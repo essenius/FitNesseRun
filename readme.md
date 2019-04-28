@@ -42,7 +42,7 @@ The task will fail if any of the tests fails. So in order for the test results p
 - 0.4.9: Changed content for exception message to CDATA; introduced stack-trace.
 - 0.4.32: Fixed bug with handling empty test pages; cleaned up logging (more to debug). 
 
-#FitNesseConfigure task
+# FitNesseConfigure task
 Configure a FitNesse/FitSharp installation using already downloaded packages (e.g. via NuGet)
 It will setup a data environment for FitNesse with the following content: 
 - a plugins.properties file for use with FitSharp and the Slim test system.
