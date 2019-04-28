@@ -30,18 +30,6 @@ If the IncludeHTML parameter is checked, then a detail test result file **Detail
 ##Control Options
 The task will fail if any of the tests fails. So in order for the test results publication to work, make sure to enable **Continue on error** in the control options for FitNesseRun, and in Publish Test Results, switch **Run this task** to **Even if a previous task has failed, unless the build was canceled**.
 
-##What's New 
-- 0.3.13: Worked around inability to parse <?xml?> tags inside FitNesse tables
-- 0.4.0: added attachment capability to NUnit 3 output to store raw HTML test results (DetailResults.html)
-- 0.4.3: Introduced TimeoutSeconds parameter to allow for long running tests. Updated screenshots to new VSTS UI.
-- 0.4.4: Removed embedded html results in NUnit 3 result file, as attaching a result file separately is now possible.
-- 0.4.5: Detailed results file is now HTML 5 rather than XHTML 1.1 (it wasn't entirely xhtml compliant)
-- 0.4.6: start time, stop time and duration for test runs not delivering results were made more accurate; introduced test run name defaults for those.
-- 0.4.7: Upgrade to VstsTaskSdk 0.11, simplified NUnit 3 result by eliminating superfluous elements
-- 0.4.8: Disabled output escaping for URL display in error reporting (&amp; -> &)
-- 0.4.9: Changed content for exception message to CDATA; introduced stack-trace.
-- 0.4.32: Fixed bug with handling empty test pages; cleaned up logging (more to debug). 
-
 # FitNesseConfigure task
 Configure a FitNesse/FitSharp installation using already downloaded packages (e.g. via NuGet)
 It will setup a data environment for FitNesse with the following content: 
@@ -61,11 +49,3 @@ It will setup a data environment for FitNesse with the following content:
 ## Return Variables
 - **FitNesse.StartCommand**: the command to start FitNesse using this configuration
 - **FitNesse.WorkFolder**: the work folder that needs to be used for this configuration
-
-##What's New 
-- 0.4.10: Initial release
-- 0.4.14: Added Cleanup Target toggle
-- 0.4.15: Bug fixes with moving Wiki content to FitNesseRoot and in content generation of plugins.properties; new icon; added firewall rules for incoming traffic on FitNesse and FitSharp ports
-- 0.4.16: Introduction of Unblock Ports toggle 
-- 0.4.32: Support running browser based tests (Chrome, Firefox, IE) on hosted agents; cleaned up logging (more to debug) 
-- 0.4.34: Introduced support for partial plugins.properties.* files (added to plugins.properties to support classic plugins)
