@@ -1,5 +1,5 @@
 # FitNesseRun Task
-Run a FitNesse test or suite on an existing FitNesse installation or by executing a local instance of FitNesse. The result is transformed into an NUnit 3 file that can be published to VSTS via a Publish Test Results 
+Azure Pipelines task to run a FitNesse test or suite on an existing FitNesse installation or by executing a local instance of FitNesse. The result is transformed into an NUnit 3 file that can be published to Azure DevOps via a Publish Test Results 
 
 ![FitNesseRun parameters](Screenshot-Parameters.png)
 
