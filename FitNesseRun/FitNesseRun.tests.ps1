@@ -1,4 +1,4 @@
-# Copyright 2017-2018 Rik Essenius
+# Copyright 2017-2019 Rik Essenius
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
 # compliance with the License. You may obtain a copy of the License at
@@ -328,7 +328,7 @@ Describe "FitNesseRun-InvokeFitNesse" {
                         'AppSearchRoot'='E:\My Apps'; 'FixtureFolder'='.'; 'DataFolder'='.'; 'ResultFolder'='.' }
             $xml = Invoke-FitNesse -Parameters $parameters
             $script:command | Should -Be "C:\Program Files\java.exe"
-            $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o -v -c `"JavaTest?test&format=xml&nochunk&includehtml`""
+            $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o -c `"JavaTest?test&format=xml&nochunk&includehtml`""
             $xml | Should -Be $extractedResult
         }
     }
@@ -350,7 +350,7 @@ Describe "FitNesseRun-InvokeFitNesse" {
             $resultXml = Invoke-FitNesse -Parameters $parameters
             $resultXml | Should -Be ("<?xml version=`"1.0`"?><testResults><executionLog><exception><![CDATA[Exception Message]]></exception>" +
 			"<stackTrace><![CDATA[FitNesseRun.ps1 Invoke-FitNesse({Parameters=System.Collections.Hashtable})]]></stackTrace></executionLog></testResults>")
-            $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o -v -c `"JavaTest?test&format=html&nochunk&includehtml`""
+            $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o -c `"JavaTest?test&format=html&nochunk&includehtml`""
             Assert-MockCalled -CommandName Execute -Times 2 -Exactly -Scope It
             Assert-MockCalled -CommandName GetErrorFromHtmlString -Times 1 -Exactly -Scope It
         }

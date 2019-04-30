@@ -4,7 +4,7 @@
     "friendlyName":  "Configure FitNesse",
     "description":  "Configure FitNesse for FitSharp so it can be used to execute tests",
     "author":  "Rik Essenius",
-    "helpMarkDown":  "Version 0.4.36",
+    "helpMarkDown":  "Version 0.4.38",
     "category":  "Test",
     "visibility":  [
                        "Build",
@@ -16,7 +16,7 @@
     "version":  {
                     "Major":  0,
                     "Minor":  4,
-                    "Patch":  36
+                    "Patch":  38
                 },
     "minimumAgentVersion":  "1.95.0",
     "instanceNameFormat":  "FitNesseDeploy",

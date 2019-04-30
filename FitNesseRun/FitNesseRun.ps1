@@ -1,4 +1,4 @@
-# Copyright 2017-2018 Rik Essenius
+# Copyright 2017-2019 Rik Essenius
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
 # compliance with the License. You may obtain a copy of the License at
@@ -85,14 +85,25 @@ function Execute([string]$Command, [string]$Arguments) {
         UseShellExecute = $false; 
         CreateNoWindow = $true;
     }
-    $process = [System.Diagnostics.Process]@{StartInfo = $processStartInfo}
-	$process.Start() | Out-Null
 
+	
+    $process = [System.Diagnostics.Process]@{StartInfo = $processStartInfo}
+
+	# This is a somewhat convoluted way to read the error and output streams, and is intended to prevent deadlocks
+	# We read one stream synchronously and one stream asynchronously.
+	$errorBuilder = [System.Text.StringBuilder]@{}
+	$appendScript = {
+        if (! [String]::IsNullOrEmpty($EventArgs.Data)) { $Event.MessageData.AppendLine($EventArgs.Data) }
+    }
+	$errorEvent = Register-ObjectEvent -InputObject $process -Action $appendScript -EventName 'ErrorDataReceived' -MessageData $errorBuilder 
+	$process.Start() | Out-Null
+	$process.BeginErrorReadLine()
 	$returnValue = New-Object ExecutionResult
 	# ReadToEnd needs to be done before WaitForExit to prevent deadlocks
 	$returnValue.output = $process.StandardOutput.ReadToEnd()
-	$returnValue.error = $process.StandardError.ReadToEnd()
 	$process.WaitForExit()
+	Unregister-Event -SourceIdentifier $errorEvent.Name
+	$returnValue.error = $errorBuilder.ToString()
 	$returnValue.exitCode = $process.ExitCode
 	return $returnValue
 }
@@ -111,7 +122,7 @@ function ExecuteFitNesse([string]$AppSearchRoot, [string]$FixtureFolder, [string
 		Out-Log -Message "Executing [$java] [$fitNesse], fixtures@[$FixtureFolder], port=[$usedPort], data@[$DataFolder], command=[$restCommand]" -Debug
 		# -o ensures that FitNesse doesn't try to update - so we don't need the "properties" file
 		$commandResult = Execute -Command $java -Arguments (
-			"-jar", "`"$fitNesse`"", "-d", "`"$DataFolder`"", "-p", $usedPort, "-o", "-v", "-c", "`"$restCommand`"")
+			"-jar", "`"$fitNesse`"", "-d", "`"$DataFolder`"", "-p", $usedPort, "-o", "-c", "`"$restCommand`"")
 	} finally {
 		Set-Location -Path $originalLocation
 	}
