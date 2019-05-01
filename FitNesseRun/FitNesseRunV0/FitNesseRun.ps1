@@ -23,7 +23,7 @@ function GetModuleFolder() {
 	if (RunningOnAgent) { 
 		return $PSScriptRoot 
 	} else { 
-		return (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath "Common")
+		return (Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath "Common")
 	}
 }
 

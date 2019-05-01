@@ -83,8 +83,13 @@ Describe "RunTestsAndPackage-Invoke-Tests" {
             $script:CodeCoverage | Should -Be "ss\ss.ps1"
             $Script:TestResult.CodeCoverage.NumberOfCommandsExecuted = 96
         }
-    }
+	}
 
+	it "shoud find the right version if specified" {
+		Invoke-Tests -Folder "tt" -MainVersion 0
+		$script:Script | Should -Be "tt\ttV0\*.tests.ps1"
+		$script:CodeCoverage | Should -Be "tt\ttV0\tt.ps1"
+    }
 }
 
 Describe "RunTestsAndPackage-Save-ToJson" {
@@ -144,26 +149,42 @@ Describe "RunTestsAndPackage-Set-VersionInTask" {
         $task.name | Should -Be "FitNesseRun"
         $task.minimumAgentVersion | Should -Be "1.95.0"
     }
+	    it "shoud correctly set the version in task.json with main version" {
+        $jsonIn='{"name": "FitNesseRun","author": "Rik Essenius","helpMarkDown": "Version 0.4.15","category": "Test",' +
+               '"version": {"Major": "0","Minor": "4","Patch": "15"},"minimumAgentVersion": "1.95.0"}'
+        New-Item -Path "TestDrive:\Test1\Test1V0" -ItemType "Directory" 
+        $jsonFile = "TestDrive:\Test1\Test1V0\task.json"
+        Out-File -InputObject $jsonIn -FilePath $jsonFile
+        $version = New-Object -TypeName "System.Version" -ArgumentList "9.10.11"
+        Set-VersionInTask -TaskName "TestDrive:\Test1" -Version $version -MainVersion 0
+        $task = Get-Content -Raw -Path $jsonFile | convertfrom-json
+        $task.Version.Major | should -be 9
+        $task.Version.Minor | should -be 10
+        $task.Version.Patch | should -be 11
+        $task.helpMarkDown | should -be "Version 9.10.11"
+        $task.name | Should -Be "FitNesseRun"
+        $task.minimumAgentVersion | Should -Be "1.95.0"
+    }
 }
 
 Describe "RunTestsAndPackage-MainHelper" {
     Mock -CommandName Invoke-Tests -MockWith { }
-    Mock -CommandName Get-Version -MockWith { return New-Object -TypeName System.Version -ArgumentList "9.10.11" }
+    Mock -CommandName Get-Version -MockWith { return New-Object -TypeName System.Version -ArgumentList "12.13.14" }
     Mock -CommandName Set-VersionInExtension -MockWith { $script:newVersion = $Version}
     Mock -CommandName Set-VersionInTask -MockWith { }
     Mock -CommandName Invoke-Tfx -MockWith { }
 
     it "should run tests if NoTest is false, and invoke Tfx but not update the version if VersionAction is Ignore" {
         MainHelper -VersionAction "Ignore" -NoTest $False -NoPackage $false
-        Assert-MockCalled -CommandName Invoke-Tests -Times 2 -Exactly -Scope It
-        Assert-MockCalled -CommandName Get-Version -Times 0 -Exactly -Scope It
+        Assert-MockCalled -CommandName Invoke-Tests -Times 3 -Exactly -Scope It
+        Assert-MockCalled -CommandName Set-VersionInExtension -Times 0 -Exactly -Scope It
         Assert-MockCalled -CommandName Invoke-Tfx -Times 1 -Exactly -Scope It
     }
     it "shoud not run tests if NoTest is true, update the version and invoke Tfx if VersionAction is Next" {
         MainHelper -VersionAction "Next" -NoTest $True -NoPackage $false
         Assert-MockCalled -CommandName Invoke-Tests -Times 0 -Exactly -Scope It
         Assert-MockCalled -CommandName Get-Version -Times 1 -Exactly -Scope It
-        "$script:newVersion" | should be "9.10.12"
+        "$script:newVersion" | should be "12.13.15"
         Assert-MockCalled -CommandName Set-VersionInextension -Times 1 -Exactly -Scope It
         Assert-MockCalled -CommandName Set-VersionInTask -Times 2 -Exactly -Scope It
         Assert-MockCalled -CommandName Invoke-Tfx -Times 1 -Exactly -Scope It
@@ -172,7 +193,7 @@ Describe "RunTestsAndPackage-MainHelper" {
         MainHelper -VersionAction "Sync" -NoTest $true -NoPackage $true
         Assert-MockCalled -CommandName Invoke-Tests -Times 0 -Exactly -Scope It
         Assert-MockCalled -CommandName Get-Version -Times 1 -Exactly -Scope It
-        "$script:newVersion" | should be "9.10.11"
+        "$script:newVersion" | should be "12.13.14"
         Assert-MockCalled -CommandName Set-VersionInextension -Times 1 -Exactly -Scope It
         Assert-MockCalled -CommandName Set-VersionInTask -Times 2 -Exactly -Scope It
         Assert-MockCalled -CommandName Invoke-Tfx -Times 0 -Exactly -Scope It

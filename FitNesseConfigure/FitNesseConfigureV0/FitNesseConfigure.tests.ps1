@@ -257,7 +257,7 @@ Describe "FitNesseConfigure-MainHelper" {
     Mock -CommandName New-NetFirewallRule -MockWith { $script:Rule += $DisplayName }
     Mock -CommandName Set-NetFirewallRule -MockWith { $script:Rule += $DisplayName }
 
-    $script:packagePath = Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -ChildPath "TestData"
+    $script:packagePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath "TestData"
 
     It "should not clean up if not told to, copy all folders and files to the right locations, and create new rules if not existing" {
         Mock Get-Parameters { return @{'TargetFolder'= "$($script:basePath)"; 'PackageFolder'="$($script:packagePath)";

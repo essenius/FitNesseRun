@@ -35,17 +35,23 @@ function Get-NextVersion {
 }
 
 function Invoke-Tests {
-    param([string]$Folder, [string[]]$CodeCoverage)
+    param([string]$Folder, [string[]]$CodeCoverage, [string]$MainVersion)
+	if ($MainVersion) {
+		$basePath = Join-Path -Path $Folder -ChildPath "$($Folder)V$MainVersion"
+	} else {
+		$basePath = $Folder
+	}
     if (!$CodeCoverage) { 
-        $CodeCoverage = (Join-Path -Pat $Folder -ChildPath "$(Split-Path -Path $Folder -Leaf).ps1")
+        $CodeCoverage = (Join-Path -Path $basePath -ChildPath "$(Split-Path -Path $Folder -Leaf).ps1")
     }
-    $scripts = Join-Path -Path $Folder -ChildPath "*.tests.ps1"
+
+    $scripts = Join-Path -Path $basePath -ChildPath "*.tests.ps1"
     $testResult = invoke-Pester -PassThru -Script $scripts -CodeCoverage $CodeCoverage
     if ($testResult.FailedCount -gt 0) { 
-        Exit-WithError -Message "$($Folder): $($testResult.FailedCount) test(s) failed"
+        Exit-WithError -Message "$($basePath): $($testResult.FailedCount) test(s) failed"
     }
     if ($testResult.PassedCount -eq 0) {
-        Exit-WithError -Message "$($Folder): no passing tests"
+        Exit-WithError -Message "$($basePath): no passing tests"
     }
     $coverage = $testResult.CodeCoverage
     $coveragePercentage = ($coverage.NumberOfCommandsExecuted / $coverage.NumberOfCommandsAnalyzed) * 100
@@ -83,8 +89,14 @@ function Set-VersionInExtension {
 }
 
 function Set-VersionInTask {
-    param([string]$TaskName, [System.Version]$Version)
-    $taskFile = "$TaskName\task.json"
+    param([string]$TaskName, [System.Version]$Version, [string]$MainVersion)
+	if ($MainVersion) {
+	    $task = (Split-Path -Path $TaskName -Leaf)
+		$subFolder = "\$($task)V$MainVersion" 
+	} else {
+		$subFolder = ""
+	}
+    $taskFile = "$TaskName$subFolder\task.json"
     $task = Get-Content -Raw -Path $taskFile | ConvertFrom-Json
     $task.helpMarkDown = "Version $Version"
     $task.Version.Major = $Version.Major
@@ -102,8 +114,8 @@ function MainHelper {
     param([string]$VersionAction, [bool]$NoTest, [bool]$NoPackage)
     if (!$NoTest) {
         Invoke-Tests -Folder "Common" -CodeCoverage "Common\CommonFunctions.psm1"
-        Invoke-Tests -Folder "FitNesseConfigure"
-        Invoke-Tests -Folder "FitNesseRun"
+        Invoke-Tests -Folder "FitNesseConfigure" -MainVersion 0
+        Invoke-Tests -Folder "FitNesseRun" -MainVersion 0
     }
     $version = Get-Version -FilePath "vss-extension.json"
     Out-Log -Message "Current version: $version"
@@ -114,8 +126,8 @@ function MainHelper {
             $versionToApply = $version
         }
         Set-VersionInExtension -FilePath "vss-extension.json" -Version $versionToApply
-        Set-VersionInTask -TaskName "FitNesseConfigure" -Version $versionToApply
-        Set-VersionInTask -TaskName "FitNesseRun" -Version $versionToApply
+        Set-VersionInTask -TaskName "FitNesseConfigure" -Version $versionToApply -MainVersion 0
+        Set-VersionInTask -TaskName "FitNesseRun" -Version $versionToApply -MainVersion 0
     }
     if (!$NoPackage) {
         Invoke-Tfx

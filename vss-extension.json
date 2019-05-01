@@ -2,7 +2,7 @@
     "manifestVersion":  1,
     "id":  "FitnesseRun",
     "name":  "FitNesseRun",
-    "version":  "0.4.40",
+    "version":  "0.4.42",
     "publisher":  "rikessenius",
     "targets":  [
                     {
@@ -54,46 +54,46 @@
     "files":  [
                   {
                       "path":  "Common/CommonFunctions.psm1",
-                      "packagePath":  "FitNesseRun/CommonFunctions.psm1"
+                      "packagePath":  "FitNesseRun/FitNesseRunV0/CommonFunctions.psm1"
                   },
                   {
                       "path":  "Common/ps_modules",
-                      "packagePath":  "FitNesseRun/ps_modules"
+                      "packagePath":  "FitNesseRun/FitNesseRunV0/ps_modules"
                   },
                   {
                       "path":  "Common/CommonFunctions.psm1",
-                      "packagePath":  "FitNesseConfigure/CommonFunctions.psm1"
+                      "packagePath":  "FitNesseConfigure/FitNesseConfigureV0/CommonFunctions.psm1"
                   },
                   {
                       "path":  "Common/ps_modules",
-                      "packagePath":  "FitNesseConfigure/ps_modules"
+                      "packagePath":  "FitNesseConfigure/FitNesseConfigureV0/ps_modules"
                   },
                   {
-                      "path":  "FitNesseRun/FitNesseRun.ps1"
+                      "path":  "FitNesseRun/FitNesseRunV0/FitNesseRun.ps1"
                   },
                   {
-                      "path":  "FitNesseRun/FitNesseToDetailedResults.xslt"
+                      "path":  "FitNesseRun/FitNesseRunV0/FitNesseToDetailedResults.xslt"
                   },
                   {
-                      "path":  "FitNesseRun/FitNesseToNUNit3.xslt"
+                      "path":  "FitNesseRun/FitNesseRunV0/FitNesseToNUNit3.xslt"
                   },
                   {
-                      "path":  "FitNesseRun/FitNesseToSummaryResult.xslt"
+                      "path":  "FitNesseRun/FitNesseRunV0/FitNesseToSummaryResult.xslt"
                   },
                   {
-                      "path":  "FitNesseRun/icon.png"
+                      "path":  "FitNesseRun/FitNesseRunV0/icon.png"
                   },
                   {
-                      "path":  "FitNesseRun/task.json"
+                      "path":  "FitNesseRun/FitNesseRunV0/task.json"
                   },
                   {
-                      "path":  "FitNesseConfigure/FitNesseConfigure.ps1"
+                      "path":  "FitNesseConfigure/FitNesseConfigureV0/FitNesseConfigure.ps1"
                   },
                   {
-                      "path":  "FitNesseConfigure/icon.png"
+                      "path":  "FitNesseConfigure/FitNesseConfigureV0/icon.png"
                   },
                   {
-                      "path":  "FitNesseConfigure/task.json"
+                      "path":  "FitNesseConfigure/FitNesseConfigureV0/task.json"
                   },
                   {
                       "path":  "Screenshot-Parameters.png",
