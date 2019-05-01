@@ -2,7 +2,7 @@
     "manifestVersion":  1,
     "id":  "FitnesseRun",
     "name":  "FitNesseRun",
-    "version":  "0.4.38",
+    "version":  "0.4.40",
     "publisher":  "rikessenius",
     "targets":  [
                     {
@@ -11,8 +11,27 @@
                 ],
     "description":  "Tasks to run a FitNesse test and save the result in NUnit3 format, and to configure FitNesse.",
     "categories":  [
-                       "Build and release"
+                       "Azure Pipelines"
                    ],
+    "tags":  [
+                 "FitNesse",
+                 "Test",
+                 "Test automation",
+                 "Test task",
+                 "Testing"
+             ],
+    "links":  {
+                  "repository":  {
+                                     "uri":  "https://github.com/essenius/FitNesseRun"
+                                 },
+                  "issues":  {
+                                 "uri":  "https://github.com/essenius/FitNesseRun/issues"
+                             }
+              },
+    "repository":  {
+                       "type":  "git",
+                       "uri":  "https://github.com/essenius/FitNesseRun"
+                   },
     "icons":  {
                   "default":  "fitnesse-logo.png"
               },

@@ -41,7 +41,7 @@ It will setup a data environment for FitNesse with the following content:
 - **Target Folder**: The location where the data environment for FitNesse needs to be configured. Default is '.'
 - **Package Folder**: the folder under which the packages have been downloaded (i.e. where FitNesse and FitSharp can be found). Default is '.' 
 - **Port**: the port that FitNesse needs to run at when executed. Default is 9123
-- **Slim Port**: THe port where the FitSharp Slim service runs at. Default is 8085
+- **Slim Port**: The port where the FitSharp Slim service runs at. Default is 8085
 - **Siim Pool Size**: the number of consecutive ports that Slim can use (starting at Slim Port). Default is 5
 - **Slim Timeout**: Timeout in seconds for the Slim server. Default is 30 seconds
 - **Cleanup Target**: Whether or note the target folder should be cleaned before configuring. Default is yes.
@@ -49,3 +49,8 @@ It will setup a data environment for FitNesse with the following content:
 ## Return Variables
 - **FitNesse.StartCommand**: the command to start FitNesse using this configuration
 - **FitNesse.WorkFolder**: the work folder that needs to be used for this configuration
+
+# Release Notes
+|Date      |Version|Note                  |
+|----------|-------|----------------------|
+|1-May-2019|1.0.0  |Initial public release|
