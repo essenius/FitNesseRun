@@ -53,4 +53,4 @@ It will setup a data environment for FitNesse with the following content:
 # Release Notes
 |Date      |Version|Note                  |
 |----------|-------|----------------------|
-|1-May-2019|0.4.42 |Final internal release|
+|1-May-2019|0.4.43 |Final internal release|
