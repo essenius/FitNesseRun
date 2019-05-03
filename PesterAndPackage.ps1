@@ -112,10 +112,11 @@ function Invoke-Tfx {
 
 function MainHelper {
     param([string]$VersionAction, [bool]$NoTest, [bool]$NoPackage)
+	$mainVersion = 1
     if (!$NoTest) {
         Invoke-Tests -Folder "Common" -CodeCoverage "Common\CommonFunctions.psm1"
-        Invoke-Tests -Folder "FitNesseConfigure" -MainVersion 0
-        Invoke-Tests -Folder "FitNesseRun" -MainVersion 0
+        Invoke-Tests -Folder "FitNesseConfigure" -MainVersion $mainVersion
+        Invoke-Tests -Folder "FitNesseRun" -MainVersion $mainVersion
     }
     $version = Get-Version -FilePath "vss-extension.json"
     Out-Log -Message "Current version: $version"
@@ -126,8 +127,8 @@ function MainHelper {
             $versionToApply = $version
         }
         Set-VersionInExtension -FilePath "vss-extension.json" -Version $versionToApply
-        Set-VersionInTask -TaskName "FitNesseConfigure" -Version $versionToApply -MainVersion 0
-        Set-VersionInTask -TaskName "FitNesseRun" -Version $versionToApply -MainVersion 0
+        Set-VersionInTask -TaskName "FitNesseConfigure" -Version $versionToApply -MainVersion $mainVersion
+        Set-VersionInTask -TaskName "FitNesseRun" -Version $versionToApply -MainVersion $mainVersion
     }
     if (!$NoPackage) {
         Invoke-Tfx

@@ -4,15 +4,15 @@
     "friendlyName":  "Configure FitNesse",
     "description":  "Configure FitNesse for FitSharp so it can be used to execute tests",
     "author":  "Rik Essenius",
-    "helpMarkDown":  "Version 0.9.3",
+    "helpMarkDown":  "Version 1.0.8",
     "category":  "Azure Pipelines",
     "demands":  [
 
                 ],
     "version":  {
-                    "Major":  0,
-                    "Minor":  9,
-                    "Patch":  3
+                    "Major":  1,
+                    "Minor":  0,
+                    "Patch":  8
                 },
     "minimumAgentVersion":  "1.95.0",
     "instanceNameFormat":  "FitNesseDeploy",
@@ -25,21 +25,12 @@
                ],
     "inputs":  [
                    {
-                       "name":  "packageFolder",
-                       "type":  "filePath",
-                       "label":  "Package Folder",
-                       "defaultValue":  ".",
-                       "required":  false,
-                       "helpMarkDown":  "Folder under which the package contents can be found",
-                       "groupName":  "all"
-                   },
-                   {
                        "name":  "targetFolder",
                        "type":  "filePath",
                        "label":  "Target Folder",
                        "defaultValue":  ".",
                        "required":  false,
-                       "helpMarkDown":  "Data folder for FitNesse, under which the wiki and fixture folders are created",
+                       "helpMarkDown":  "Data folder for FitNesse, where FitNesseRoot and fixtures are expected",
                        "groupName":  "all"
                    },
                    {
@@ -76,15 +67,6 @@
                        "defaultValue":  "30",
                        "required":  false,
                        "helpMarkDown":  "Timeout for the SLIM server in seconds.",
-                       "groupName":  "all"
-                   },
-                   {
-                       "name":  "cleanupTarget",
-                       "type":  "boolean",
-                       "label":  "Cleanup Target",
-                       "defaultValue":  "true",
-                       "required":  false,
-                       "helpMarkDown":  "Clear the data folder before copying in the package data",
                        "groupName":  "all"
                    },
                    {

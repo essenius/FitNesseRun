@@ -1,0 +1,4002 @@
+<?xml version="1.0"?>
+<!--
+ Copyright 2013-2017 Rik Essenius
+
+ Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
+ compliance with the License. You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software distributed under the License is
+ distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and limitations under the License.
+-->
+<testcases>
+  <testcase name="MinimalTestFailed_20111026">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20111026</FitNesseVersion>
+        <rootPath>TestPage</rootPath>
+        <result>
+          <date>2011-10-26T01:02:03+02:00</date>
+          <counts>
+            <right>5</right>
+            <wrong>3</wrong>
+            <ignores>2</ignores>
+            <exceptions>1</exceptions>
+          </counts>
+          <runTimeInMillis>201</runTimeInMillis>
+          <content><![CDATA[<div class="collapse_rim">
+	<div style="float: right;" class="meta">
+		<a href="javascript:expandAll();">Expand All</a>
+ | 
+		<a href="javascript:collapseAll();">Collapse All</a>
+	</div>
+	<a href="javascript:toggleCollapsable('1');">
+		<img src="/files/images/collapsableClosed.gif" class="left" id="img1"/>
+	</a>
+&#160;
+	<span class="meta">Precompiled Libraries</span>
+	<div class="hidden" id="1"><br/></div>
+</div>
+<br/><div class="collapse_rim">
+	<div style="float: right;" class="meta">
+		<a href="javascript:expandAll();">Expand All</a>
+ | 
+		<a href="javascript:collapseAll();">Collapse All</a>
+	</div>
+	<a href="javascript:toggleCollapsable('2');">
+		<img src="/files/images/collapsableClosed.gif" class="left" id="img2"/>
+	</a>
+&#160;
+	<span class="meta">Included page: <a href="FitSharpDemoSuite.SetUp">.FitSharpDemoSuite.SetUp</a> <a href="FitSharpDemoSuite.SetUp?edit&amp;redirectToReferer=true&amp;redirectAction=">(edit)</a></span>
+	<div class="hidden" id="2"><table border="1" cellspacing="0" _TABLENUMBER="5826437410029506943">
+	<tr>
+		<td>import</td>
+	</tr>
+	<tr>
+		<td>FitSharpDemo</td>
+	</tr>
+</table>
+</div>
+</div>
+<br/><table border="1" cellspacing="0" _TABLENUMBER="5299032501323816046">
+	<tr>
+		<td colspan="4"><span class="pass">should I buy milk</span></td>
+	</tr>
+	<tr>
+		<td>cash in wallet</td>
+		<td>credit card</td>
+		<td>pints of milk remaining</td>
+		<td>go to store?</td>
+	</tr>
+	<tr>
+		<td>0</td>
+		<td>no</td>
+		<td>0</td>
+		<td><span class="pass">no</span></td>
+	</tr>
+</table>
+<br/><br/>]]></content>
+          <relativePageName>TestPage</relativePageName>
+        </result>
+        <executionLog>
+          <testSystem>slim:c:\fitsharp\Runner.exe</testSystem>
+          <command>C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088</command>
+          <exitCode>0</exitCode>
+          <stdOut />
+          <stdErr />
+        </executionLog>
+        <finalCounts>
+          <right>0</right>
+          <wrong>1</wrong>
+          <ignores>0</ignores>
+          <exceptions>0</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>2011</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>TestPage</TestName>
+        <TestResult>Failed</TestResult>
+        <ErrorMessage>Test Pages: 0 right, 1 wrong, 0 ignores, 0 exceptions. Assertions: 5 right, 3 wrong, 2 ignores, 1 exceptions. Run time: 2.011 s.</ErrorMessage>
+        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
+        <InnerTests>
+          <InnerTest>
+            <TestName>TestPage</TestName>
+            <TestResult>Failed</TestResult>
+            <ErrorMessage>Assertions: 5 right, 3 wrong, 2 ignores, 1 exceptions. Run time: 0.201 s.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="TestPage-Run" result="Failed" testcasecount="1" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="11" start-time="2011-10-25T23:02:03.0000000Z" end-time="2011-10-25T23:02:05.0110000Z" engine-version="FitNesse v20111026">
+        <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="TestPage" fullName="TestPage" result="Failed" testcasecount="1" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="11" start-time="2011-10-25T23:02:03.0000000Z" end-time="2011-10-25T23:02:05.0110000Z">
+          <environment />
+          <settings>
+            <setting name="TestSystem" value="slim:c:\fitsharp\Runner.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Test Pages: 0 right, 1 wrong, 0 ignores, 0 exceptions. Assertions: 5 right, 3 wrong, 2 ignores, 1 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name="TestPage" fullname="TestPage" result="Failed" start-time="2011-10-25T23:02:03.0000000Z" duration="0.201" asserts="11">
+              <failure>
+                <message><![CDATA[Assertions: 5 right, 3 wrong, 2 ignores, 1 exceptions. ]]></message>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+    <expectedDetails><![CDATA[<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TestPage</title>
+    <style type="text/css">
+          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+          .pass { background-color: #AAFFAA; }
+          .fail { background-color: #FFAAAA; }
+          .diff { background-color: #FF6666; }
+          .error { background-color: #FFFFAA; }
+          .ignore { background-color: #CCCCCC; }
+          table, td { font-size: 1em; border-color:black; border-style:solid; }
+          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+          h1 { font-size: 2em; }
+          h2 { font-size: 1.5em; }
+          </style>
+  </head>
+  <body>
+    <h2 class="fail"><a id="#result1">TestPage</a></h2><div class="collapse_rim">
+	<div style="float: right;" class="meta">
+		
+ | 
+		
+	</div>
+	
+&#160;
+	<span class="meta">Precompiled Libraries</span>
+	<div class="hidden" id="1"><br/></div>
+</div>
+<br/><div class="collapse_rim">
+	<div style="float: right;" class="meta">
+		
+ | 
+		
+	</div>
+	
+&#160;
+	<span class="meta">[Included page: FitSharpDemoSuite.SetUp] </span>
+	<div class="hidden" id="2"><table border="1" cellspacing="0" _TABLENUMBER="5826437410029506943">
+	<tr>
+		<td>import</td>
+	</tr>
+	<tr>
+		<td>FitSharpDemo</td>
+	</tr>
+</table>
+</div>
+</div>
+<br/><table border="1" cellspacing="0" _TABLENUMBER="5299032501323816046">
+	<tr>
+		<td colspan="4"><span class="pass">should I buy milk</span></td>
+	</tr>
+	<tr>
+		<td>cash in wallet</td>
+		<td>credit card</td>
+		<td>pints of milk remaining</td>
+		<td>go to store?</td>
+	</tr>
+	<tr>
+		<td>0</td>
+		<td>no</td>
+		<td>0</td>
+		<td><span class="pass">no</span></td>
+	</tr>
+</table>
+<br/><br/></body>
+</html>]]></expectedDetails>
+  </testcase>
+  <testcase name="MinimalTestPassed_20111026">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20111026</FitNesseVersion>
+        <rootPath>TestPage</rootPath>
+        <result>
+          <date>2011-10-26T01:02:03+02:00</date>
+          <counts>
+            <right>6</right>
+            <wrong>0</wrong>
+            <ignores>2</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <runTimeInMillis>201</runTimeInMillis>
+          <content />
+          <relativePageName>TestPage</relativePageName>
+        </result>
+        <executionLog>
+          <testSystem>slim:c:\fitsharp\Runner.exe</testSystem>
+          <command>C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088</command>
+          <exitCode>0</exitCode>
+          <stdOut />
+          <stdErr />
+        </executionLog>
+        <finalCounts>
+          <right>1</right>
+          <wrong>0</wrong>
+          <ignores>0</ignores>
+          <exceptions>0</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>2011</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>TestPage</TestName>
+        <TestResult>Passed</TestResult>
+        <ErrorMessage>Test Pages: 1 right, 0 wrong, 0 ignores, 0 exceptions. Assertions: 6 right, 0 wrong, 2 ignores, 0 exceptions. Run time: 2.011 s.</ErrorMessage>
+        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
+        <InnerTests>
+          <InnerTest>
+            <TestName>TestPage</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 6 right, 0 wrong, 2 ignores, 0 exceptions. Run time: 0.201 s.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="TestPage-Run" result="Passed" testcasecount="1" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="8" start-time="2011-10-25T23:02:03.0000000Z" end-time="2011-10-25T23:02:05.0110000Z" engine-version="FitNesse v20111026">
+        <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="TestPage" fullName="TestPage" result="Passed" testcasecount="1" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="8" start-time="2011-10-25T23:02:03.0000000Z" end-time="2011-10-25T23:02:05.0110000Z">
+          <environment />
+          <settings>
+            <setting name="TestSystem" value="slim:c:\fitsharp\Runner.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Test Pages: 1 right, 0 wrong, 0 ignores, 0 exceptions. Assertions: 6 right, 0 wrong, 2 ignores, 0 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name="TestPage" fullname="TestPage" result="Passed" start-time="2011-10-25T23:02:03.0000000Z" duration="0.201" asserts="8">
+              <failure>
+                <message><![CDATA[Assertions: 6 right, 0 wrong, 2 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+  </testcase>
+  <testcase name="SmallSuite_20111026">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20111026</FitNesseVersion>
+        <rootPath>FitSharpDemoSuite</rootPath>
+        <result>
+          <date>2011-10-26T01:02:03+02:00</date>
+          <counts>
+            <right>0</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>66</exceptions>
+          </counts>
+          <runTimeInMillis>356</runTimeInMillis>
+          <relativePageName>BuyBeer</relativePageName>
+          <pageHistoryLink>FitSharpDemoSuite.BuyBeer?pageHistory&amp;resultDate=20121105110759&amp;format=xml</pageHistoryLink>
+        </result>
+        <result>
+          <date>2011-10-26T01:02:03.356+02:00</date>
+          <counts>
+            <right>6</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <runTimeInMillis>66</runTimeInMillis>
+          <relativePageName>BuyMilk</relativePageName>
+          <pageHistoryLink>FitSharpDemoSuite.BuyMilk?pageHistory&amp;resultDate=20121105110759&amp;format=xml</pageHistoryLink>
+        </result>
+        <executionLog>
+          <testSystem>slim:c:\fitsharp\Runner.exe</testSystem>
+          <command>C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088</command>
+          <exitCode>0</exitCode>
+          <stdOut />
+          <stdErr />
+        </executionLog>
+        <finalCounts>
+          <right>1</right>
+          <wrong>0</wrong>
+          <ignores>0</ignores>
+          <exceptions>1</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>1342</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>FitSharpDemoSuite</TestName>
+        <TestResult>Error</TestResult>
+        <ErrorMessage>Test Pages: 1 right, 0 wrong, 0 ignores, 1 exceptions. Assertions: 6 right, 0 wrong, 0 ignores, 66 exceptions. Run time: 1.342 s.</ErrorMessage>
+        <InnerTests>
+          <InnerTest>
+            <TestName>FitSharpDemoSuite.BuyBeer</TestName>
+            <TestResult>Error</TestResult>
+            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 66 exceptions. Run time: 0.356 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>FitSharpDemoSuite.BuyMilk</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 6 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.066 s.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="FitSharpDemoSuite-Run" result="Failed" testcasecount="2" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="72" start-time="2011-10-25T23:02:03.0000000Z" end-time="2011-10-25T23:02:04.3420000Z" engine-version="FitNesse v20111026">
+        <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="FitSharpDemoSuite" fullName="FitSharpDemoSuite" result="Failed" testcasecount="2" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="72" start-time="2011-10-25T23:02:03.0000000Z" end-time="2011-10-25T23:02:04.3420000Z">
+          <environment />
+          <settings>
+            <setting name="TestSystem" value="slim:c:\fitsharp\Runner.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Test Pages: 1 right, 0 wrong, 0 ignores, 1 exceptions. Assertions: 6 right, 0 wrong, 0 ignores, 66 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name=".BuyBeer" fullname=".BuyBeer" result="Failed" start-time="2011-10-25T23:02:03.0000000Z" duration="0.356" asserts="66">
+              <failure>
+                <message><![CDATA[Assertions: 0 right, 0 wrong, 0 ignores, 66 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".BuyMilk" fullname=".BuyMilk" result="Passed" start-time="2011-10-25T23:02:03.3560000Z" duration="0.066" asserts="6">
+              <failure>
+                <message><![CDATA[Assertions: 6 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+  </testcase>
+  <testcase name="EmptySource">
+    <fitnesseInput>
+      <testResults />
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName />
+        <TestResult>Inconclusive</TestResult>
+        <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. </ErrorMessage>
+        <InnerTests />
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="FitNesse-Run" result="Inconclusive" testcasecount="0" total="0" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" start-time="2017-02-23T15:10:00.0000000Z" end-time="2017-02-23T15:10:00.0000000Z">
+        <test-suite type="Assembly" runstate="Runnable" name="FitNesse" fullName="FitNesse" result="Inconclusive" testcasecount="0" total="0" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" start-time="2017-02-23T15:10:00.0000000Z" end-time="2017-02-23T15:10:00.0000000Z">
+          <environment />
+          <failure>
+            <message><![CDATA[Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name="ErrorTestCase" fullname="ErrorTestCase" result="Failed" label="Error" asserts="0" start-time="2017-02-23T15:10:00.0000000Z" duration="0" />
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+  </testcase>
+  <testcase name="FibonacciPassed_20121220">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20121220</FitNesseVersion>
+        <rootPath>$response.RootPath</rootPath>
+        <result>
+          <counts>
+            <right>8</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <runTimeInMillis>167</runTimeInMillis>
+          <content><![CDATA[<div class="collapsible closed"><ul><li><a href='#' class='expandall'>Expand All</a></li><li><a href='#' class='collapseall'>Collapse All</a></li></ul>
+	<p class="title">Precompiled Libraries</p>
+	<div><br/></div>
+</div>
+<span class="meta">classpath: "ExtendedMathTest.dll"</span><br/><br/><table _TABLENUMBER="2315413469855163777">
+	<tr>
+		<td>import</td>
+	</tr>
+	<tr>
+		<td>ExtendedMathTest</td>
+	</tr>
+</table>
+<br/><table _TABLENUMBER="7708978816475170189">
+	<tr>
+		<td colspan="2"><span class="pass">Fibonacci Fixture</span></td>
+	</tr>
+	<tr>
+		<td>Input Value</td>
+		<td>Fibonacci?</td>
+	</tr>
+	<tr>
+		<td>0</td>
+		<td><span class="pass">0</span></td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td><span class="pass">1</span></td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td><span class="pass">1</span></td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td><span class="pass">21</span></td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td><span class="pass">6765</span></td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td><span class="pass">1836311903</span></td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td><span class="pass">System.OverflowException</span></td>
+	</tr>
+	<tr>
+		<td>-1</td>
+		<td><span class="pass">System.ArgumentOutOfRangeException</span></td>
+	</tr>
+</table>
+<br/>Fibonacci(46) is the largest value that fits in an int32, so that should still work. <br/>Any higher value should result in an overflow. Negative values are also not allowed.<br/>]]></content>
+          <relativePageName>FibonacciTest</relativePageName>
+        </result>
+        <executionLog>
+          <testSystem>slim:c:\fitsharp\Runner.exe</testSystem>
+          <command>C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088</command>
+          <exitCode>0</exitCode>
+          <stdOut />
+          <stdErr />
+        </executionLog>
+        <finalCounts>
+          <right>1</right>
+          <wrong>0</wrong>
+          <ignores>0</ignores>
+          <exceptions>0</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>1398</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>FibonacciTest</TestName>
+        <TestResult>Passed</TestResult>
+        <ErrorMessage>Test Pages: 1 right, 0 wrong, 0 ignores, 0 exceptions. Assertions: 8 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 1.398 s.</ErrorMessage>
+        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
+        <InnerTests>
+          <InnerTest>
+            <TestName>FibonacciTest</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 8 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.167 s.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="FibonacciTest-Run" result="Passed" testcasecount="1" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="8" start-time="2017-02-23T15:09:58.6020000Z" end-time="2017-02-23T15:10:00.0000000Z" engine-version="FitNesse v20121220">
+        <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="FibonacciTest" fullName="FibonacciTest" result="Passed" testcasecount="1" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="8" start-time="2017-02-23T15:09:58.6020000Z" end-time="2017-02-23T15:10:00.0000000Z">
+          <environment />
+          <settings>
+            <setting name="TestSystem" value="slim:c:\fitsharp\Runner.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Test Pages: 1 right, 0 wrong, 0 ignores, 0 exceptions. Assertions: 8 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name="FibonacciTest" fullname="FibonacciTest" result="Passed" duration="0.167" asserts="8">
+              <failure>
+                <message><![CDATA[Assertions: 8 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+    <expectedDetails><![CDATA[<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>FibonacciTest</title>
+    <style type="text/css">
+          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+          .pass { background-color: #AAFFAA; }
+          .fail { background-color: #FFAAAA; }
+          .diff { background-color: #FF6666; }
+          .error { background-color: #FFFFAA; }
+          .ignore { background-color: #CCCCCC; }
+          table, td { font-size: 1em; border-color:black; border-style:solid; }
+          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+          h1 { font-size: 2em; }
+          h2 { font-size: 1.5em; }
+          </style>
+  </head>
+  <body>
+    <h2 class="pass"><a id="#result1">FibonacciTest</a></h2><div class="collapsible closed">
+	<p class="title">Precompiled Libraries</p>
+	<div><br/></div>
+</div>
+<span class="meta">classpath: "ExtendedMathTest.dll"</span><br/><br/><table _TABLENUMBER="2315413469855163777">
+	<tr>
+		<td>import</td>
+	</tr>
+	<tr>
+		<td>ExtendedMathTest</td>
+	</tr>
+</table>
+<br/><table _TABLENUMBER="7708978816475170189">
+	<tr>
+		<td colspan="2"><span class="pass">Fibonacci Fixture</span></td>
+	</tr>
+	<tr>
+		<td>Input Value</td>
+		<td>Fibonacci?</td>
+	</tr>
+	<tr>
+		<td>0</td>
+		<td><span class="pass">0</span></td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td><span class="pass">1</span></td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td><span class="pass">1</span></td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td><span class="pass">21</span></td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td><span class="pass">6765</span></td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td><span class="pass">1836311903</span></td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td><span class="pass">System.OverflowException</span></td>
+	</tr>
+	<tr>
+		<td>-1</td>
+		<td><span class="pass">System.ArgumentOutOfRangeException</span></td>
+	</tr>
+</table>
+<br/>Fibonacci(46) is the largest value that fits in an int32, so that should still work. <br/>Any higher value should result in an overflow. Negative values are also not allowed.<br/></body>
+</html>]]></expectedDetails>
+  </testcase>
+  <testcase name="SmallSuite_20121220">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20121220</FitNesseVersion>
+        <rootPath>FitSharpDemoSuite</rootPath>
+        <result>
+          <counts>
+            <right>0</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>66</exceptions>
+          </counts>
+          <runTimeInMillis>163</runTimeInMillis>
+          <relativePageName>BuyBeer</relativePageName>
+          <pageHistoryLink>FitSharpDemoSuite.BuyBeer?pageHistory&amp;resultDate=20130114225257&amp;format=xml</pageHistoryLink>
+        </result>
+        <result>
+          <counts>
+            <right>6</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <runTimeInMillis>40</runTimeInMillis>
+          <relativePageName>BuyMilk</relativePageName>
+          <pageHistoryLink>FitSharpDemoSuite.BuyMilk?pageHistory&amp;resultDate=20130114225258&amp;format=xml</pageHistoryLink>
+        </result>
+        <executionLog>
+          <testSystem>slim:c:\fitsharp\Runner.exe</testSystem>
+          <command>C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088</command>
+          <exitCode>0</exitCode>
+          <stdOut />
+          <stdErr />
+        </executionLog>
+        <finalCounts>
+          <right>1</right>
+          <wrong>0</wrong>
+          <ignores>0</ignores>
+          <exceptions>1</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>943</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>FitSharpDemoSuite</TestName>
+        <TestResult>Error</TestResult>
+        <ErrorMessage>Test Pages: 1 right, 0 wrong, 0 ignores, 1 exceptions. Assertions: 6 right, 0 wrong, 0 ignores, 66 exceptions. Run time: 0.943 s.</ErrorMessage>
+        <InnerTests>
+          <InnerTest>
+            <TestName>FitSharpDemoSuite.BuyBeer</TestName>
+            <TestResult>Error</TestResult>
+            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 66 exceptions. Run time: 0.163 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>FitSharpDemoSuite.BuyMilk</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 6 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.04 s.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="FitSharpDemoSuite-Run" result="Failed" testcasecount="2" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="72" start-time="2017-02-23T15:09:59.0570000Z" end-time="2017-02-23T15:10:00.0000000Z"  engine-version="FitNesse v20121220">
+        <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="FitSharpDemoSuite" fullName="FitSharpDemoSuite" result="Failed" testcasecount="2" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="72" start-time="2017-02-23T15:09:59.0570000Z" end-time="2017-02-23T15:10:00.0000000Z">
+          <environment />
+          <settings>
+            <setting name="TestSystem" value="slim:c:\fitsharp\Runner.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Test Pages: 1 right, 0 wrong, 0 ignores, 1 exceptions. Assertions: 6 right, 0 wrong, 0 ignores, 66 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name=".BuyBeer" fullname=".BuyBeer" result="Failed" duration="0.163" asserts="66">
+              <failure>
+                <message><![CDATA[Assertions: 0 right, 0 wrong, 0 ignores, 66 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".BuyMilk" fullname=".BuyMilk" result="Passed" duration="0.04" asserts="6">
+              <failure>
+                <message><![CDATA[Assertions: 6 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+  </testcase>
+  <testcase name="GameManagementSuite_20160515">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20160515</FitNesseVersion>
+        <rootPath>GameManagementSuite</rootPath>
+        <result>
+          <counts>
+            <right>14</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2016-06-15T15:29:51+02:00</date>
+          <runTimeInMillis>72</runTimeInMillis>
+          <relativePageName>DuplicateCheck</relativePageName>
+          <pageHistoryLink>GameManagementSuite.DuplicateCheck?pageHistory&amp;resultDate=20160615152951</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.ScenarioLibrary"&gt;.GameManagementSuite.ScenarioLibrary&lt;/a&gt; &lt;a href="GameManagementSuite.ScenarioLibrary?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;scenario&lt;/td&gt;
+            &lt;td&gt;reject duplicate on player&lt;/td&gt;
+            &lt;td colspan="3"&gt;player&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor5"&gt;
+            &lt;td&gt;$players=&lt;/td&gt;
+            &lt;td colspan="4"&gt;player count&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;$skill=&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td colspan="2"&gt;if skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor7"&gt;
+            &lt;td&gt;reject&lt;/td&gt;
+            &lt;td&gt;add player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;with skill&lt;/td&gt;
+            &lt;td&gt;unknown&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player count&lt;/td&gt;
+            &lt;td colspan="3"&gt;$players&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;if skill&lt;/td&gt;
+            &lt;td&gt;$skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.SetUp"&gt;.GameManagementSuite.SetUp&lt;/a&gt; &lt;a href="GameManagementSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;GameManagementTest&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;Define table type&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;add players&lt;/td&gt;
+            &lt;td&gt;as Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;overview&lt;/td&gt;
+            &lt;td&gt;as Table&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;players with skill&lt;/td&gt;
+            &lt;td&gt;as Query&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;skills overview&lt;/td&gt;
+            &lt;td&gt;as Dynamic Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;Add Players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Player Name&lt;/td&gt;
+            &lt;td&gt;Skill&lt;/td&gt;
+            &lt;td&gt;Success?&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Steve&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Bill&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;John&lt;/td&gt;
+            &lt;td&gt;advanced&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;JohnJohn&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;Attempting to register an already existing user should fail. Player count should remain the same, and skill levels should not be changed.&lt;br/&gt;&lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;Script&lt;/td&gt;
+            &lt;td colspan="4"&gt;&lt;span class="pass"&gt;player management driver&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="scenario closed"&gt;
+            &lt;td class="pass"&gt;reject duplicate on player&lt;/td&gt;
+            &lt;td colspan="4" class="pass"&gt;JohnJohn&lt;/td&gt;
+            &lt;/tr&gt;&lt;tr class="scenario-detail closed-detail"&gt;&lt;td colspan="5"&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;scenario&lt;/td&gt;
+            &lt;td&gt;reject duplicate on player&lt;/td&gt;
+            &lt;td colspan="3"&gt;player&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor5"&gt;
+            &lt;td&gt;$players&amp;lt;-[5]&lt;/td&gt;
+            &lt;td colspan="4"&gt;player count&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;$skill&amp;lt;-[beginner]&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;JohnJohn&lt;/td&gt;
+            &lt;td colspan="2"&gt;if skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor7"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;reject&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;add player&lt;/td&gt;
+            &lt;td&gt;JohnJohn&lt;/td&gt;
+            &lt;td&gt;with skill&lt;/td&gt;
+            &lt;td&gt;unknown&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player count&lt;/td&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;$players-&amp;gt;[5]&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;JohnJohn&lt;/td&gt;
+            &lt;td&gt;if skill&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;$skill-&amp;gt;[beginner]&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr class="scenario closed"&gt;
+            &lt;td class="pass"&gt;reject duplicate on player&lt;/td&gt;
+            &lt;td colspan="4" class="pass"&gt;Julie&lt;/td&gt;
+            &lt;/tr&gt;&lt;tr class="scenario-detail closed-detail"&gt;&lt;td colspan="5"&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;scenario&lt;/td&gt;
+            &lt;td&gt;reject duplicate on player&lt;/td&gt;
+            &lt;td colspan="3"&gt;player&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor5"&gt;
+            &lt;td&gt;$players&amp;lt;-[5]&lt;/td&gt;
+            &lt;td colspan="4"&gt;player count&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;$skill&amp;lt;-[intermediate]&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td colspan="2"&gt;if skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor7"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;reject&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;add player&lt;/td&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td&gt;with skill&lt;/td&gt;
+            &lt;td&gt;unknown&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player count&lt;/td&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;$players-&amp;gt;[5]&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td&gt;if skill&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;$skill-&amp;gt;[intermediate]&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr class="slimRowColor8"&gt;
+            &lt;td&gt;note&lt;/td&gt;
+            &lt;td colspan="4"&gt;Make sure that all still works after the duplicate&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor8"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;ensure&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;add player&lt;/td&gt;
+            &lt;td&gt;Tina&lt;/td&gt;
+            &lt;td&gt;with skill&lt;/td&gt;
+            &lt;td&gt;advanced&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player count&lt;/td&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;6&amp;gt;$players-&amp;gt;[5]&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.TearDown"&gt;.GameManagementSuite.TearDown&lt;/a&gt; &lt;a href="GameManagementSuite.TearDown?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;Script&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor9"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;clear players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+          </content>
+        </result>
+        <result>
+          <counts>
+            <right>18</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2016-06-15T15:29:51+02:00</date>
+          <runTimeInMillis>21</runTimeInMillis>
+          <relativePageName>DynamicTableDemo</relativePageName>
+          <pageHistoryLink>GameManagementSuite.DynamicTableDemo?pageHistory&amp;resultDate=20160615152951</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.ScenarioLibrary"&gt;.GameManagementSuite.ScenarioLibrary&lt;/a&gt; &lt;a href="GameManagementSuite.ScenarioLibrary?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;scenario&lt;/td&gt;
+            &lt;td&gt;reject duplicate on player&lt;/td&gt;
+            &lt;td colspan="3"&gt;player&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor5"&gt;
+            &lt;td&gt;$players=&lt;/td&gt;
+            &lt;td colspan="4"&gt;player count&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;$skill=&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td colspan="2"&gt;if skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor7"&gt;
+            &lt;td&gt;reject&lt;/td&gt;
+            &lt;td&gt;add player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;with skill&lt;/td&gt;
+            &lt;td&gt;unknown&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player count&lt;/td&gt;
+            &lt;td colspan="3"&gt;$players&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;if skill&lt;/td&gt;
+            &lt;td&gt;$skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.SetUp"&gt;.GameManagementSuite.SetUp&lt;/a&gt; &lt;a href="GameManagementSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;GameManagementTest&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;Define table type&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;add players&lt;/td&gt;
+            &lt;td&gt;as Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;overview&lt;/td&gt;
+            &lt;td&gt;as Table&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;players with skill&lt;/td&gt;
+            &lt;td&gt;as Query&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;skills overview&lt;/td&gt;
+            &lt;td&gt;as Dynamic Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;Add Players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Player Name&lt;/td&gt;
+            &lt;td&gt;Skill&lt;/td&gt;
+            &lt;td&gt;Success?&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Steve&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Bill&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;John&lt;/td&gt;
+            &lt;td&gt;advanced&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;JohnJohn&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="4"&gt;&lt;span class="pass"&gt;skills overview&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Player Name&lt;/td&gt;
+            &lt;td&gt;beginner?&lt;/td&gt;
+            &lt;td&gt;intermediate?&lt;/td&gt;
+            &lt;td&gt;advanced?&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Steve&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;X&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;BLANK&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;BLANK&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;BLANK&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;X&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;BLANK&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Bill&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;BLANK&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;X&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;BLANK&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;John&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;BLANK&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;BLANK&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;X&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;br/&gt;&lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.TearDown"&gt;.GameManagementSuite.TearDown&lt;/a&gt; &lt;a href="GameManagementSuite.TearDown?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;Script&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor9"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;clear players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+          </content>
+        </result>
+        <result>
+          <counts>
+            <right>7</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2016-06-15T15:29:51+02:00</date>
+          <runTimeInMillis>19</runTimeInMillis>
+          <relativePageName>EchoTestPage</relativePageName>
+          <pageHistoryLink>GameManagementSuite.EchoTestPage?pageHistory&amp;resultDate=20160615152951</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.ScenarioLibrary"&gt;.GameManagementSuite.ScenarioLibrary&lt;/a&gt; &lt;a href="GameManagementSuite.ScenarioLibrary?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;scenario&lt;/td&gt;
+            &lt;td&gt;reject duplicate on player&lt;/td&gt;
+            &lt;td colspan="3"&gt;player&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor5"&gt;
+            &lt;td&gt;$players=&lt;/td&gt;
+            &lt;td colspan="4"&gt;player count&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;$skill=&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td colspan="2"&gt;if skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor7"&gt;
+            &lt;td&gt;reject&lt;/td&gt;
+            &lt;td&gt;add player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;with skill&lt;/td&gt;
+            &lt;td&gt;unknown&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player count&lt;/td&gt;
+            &lt;td colspan="3"&gt;$players&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;if skill&lt;/td&gt;
+            &lt;td&gt;$skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.SetUp"&gt;.GameManagementSuite.SetUp&lt;/a&gt; &lt;a href="GameManagementSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;GameManagementTest&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;Define table type&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;add players&lt;/td&gt;
+            &lt;td&gt;as Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;overview&lt;/td&gt;
+            &lt;td&gt;as Table&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;players with skill&lt;/td&gt;
+            &lt;td&gt;as Query&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;skills overview&lt;/td&gt;
+            &lt;td&gt;as Dynamic Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;Add Players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Player Name&lt;/td&gt;
+            &lt;td&gt;Skill&lt;/td&gt;
+            &lt;td&gt;Success?&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Steve&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Bill&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;John&lt;/td&gt;
+            &lt;td&gt;advanced&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;JohnJohn&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;&lt;span class="meta"&gt;classpath: "SupportFunctions.dll"&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;library&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;SupportFunctions.EchoSupport&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;script&lt;/td&gt;
+            &lt;td colspan="4"&gt;&lt;span class="pass"&gt;player management driver&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;$player&amp;lt;-[Julie]&lt;/td&gt;
+            &lt;td&gt;echo&lt;/td&gt;
+            &lt;td colspan="3"&gt;Julie&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;$player-&gt;[Julie]&lt;/td&gt;
+            &lt;td&gt;if skill&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;intermediate&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.TearDown"&gt;.GameManagementSuite.TearDown&lt;/a&gt; &lt;a href="GameManagementSuite.TearDown?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;Script&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor9"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;clear players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+          </content>
+        </result>
+        <result>
+          <counts>
+            <right>14</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2016-06-15T15:29:51+02:00</date>
+          <runTimeInMillis>23</runTimeInMillis>
+          <relativePageName>GameManagement</relativePageName>
+          <pageHistoryLink>GameManagementSuite.GameManagement?pageHistory&amp;resultDate=20160615152951</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.ScenarioLibrary"&gt;.GameManagementSuite.ScenarioLibrary&lt;/a&gt; &lt;a href="GameManagementSuite.ScenarioLibrary?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;scenario&lt;/td&gt;
+            &lt;td&gt;reject duplicate on player&lt;/td&gt;
+            &lt;td colspan="3"&gt;player&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor5"&gt;
+            &lt;td&gt;$players=&lt;/td&gt;
+            &lt;td colspan="4"&gt;player count&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;$skill=&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td colspan="2"&gt;if skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor7"&gt;
+            &lt;td&gt;reject&lt;/td&gt;
+            &lt;td&gt;add player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;with skill&lt;/td&gt;
+            &lt;td&gt;unknown&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player count&lt;/td&gt;
+            &lt;td colspan="3"&gt;$players&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;if skill&lt;/td&gt;
+            &lt;td&gt;$skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.SetUp"&gt;.GameManagementSuite.SetUp&lt;/a&gt; &lt;a href="GameManagementSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;GameManagementTest&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;Define table type&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;add players&lt;/td&gt;
+            &lt;td&gt;as Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;overview&lt;/td&gt;
+            &lt;td&gt;as Table&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;players with skill&lt;/td&gt;
+            &lt;td&gt;as Query&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;skills overview&lt;/td&gt;
+            &lt;td&gt;as Dynamic Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;Add Players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Player Name&lt;/td&gt;
+            &lt;td&gt;Skill&lt;/td&gt;
+            &lt;td&gt;Success?&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Steve&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Bill&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;John&lt;/td&gt;
+            &lt;td&gt;advanced&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;JohnJohn&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;library&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;player management driver&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td colspan="5"&gt;script&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor8"&gt;
+            &lt;td&gt;note&lt;/td&gt;
+            &lt;td colspan="4"&gt;Check that non-existing players are handled OK&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;Bart&lt;/td&gt;
+            &lt;td&gt;if skill&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;null&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;players with skill&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;Player&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;&lt;span class="pass"&gt;Julie&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;&lt;span class="pass"&gt;Bill&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td colspan="5"&gt;Script&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor5"&gt;
+            &lt;td&gt;$players&amp;lt;-[5]&lt;/td&gt;
+            &lt;td colspan="4"&gt;player count&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor8"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;ensure&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;remove player&lt;/td&gt;
+            &lt;td colspan="3"&gt;Steve&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player count&lt;/td&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;4&amp;lt;$players-&amp;gt;[5]&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor8"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;ensure&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;update skill for player&lt;/td&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td&gt;to&lt;/td&gt;
+            &lt;td&gt;advanced&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;players with skill&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;advanced&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;Player&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;&lt;span class="pass"&gt;John&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;&lt;span class="pass"&gt;Julie&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.TearDown"&gt;.GameManagementSuite.TearDown&lt;/a&gt; &lt;a href="GameManagementSuite.TearDown?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;Script&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor9"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;clear players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+          </content>
+        </result>
+        <result>
+          <counts>
+            <right>8</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2016-06-15T15:29:51+02:00</date>
+          <runTimeInMillis>16</runTimeInMillis>
+          <relativePageName>OverviewPage</relativePageName>
+          <pageHistoryLink>GameManagementSuite.OverviewPage?pageHistory&amp;resultDate=20160615152951</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.ScenarioLibrary"&gt;.GameManagementSuite.ScenarioLibrary&lt;/a&gt; &lt;a href="GameManagementSuite.ScenarioLibrary?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;scenario&lt;/td&gt;
+            &lt;td&gt;reject duplicate on player&lt;/td&gt;
+            &lt;td colspan="3"&gt;player&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor5"&gt;
+            &lt;td&gt;$players=&lt;/td&gt;
+            &lt;td colspan="4"&gt;player count&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;$skill=&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td colspan="2"&gt;if skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor7"&gt;
+            &lt;td&gt;reject&lt;/td&gt;
+            &lt;td&gt;add player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;with skill&lt;/td&gt;
+            &lt;td&gt;unknown&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player count&lt;/td&gt;
+            &lt;td colspan="3"&gt;$players&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;player&lt;/td&gt;
+            &lt;td&gt;@player&lt;/td&gt;
+            &lt;td&gt;if skill&lt;/td&gt;
+            &lt;td&gt;$skill&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.SetUp"&gt;.GameManagementSuite.SetUp&lt;/a&gt; &lt;a href="GameManagementSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;GameManagementTest&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="2"&gt;Define table type&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;add players&lt;/td&gt;
+            &lt;td&gt;as Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;overview&lt;/td&gt;
+            &lt;td&gt;as Table&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;players with skill&lt;/td&gt;
+            &lt;td&gt;as Query&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;skills overview&lt;/td&gt;
+            &lt;td&gt;as Dynamic Decision&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;Add Players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Player Name&lt;/td&gt;
+            &lt;td&gt;Skill&lt;/td&gt;
+            &lt;td&gt;Success?&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Steve&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Julie&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;Bill&lt;/td&gt;
+            &lt;td&gt;intermediate&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;John&lt;/td&gt;
+            &lt;td&gt;advanced&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+            &lt;td&gt;JohnJohn&lt;/td&gt;
+            &lt;td&gt;beginner&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;overview&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;&lt;td&gt;Number of players&lt;/td&gt;&lt;td&gt;&lt;span class="pass"&gt;5&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="GameManagementSuite.TearDown"&gt;.GameManagementSuite.TearDown&lt;/a&gt; &lt;a href="GameManagementSuite.TearDown?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;Script&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor9"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;clear players&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+          </content>
+        </result>
+        <executionLog>
+          <testSystem>slim:c:\fitsharp\Runner.exe</testSystem>
+          <command>C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088</command>
+          <exitCode>0</exitCode>
+          <stdOut />
+          <stdErr />
+        </executionLog>
+        <finalCounts>
+          <right>5</right>
+          <wrong>0</wrong>
+          <ignores>0</ignores>
+          <exceptions>0</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>811</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>GameManagementSuite</TestName>
+        <TestResult>Passed</TestResult>
+        <ErrorMessage>Test Pages: 5 right, 0 wrong, 0 ignores, 0 exceptions. Assertions: 61 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.811 s.</ErrorMessage>
+        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
+        <InnerTests>
+          <InnerTest>
+            <TestName>GameManagementSuite.DuplicateCheck</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 14 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.072 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>GameManagementSuite.DynamicTableDemo</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 18 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.021 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>GameManagementSuite.EchoTestPage</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 7 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.019 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>GameManagementSuite.GameManagement</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 14 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.023 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>GameManagementSuite.OverviewPage</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 8 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.016 s.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="GameManagementSuite-Run" result="Passed" testcasecount="5" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="61" start-time="2016-06-15T13:29:51.0000000Z" end-time="2016-06-15T13:29:51.8110000Z" engine-version="FitNesse v20160515">
+        <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="GameManagementSuite" fullName="GameManagementSuite" result="Passed" testcasecount="5" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="61" start-time="2016-06-15T13:29:51.0000000Z" end-time="2016-06-15T13:29:51.8110000Z">
+          <environment />
+          <settings>
+            <setting name="TestSystem" value="slim:c:\fitsharp\Runner.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Test Pages: 5 right, 0 wrong, 0 ignores, 0 exceptions. Assertions: 61 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name=".DuplicateCheck" fullname=".DuplicateCheck" result="Passed" start-time="2016-06-15T13:29:51.0000000Z" duration="0.072" asserts="14">
+              <failure>
+                <message><![CDATA[Assertions: 14 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".DynamicTableDemo" fullname=".DynamicTableDemo" result="Passed" start-time="2016-06-15T13:29:51.0000000Z" duration="0.021" asserts="18">
+              <failure>
+                <message><![CDATA[Assertions: 18 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".EchoTestPage" fullname=".EchoTestPage" result="Passed" start-time="2016-06-15T13:29:51.0000000Z" duration="0.019" asserts="7">
+              <failure>
+                <message><![CDATA[Assertions: 7 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".GameManagement" fullname=".GameManagement" result="Passed" start-time="2016-06-15T13:29:51.0000000Z" duration="0.023" asserts="14">
+              <failure>
+                <message><![CDATA[Assertions: 14 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".OverviewPage" fullname=".OverviewPage" result="Passed" start-time="2016-06-15T13:29:51.0000000Z" duration="0.016" asserts="8">
+              <failure>
+                <message><![CDATA[Assertions: 8 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+    <expectedDetails><![CDATA[<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>GameManagementSuite</title>
+    <style type="text/css">
+          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+          .pass { background-color: #AAFFAA; }
+          .fail { background-color: #FFAAAA; }
+          .diff { background-color: #FF6666; }
+          .error { background-color: #FFFFAA; }
+          .ignore { background-color: #CCCCCC; }
+          table, td { font-size: 1em; border-color:black; border-style:solid; }
+          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+          h1 { font-size: 2em; }
+          h2 { font-size: 1.5em; }
+          </style>
+  </head>
+  <body>
+    <h1 class="pass">GameManagementSuite</h1>
+    <table>
+      <tr>
+        <td>Page</td>
+        <td>Right</td>
+        <td>Wrong</td>
+        <td>Ignores</td>
+        <td>Exceptions</td>
+        <td>Run Time (ms)</td>
+      </tr>
+      <tr class="pass">
+        <td><a href="#result1">DuplicateCheck</a></td>
+        <td>14</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>72</td>
+      </tr>
+      <tr class="pass">
+        <td><a href="#result2">DynamicTableDemo</a></td>
+        <td>18</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>21</td>
+      </tr>
+      <tr class="pass">
+        <td><a href="#result3">EchoTestPage</a></td>
+        <td>7</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>19</td>
+      </tr>
+      <tr class="pass">
+        <td><a href="#result4">GameManagement</a></td>
+        <td>14</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>23</td>
+      </tr>
+      <tr class="pass">
+        <td><a href="#result5">OverviewPage</a></td>
+        <td>8</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>16</td>
+      </tr>
+    </table>
+    <h2 class="pass"><a id="#result1">DuplicateCheck</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>scenario</td>
+            <td>reject duplicate on player</td>
+            <td colspan="3">player</td>
+            </tr>
+            <tr class="slimRowColor5">
+            <td>$players=</td>
+            <td colspan="4">player count</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>$skill=</td>
+            <td>player</td>
+            <td>@player</td>
+            <td colspan="2">if skill</td>
+            </tr>
+            <tr class="slimRowColor7">
+            <td>reject</td>
+            <td>add player</td>
+            <td>@player</td>
+            <td>with skill</td>
+            <td>unknown</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player count</td>
+            <td colspan="3">$players</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player</td>
+            <td>@player</td>
+            <td>if skill</td>
+            <td>$skill</td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">GameManagementTest</span></td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="2">Define table type</td>
+            </tr>
+            <tr>
+            <td>add players</td>
+            <td>as Decision</td>
+            </tr>
+            <tr>
+            <td>overview</td>
+            <td>as Table</td>
+            </tr>
+            <tr>
+            <td>players with skill</td>
+            <td>as Query</td>
+            </tr>
+            <tr>
+            <td>skills overview</td>
+            <td>as Dynamic Decision</td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="3"><span class="pass">Add Players</span></td>
+            </tr>
+            <tr>
+            <td>Player Name</td>
+            <td>Skill</td>
+            <td>Success?</td>
+            </tr>
+            <tr>
+            <td>Steve</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Julie</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Bill</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>John</td>
+            <td>advanced</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>JohnJohn</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            </table>
+            <br/></div>
+            </div>
+            <br/>Attempting to register an already existing user should fail. Player count should remain the same, and skill levels should not be changed.<br/><br/><table>
+            <tr class="slimRowTitle">
+            <td>Script</td>
+            <td colspan="4"><span class="pass">player management driver</span></td>
+            </tr>
+            <tr class="scenario closed">
+            <td class="pass">reject duplicate on player</td>
+            <td colspan="4" class="pass">JohnJohn</td>
+            </tr><tr class="scenario-detail closed-detail"><td colspan="5"><table>
+            <tr class="slimRowTitle">
+            <td>scenario</td>
+            <td>reject duplicate on player</td>
+            <td colspan="3">player</td>
+            </tr>
+            <tr class="slimRowColor5">
+            <td>$players&lt;-[5]</td>
+            <td colspan="4">player count</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>$skill&lt;-[beginner]</td>
+            <td>player</td>
+            <td>JohnJohn</td>
+            <td colspan="2">if skill</td>
+            </tr>
+            <tr class="slimRowColor7">
+            <td><span class="pass">reject</span></td>
+            <td>add player</td>
+            <td>JohnJohn</td>
+            <td>with skill</td>
+            <td>unknown</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player count</td>
+            <td colspan="3"><span class="pass">$players-&gt;[5]</span></td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player</td>
+            <td>JohnJohn</td>
+            <td>if skill</td>
+            <td><span class="pass">$skill-&gt;[beginner]</span></td>
+            </tr>
+            </table></td></tr>
+            <tr class="scenario closed">
+            <td class="pass">reject duplicate on player</td>
+            <td colspan="4" class="pass">Julie</td>
+            </tr><tr class="scenario-detail closed-detail"><td colspan="5"><table>
+            <tr class="slimRowTitle">
+            <td>scenario</td>
+            <td>reject duplicate on player</td>
+            <td colspan="3">player</td>
+            </tr>
+            <tr class="slimRowColor5">
+            <td>$players&lt;-[5]</td>
+            <td colspan="4">player count</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>$skill&lt;-[intermediate]</td>
+            <td>player</td>
+            <td>Julie</td>
+            <td colspan="2">if skill</td>
+            </tr>
+            <tr class="slimRowColor7">
+            <td><span class="pass">reject</span></td>
+            <td>add player</td>
+            <td>Julie</td>
+            <td>with skill</td>
+            <td>unknown</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player count</td>
+            <td colspan="3"><span class="pass">$players-&gt;[5]</span></td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player</td>
+            <td>Julie</td>
+            <td>if skill</td>
+            <td><span class="pass">$skill-&gt;[intermediate]</span></td>
+            </tr>
+            </table></td></tr>
+            <tr class="slimRowColor8">
+            <td>note</td>
+            <td colspan="4">Make sure that all still works after the duplicate</td>
+            </tr>
+            <tr class="slimRowColor8">
+            <td><span class="pass">ensure</span></td>
+            <td>add player</td>
+            <td>Tina</td>
+            <td>with skill</td>
+            <td>advanced</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player count</td>
+            <td colspan="3"><span class="pass">6&gt;$players-&gt;[5]</span></td>
+            </tr>
+            </table>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.TearDown] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>Script</td>
+            </tr>
+            <tr class="slimRowColor9">
+            <td><span class="pass">clear players</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+          <h2 class="pass"><a id="#result2">DynamicTableDemo</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>scenario</td>
+            <td>reject duplicate on player</td>
+            <td colspan="3">player</td>
+            </tr>
+            <tr class="slimRowColor5">
+            <td>$players=</td>
+            <td colspan="4">player count</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>$skill=</td>
+            <td>player</td>
+            <td>@player</td>
+            <td colspan="2">if skill</td>
+            </tr>
+            <tr class="slimRowColor7">
+            <td>reject</td>
+            <td>add player</td>
+            <td>@player</td>
+            <td>with skill</td>
+            <td>unknown</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player count</td>
+            <td colspan="3">$players</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player</td>
+            <td>@player</td>
+            <td>if skill</td>
+            <td>$skill</td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">GameManagementTest</span></td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="2">Define table type</td>
+            </tr>
+            <tr>
+            <td>add players</td>
+            <td>as Decision</td>
+            </tr>
+            <tr>
+            <td>overview</td>
+            <td>as Table</td>
+            </tr>
+            <tr>
+            <td>players with skill</td>
+            <td>as Query</td>
+            </tr>
+            <tr>
+            <td>skills overview</td>
+            <td>as Dynamic Decision</td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="3"><span class="pass">Add Players</span></td>
+            </tr>
+            <tr>
+            <td>Player Name</td>
+            <td>Skill</td>
+            <td>Success?</td>
+            </tr>
+            <tr>
+            <td>Steve</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Julie</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Bill</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>John</td>
+            <td>advanced</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>JohnJohn</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            </table>
+            <br/></div>
+            </div>
+            <br/><table>
+            <tr>
+            <td colspan="4"><span class="pass">skills overview</span></td>
+            </tr>
+            <tr>
+            <td>Player Name</td>
+            <td>beginner?</td>
+            <td>intermediate?</td>
+            <td>advanced?</td>
+            </tr>
+            <tr>
+            <td>Steve</td>
+            <td><span class="pass">X</span></td>
+            <td><span class="pass">BLANK</span></td>
+            <td><span class="pass">BLANK</span></td>
+            </tr>
+            <tr>
+            <td>Julie</td>
+            <td><span class="pass">BLANK</span></td>
+            <td><span class="pass">X</span></td>
+            <td><span class="pass">BLANK</span></td>
+            </tr>
+            <tr>
+            <td>Bill</td>
+            <td><span class="pass">BLANK</span></td>
+            <td><span class="pass">X</span></td>
+            <td><span class="pass">BLANK</span></td>
+            </tr>
+            <tr>
+            <td>John</td>
+            <td><span class="pass">BLANK</span></td>
+            <td><span class="pass">BLANK</span></td>
+            <td><span class="pass">X</span></td>
+            </tr>
+            </table>
+            <br/><br/><div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.TearDown] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>Script</td>
+            </tr>
+            <tr class="slimRowColor9">
+            <td><span class="pass">clear players</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+          <h2 class="pass"><a id="#result3">EchoTestPage</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>scenario</td>
+            <td>reject duplicate on player</td>
+            <td colspan="3">player</td>
+            </tr>
+            <tr class="slimRowColor5">
+            <td>$players=</td>
+            <td colspan="4">player count</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>$skill=</td>
+            <td>player</td>
+            <td>@player</td>
+            <td colspan="2">if skill</td>
+            </tr>
+            <tr class="slimRowColor7">
+            <td>reject</td>
+            <td>add player</td>
+            <td>@player</td>
+            <td>with skill</td>
+            <td>unknown</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player count</td>
+            <td colspan="3">$players</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player</td>
+            <td>@player</td>
+            <td>if skill</td>
+            <td>$skill</td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">GameManagementTest</span></td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="2">Define table type</td>
+            </tr>
+            <tr>
+            <td>add players</td>
+            <td>as Decision</td>
+            </tr>
+            <tr>
+            <td>overview</td>
+            <td>as Table</td>
+            </tr>
+            <tr>
+            <td>players with skill</td>
+            <td>as Query</td>
+            </tr>
+            <tr>
+            <td>skills overview</td>
+            <td>as Dynamic Decision</td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="3"><span class="pass">Add Players</span></td>
+            </tr>
+            <tr>
+            <td>Player Name</td>
+            <td>Skill</td>
+            <td>Success?</td>
+            </tr>
+            <tr>
+            <td>Steve</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Julie</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Bill</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>John</td>
+            <td>advanced</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>JohnJohn</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            </table>
+            <br/></div>
+            </div>
+            <br/><span class="meta">classpath: "SupportFunctions.dll"</span><br/><br/><table>
+            <tr class="slimRowTitle">
+            <td>library</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">SupportFunctions.EchoSupport</span></td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr class="slimRowTitle">
+            <td>script</td>
+            <td colspan="4"><span class="pass">player management driver</span></td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>$player&lt;-[Julie]</td>
+            <td>echo</td>
+            <td colspan="3">Julie</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player</td>
+            <td>$player->[Julie]</td>
+            <td>if skill</td>
+            <td><span class="pass">intermediate</span></td>
+            </tr>
+            </table>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.TearDown] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>Script</td>
+            </tr>
+            <tr class="slimRowColor9">
+            <td><span class="pass">clear players</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+          <h2 class="pass"><a id="#result4">GameManagement</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>scenario</td>
+            <td>reject duplicate on player</td>
+            <td colspan="3">player</td>
+            </tr>
+            <tr class="slimRowColor5">
+            <td>$players=</td>
+            <td colspan="4">player count</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>$skill=</td>
+            <td>player</td>
+            <td>@player</td>
+            <td colspan="2">if skill</td>
+            </tr>
+            <tr class="slimRowColor7">
+            <td>reject</td>
+            <td>add player</td>
+            <td>@player</td>
+            <td>with skill</td>
+            <td>unknown</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player count</td>
+            <td colspan="3">$players</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player</td>
+            <td>@player</td>
+            <td>if skill</td>
+            <td>$skill</td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">GameManagementTest</span></td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="2">Define table type</td>
+            </tr>
+            <tr>
+            <td>add players</td>
+            <td>as Decision</td>
+            </tr>
+            <tr>
+            <td>overview</td>
+            <td>as Table</td>
+            </tr>
+            <tr>
+            <td>players with skill</td>
+            <td>as Query</td>
+            </tr>
+            <tr>
+            <td>skills overview</td>
+            <td>as Dynamic Decision</td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="3"><span class="pass">Add Players</span></td>
+            </tr>
+            <tr>
+            <td>Player Name</td>
+            <td>Skill</td>
+            <td>Success?</td>
+            </tr>
+            <tr>
+            <td>Steve</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Julie</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Bill</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>John</td>
+            <td>advanced</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>JohnJohn</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            </table>
+            <br/></div>
+            </div>
+            <br/><table>
+            <tr class="slimRowTitle">
+            <td>library</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">player management driver</span></td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr class="slimRowTitle">
+            <td colspan="5">script</td>
+            </tr>
+            <tr class="slimRowColor8">
+            <td>note</td>
+            <td colspan="4">Check that non-existing players are handled OK</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player</td>
+            <td>Bart</td>
+            <td>if skill</td>
+            <td><span class="pass">null</span></td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td><span class="pass">players with skill</span></td>
+            <td>intermediate</td>
+            </tr>
+            <tr>
+            <td colspan="2">Player</td>
+            </tr>
+            <tr>
+            <td colspan="2"><span class="pass">Julie</span></td>
+            </tr>
+            <tr>
+            <td colspan="2"><span class="pass">Bill</span></td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr class="slimRowTitle">
+            <td colspan="5">Script</td>
+            </tr>
+            <tr class="slimRowColor5">
+            <td>$players&lt;-[5]</td>
+            <td colspan="4">player count</td>
+            </tr>
+            <tr class="slimRowColor8">
+            <td><span class="pass">ensure</span></td>
+            <td>remove player</td>
+            <td colspan="3">Steve</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player count</td>
+            <td colspan="3"><span class="pass">4&lt;$players-&gt;[5]</span></td>
+            </tr>
+            <tr class="slimRowColor8">
+            <td><span class="pass">ensure</span></td>
+            <td>update skill for player</td>
+            <td>Julie</td>
+            <td>to</td>
+            <td>advanced</td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td><span class="pass">players with skill</span></td>
+            <td>advanced</td>
+            </tr>
+            <tr>
+            <td colspan="2">Player</td>
+            </tr>
+            <tr>
+            <td colspan="2"><span class="pass">John</span></td>
+            </tr>
+            <tr>
+            <td colspan="2"><span class="pass">Julie</span></td>
+            </tr>
+            </table>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.TearDown] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>Script</td>
+            </tr>
+            <tr class="slimRowColor9">
+            <td><span class="pass">clear players</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+          <h2 class="pass"><a id="#result5">OverviewPage</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>scenario</td>
+            <td>reject duplicate on player</td>
+            <td colspan="3">player</td>
+            </tr>
+            <tr class="slimRowColor5">
+            <td>$players=</td>
+            <td colspan="4">player count</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>$skill=</td>
+            <td>player</td>
+            <td>@player</td>
+            <td colspan="2">if skill</td>
+            </tr>
+            <tr class="slimRowColor7">
+            <td>reject</td>
+            <td>add player</td>
+            <td>@player</td>
+            <td>with skill</td>
+            <td>unknown</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player count</td>
+            <td colspan="3">$players</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>player</td>
+            <td>@player</td>
+            <td>if skill</td>
+            <td>$skill</td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">GameManagementTest</span></td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="2">Define table type</td>
+            </tr>
+            <tr>
+            <td>add players</td>
+            <td>as Decision</td>
+            </tr>
+            <tr>
+            <td>overview</td>
+            <td>as Table</td>
+            </tr>
+            <tr>
+            <td>players with skill</td>
+            <td>as Query</td>
+            </tr>
+            <tr>
+            <td>skills overview</td>
+            <td>as Dynamic Decision</td>
+            </tr>
+            </table>
+            <br/><table>
+            <tr>
+            <td colspan="3"><span class="pass">Add Players</span></td>
+            </tr>
+            <tr>
+            <td>Player Name</td>
+            <td>Skill</td>
+            <td>Success?</td>
+            </tr>
+            <tr>
+            <td>Steve</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Julie</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>Bill</td>
+            <td>intermediate</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>John</td>
+            <td>advanced</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            <tr>
+            <td>JohnJohn</td>
+            <td>beginner</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            </table>
+            <br/></div>
+            </div>
+            <br/><table>
+            <tr>
+            <td><span class="pass">overview</span></td>
+            </tr>
+            <tr><td>Number of players</td><td><span class="pass">5</span></td></tr></table>
+            <div class="collapsible closed">
+            <p class="title">[Included page: GameManagementSuite.TearDown] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>Script</td>
+            </tr>
+            <tr class="slimRowColor9">
+            <td><span class="pass">clear players</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+          </body>
+</html>]]></expectedDetails>
+  </testcase>
+  <!--
+    <testcase name="SmallSuite_20111026">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20111026</FitNesseVersion>
+        <rootPath>FitSharpDemoSuite</rootPath>
+        <result>
+          <counts>
+            <right>0</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>66</exceptions>
+          </counts>
+          <runTimeInMillis>356</runTimeInMillis>
+          <relativePageName>BuyBeer</relativePageName>
+          <pageHistoryLink>FitSharpDemoSuite.BuyBeer?pageHistory&amp;resultDate=20121105110759&amp;format=xml</pageHistoryLink>
+        </result>
+        <result>
+          <counts>
+            <right>6</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <runTimeInMillis>66</runTimeInMillis>
+          <relativePageName>BuyMilk</relativePageName>
+          <pageHistoryLink>FitSharpDemoSuite.BuyMilk?pageHistory&amp;resultDate=20121105110759&amp;format=xml</pageHistoryLink>
+        </result>
+        <finalCounts>
+          <right>1</right>
+          <wrong>0</wrong>
+          <ignores>0</ignores>
+          <exceptions>1</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>1342</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>FitSharpDemoSuite</TestName>
+        <TestResult>Error</TestResult>
+        <ErrorMessage>Test results: 1 right, 0 wrong, 0 ignores and 1 exceptions.</ErrorMessage>
+        <InnerTests>
+          <InnerTest>
+            <TestName>FitSharpDemoSuite.BuyBeer</TestName>
+            <TestResult>Error</TestResult>
+            <ErrorMessage>Test case results: 0 right, 0 wrong, 0 ignores and 66 exceptions.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>FitSharpDemoSuite.BuyMilk</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Test case results: 6 right, 0 wrong, 0 ignores and 0 exceptions.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+  </testcase> -->
+  <testcase name="PassFailExceptionSuite_20160515">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20160515</FitNesseVersion>
+        <rootPath>FeatureDemoSuite.PassFailExceptionSuite</rootPath>
+        <result>
+          <counts>
+            <right>0</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2016-06-16T10:14:31+02:00</date>
+          <runTimeInMillis>23</runTimeInMillis>
+          <relativePageName>EmptyTest</relativePageName>
+          <pageHistoryLink>FeatureDemoSuite.PassFailExceptionSuite.EmptyTest?pageHistory&amp;resultDate=20160616101431</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp"&gt;.FeatureDemoSuite.PassFailExceptionSuite.SetUp&lt;/a&gt; &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;SupportFunctions&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;Ignore everything here&lt;br/&gt;
+          </content>
+        </result>
+        <result>
+          <counts>
+            <right>0</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>1</exceptions>
+          </counts>
+          <date>2016-06-16T10:14:31+02:00</date>
+          <runTimeInMillis>30</runTimeInMillis>
+          <relativePageName>ExceptionTest</relativePageName>
+          <pageHistoryLink>FeatureDemoSuite.PassFailExceptionSuite.ExceptionTest?pageHistory&amp;resultDate=20160616101431</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp"&gt;.FeatureDemoSuite.PassFailExceptionSuite.SetUp&lt;/a&gt; &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;SupportFunctions&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;script&lt;/td&gt;
+            &lt;td&gt;echoq support &lt;span class="error"&gt;Could not find class EchoqSupport&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;
+          </content>
+        </result>
+        <result>
+          <counts>
+            <right>0</right>
+            <wrong>1</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2016-06-16T10:14:31+02:00</date>
+          <runTimeInMillis>15</runTimeInMillis>
+          <relativePageName>FailingTest</relativePageName>
+          <pageHistoryLink>FeatureDemoSuite.PassFailExceptionSuite.FailingTest?pageHistory&amp;resultDate=20160616101431</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp"&gt;.FeatureDemoSuite.PassFailExceptionSuite.SetUp&lt;/a&gt; &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;SupportFunctions&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;script&lt;/td&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;echo support&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;echo&lt;/td&gt;
+            &lt;td&gt;true&lt;/td&gt;
+            &lt;td&gt;[&lt;span class="diff"&gt;tru&lt;/span&gt;e] &lt;span class="fail"&gt;expected [&lt;/span&gt;&lt;span class="diff"&gt;fals&lt;/span&gt;&lt;span class="fail"&gt;e]&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+          </content>
+        </result>
+        <result>
+          <counts>
+            <right>0</right>
+            <wrong>0</wrong>
+            <ignores>1</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2016-06-16T10:14:31+02:00</date>
+          <runTimeInMillis>5</runTimeInMillis>
+          <relativePageName>IgnoreTest</relativePageName>
+          <pageHistoryLink>FeatureDemoSuite.PassFailExceptionSuite.IgnoreTest?pageHistory&amp;resultDate=20160616101431</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp"&gt;.FeatureDemoSuite.PassFailExceptionSuite.SetUp&lt;/a&gt; &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;SupportFunctions&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;script&lt;/td&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;Echo Support&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;echo&lt;/td&gt;
+            &lt;td&gt;hello&lt;/td&gt;
+            &lt;td&gt;&lt;span class="ignore"&gt;hello&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+          </content>
+        </result>
+        <result>
+          <counts>
+            <right>1</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2016-06-16T10:14:31+02:00</date>
+          <runTimeInMillis>5</runTimeInMillis>
+          <relativePageName>PassingTest</relativePageName>
+          <pageHistoryLink>FeatureDemoSuite.PassFailExceptionSuite.PassingTest?pageHistory&amp;resultDate=20160616101431</pageHistoryLink>
+          <content>
+            &lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+            &lt;p class="title"&gt;Included page: &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp"&gt;.FeatureDemoSuite.PassFailExceptionSuite.SetUp&lt;/a&gt; &lt;a href="FeatureDemoSuite.PassFailExceptionSuite.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+            &lt;div&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;import&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;SupportFunctions&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;br/&gt;&lt;table&gt;
+            &lt;tr class="slimRowTitle"&gt;
+            &lt;td&gt;script&lt;/td&gt;
+            &lt;td colspan="3"&gt;&lt;span class="pass"&gt;echo support&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="slimRowColor0"&gt;
+            &lt;td&gt;check&lt;/td&gt;
+            &lt;td&gt;echo&lt;/td&gt;
+            &lt;td&gt;true&lt;/td&gt;
+            &lt;td&gt;&lt;span class="pass"&gt;true&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/table&gt;
+          </content>
+        </result>
+        <executionLog>
+          <testSystem>slim:c:\fitsharp\Runner.exe</testSystem>
+          <command>C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088</command>
+          <exitCode>0</exitCode>
+          <stdOut />
+          <stdErr />
+        </executionLog>
+        <finalCounts>
+          <right>1</right>
+          <wrong>1</wrong>
+          <ignores>2</ignores>
+          <exceptions>1</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>694</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>FeatureDemoSuite.PassFailExceptionSuite</TestName>
+        <TestResult>Failed</TestResult>
+        <ErrorMessage>Test Pages: 1 right, 1 wrong, 2 ignores, 1 exceptions. Assertions: 1 right, 1 wrong, 1 ignores, 1 exceptions. Run time: 0.694 s.</ErrorMessage>
+        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
+        <InnerTests>
+          <InnerTest>
+            <TestName>FeatureDemoSuite.PassFailExceptionSuite.EmptyTest</TestName>
+            <TestResult>Inconclusive</TestResult>
+            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.023 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>FeatureDemoSuite.PassFailExceptionSuite.ExceptionTest</TestName>
+            <TestResult>Error</TestResult>
+            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 1 exceptions. Run time: 0.03 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>FeatureDemoSuite.PassFailExceptionSuite.FailingTest</TestName>
+            <TestResult>Failed</TestResult>
+            <ErrorMessage>Assertions: 0 right, 1 wrong, 0 ignores, 0 exceptions. Run time: 0.015 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>FeatureDemoSuite.PassFailExceptionSuite.IgnoreTest</TestName>
+            <TestResult>Inconclusive</TestResult>
+            <ErrorMessage>Assertions: 0 right, 0 wrong, 1 ignores, 0 exceptions. Run time: 0.005 s.</ErrorMessage>
+          </InnerTest>
+          <InnerTest>
+            <TestName>FeatureDemoSuite.PassFailExceptionSuite.PassingTest</TestName>
+            <TestResult>Passed</TestResult>
+            <ErrorMessage>Assertions: 1 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.005 s.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="FeatureDemoSuite.PassFailExceptionSuite-Run" result="Failed" testcasecount="5" total="5" passed="1" failed="2" inconclusive="2" skipped="0" asserts="4" start-time="2016-06-16T08:14:31.0000000Z" end-time="2016-06-16T08:14:31.6940000Z" engine-version="FitNesse v20160515">
+        <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="FeatureDemoSuite.PassFailExceptionSuite" fullName="FeatureDemoSuite.PassFailExceptionSuite" result="Failed" testcasecount="5" total="5" passed="1" failed="2" inconclusive="2" skipped="0" asserts="4" start-time="2016-06-16T08:14:31.0000000Z" end-time="2016-06-16T08:14:31.6940000Z">
+          <environment />
+          <settings>
+            <setting name="TestSystem" value="slim:c:\fitsharp\Runner.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Test Pages: 1 right, 1 wrong, 2 ignores, 1 exceptions. Assertions: 1 right, 1 wrong, 1 ignores, 1 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name=".EmptyTest" fullname=".EmptyTest" result="Inconclusive" start-time="2016-06-16T08:14:31.0000000Z" duration="0.023" asserts="0">
+              <failure>
+                <message><![CDATA[Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".ExceptionTest" fullname=".ExceptionTest" result="Failed" start-time="2016-06-16T08:14:31.0000000Z" duration="0.03" asserts="1">
+              <failure>
+                <message><![CDATA[Assertions: 0 right, 0 wrong, 0 ignores, 1 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".FailingTest" fullname=".FailingTest" result="Failed" start-time="2016-06-16T08:14:31.0000000Z" duration="0.015" asserts="1">
+              <failure>
+                <message><![CDATA[Assertions: 0 right, 1 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".IgnoreTest" fullname=".IgnoreTest" result="Inconclusive" start-time="2016-06-16T08:14:31.0000000Z" duration="0.005" asserts="1">
+              <failure>
+                <message><![CDATA[Assertions: 0 right, 0 wrong, 1 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+            <test-case name=".PassingTest" fullname=".PassingTest" result="Passed" start-time="2016-06-16T08:14:31.0000000Z" duration="0.005" asserts="1">
+              <failure>
+                <message><![CDATA[Assertions: 1 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+    <expectedDetails><![CDATA[<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>FeatureDemoSuite.PassFailExceptionSuite</title>
+    <style type="text/css">
+          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+          .pass { background-color: #AAFFAA; }
+          .fail { background-color: #FFAAAA; }
+          .diff { background-color: #FF6666; }
+          .error { background-color: #FFFFAA; }
+          .ignore { background-color: #CCCCCC; }
+          table, td { font-size: 1em; border-color:black; border-style:solid; }
+          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+          h1 { font-size: 2em; }
+          h2 { font-size: 1.5em; }
+          </style>
+  </head>
+  <body>
+    <h1 class="fail">FeatureDemoSuite.PassFailExceptionSuite</h1>
+    <table>
+      <tr>
+        <td>Page</td>
+        <td>Right</td>
+        <td>Wrong</td>
+        <td>Ignores</td>
+        <td>Exceptions</td>
+        <td>Run Time (ms)</td>
+      </tr>
+      <tr class="ignore">
+        <td><a href="#result1">EmptyTest</a></td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>23</td>
+      </tr>
+      <tr class="error">
+        <td><a href="#result2">ExceptionTest</a></td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>30</td>
+      </tr>
+      <tr class="fail">
+        <td><a href="#result3">FailingTest</a></td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>15</td>
+      </tr>
+      <tr class="ignore">
+        <td><a href="#result4">IgnoreTest</a></td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>5</td>
+      </tr>
+      <tr class="pass">
+        <td><a href="#result5">PassingTest</a></td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>5</td>
+      </tr>
+    </table>
+    <h2 class="ignore"><a id="#result1">EmptyTest</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">SupportFunctions</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <br/>Ignore everything here<br/>
+          <h2 class="error"><a id="#result2">ExceptionTest</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">SupportFunctions</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <br/><table>
+            <tr class="slimRowTitle">
+            <td>script</td>
+            <td>echoq support <span class="error">Could not find class EchoqSupport</span></td>
+            </tr>
+            </table>
+            <br/>
+          <h2 class="fail"><a id="#result3">FailingTest</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">SupportFunctions</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <br/><table>
+            <tr class="slimRowTitle">
+            <td>script</td>
+            <td colspan="3"><span class="pass">echo support</span></td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>echo</td>
+            <td>true</td>
+            <td>[<span class="diff">tru</span>e] <span class="fail">expected [</span><span class="diff">fals</span><span class="fail">e]</span></td>
+            </tr>
+            </table>
+          <h2 class="ignore"><a id="#result4">IgnoreTest</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">SupportFunctions</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <br/><table>
+            <tr class="slimRowTitle">
+            <td>script</td>
+            <td colspan="3"><span class="pass">Echo Support</span></td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>echo</td>
+            <td>hello</td>
+            <td><span class="ignore">hello</span></td>
+            </tr>
+            </table>
+          <h2 class="pass"><a id="#result5">PassingTest</a></h2>
+            <div class="collapsible closed">
+            <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
+            <div><table>
+            <tr class="slimRowTitle">
+            <td>import</td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td><span class="pass">SupportFunctions</span></td>
+            </tr>
+            </table>
+            </div>
+            </div>
+            <br/><table>
+            <tr class="slimRowTitle">
+            <td>script</td>
+            <td colspan="3"><span class="pass">echo support</span></td>
+            </tr>
+            <tr class="slimRowColor0">
+            <td>check</td>
+            <td>echo</td>
+            <td>true</td>
+            <td><span class="pass">true</span></td>
+            </tr>
+            </table>
+          </body>
+</html>]]></expectedDetails>
+  </testcase>
+  <testcase name="QoSTest_Failed_20161116">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20161106</FitNesseVersion>
+        <rootPath>SeleniumSuite.ProjectDemos.QosMockup</rootPath>
+        <result>
+          <counts>
+            <right>2</right>
+            <wrong>2</wrong>
+            <ignores>0</ignores>
+            <exceptions>1</exceptions>
+          </counts>
+          <date>2017-05-13T08:31:52+02:00</date>
+          <runTimeInMillis>3306</runTimeInMillis>
+          <content>&lt;br/&gt;&lt;span class="meta"&gt;variable defined: TEST_RUNNER=${FITSHARP_HOME}\RunnerW.exe&lt;/span&gt;
+&lt;br/&gt;&lt;span class="meta"&gt;variable defined: SLIM_PORT=8085&lt;/span&gt;
+&lt;br/&gt;&lt;br/&gt;&lt;table&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;import&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;SeleniumFixture&lt;/span&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;br/&gt;&lt;table&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;Script&lt;/td&gt;
+		&lt;td colspan="2"&gt;&lt;span class="pass"&gt;selenium&lt;/span&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor6"&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;set browser&lt;/span&gt;&lt;/td&gt;
+		&lt;td colspan="2"&gt;chrome&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor9"&gt;
+		&lt;td&gt;set timeout&lt;/td&gt;
+		&lt;td&gt;5&lt;/td&gt;
+		&lt;td&gt;seconds&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor8"&gt;
+		&lt;td&gt;note&lt;/td&gt;
+		&lt;td&gt;checking for the element on the main page didn't work - menu item not visible&lt;/td&gt;
+		&lt;td&gt;//text()[contains(.,'QosDashboard')]/ancestor::*[self::a]&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor4"&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;open&lt;/span&gt;&lt;/td&gt;
+		&lt;td colspan="2"&gt;http://localhost/re_qos.html&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor8"&gt;
+		&lt;td&gt;&lt;span class="fail"&gt;ensure&lt;/span&gt;&lt;/td&gt;
+		&lt;td&gt;text exists&lt;/td&gt;
+		&lt;td&gt;Quality Of Service Dashboard&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;br/&gt;&lt;table&gt;
+	&lt;tr class="exception closed"&gt;
+		&lt;td class="error"&gt;&lt;span class="pass"&gt;query:extract table values&lt;/span&gt;&lt;/td&gt;
+		&lt;td colspan="4" class="error"&gt;xpath://table[@class='rgMasterTable' and contains(@id,'Ifci')]&lt;/td&gt;
+	&lt;/tr&gt;&lt;tr class="exception-detail closed-detail"&gt;&lt;td colspan="5"&gt;&lt;pre&gt;__EXCEPTION__:System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---&amp;gt; System.NullReferenceException: Object reference not set to an instance of an object.
+   at SeleniumFixture.ExtractTableValues.DoExtraction()
+   at SeleniumFixture.ExtractTableValues.Query()
+   --- End of inner exception stack trace ---
+   at fitSharp.Machine.Model.TypedValue.ThrowExceptionIfNotValid()
+   at fitSharp.Slim.Operators.InvokeInstructionBase.InvokeMember(Tree`1 parameters, Int32 memberIndex)
+   at fitSharp.Slim.Operators.ExecuteCall.ExecuteOperation(Tree`1 parameters)
+   at fitSharp.Slim.Operators.InvokeInstructionBase.Invoke(TypedValue instance, MemberName memberName, Tree`1 parameters)&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;Component Name&lt;/td&gt;
+		&lt;td&gt;Health&lt;/td&gt;
+		&lt;td&gt;Performance&lt;/td&gt;
+		&lt;td&gt;Message&lt;/td&gt;
+		&lt;td&gt;Timestamp (UTC)&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;DevelopmentPortalSandbox&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;=~/\[OK\].*\[OK\]/&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;CalculationServices&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;=~/Calculation Components are running/&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Streaming Engine&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;Component is performing well&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;Packaging&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;No health records available; No performance records available&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Data Service&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;Data Service not healthy. Failing: Sync; Not implemented&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;Web Services&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;=~/Web Services not healthy\. Failing: UnitConversion;/&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Core Services&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;=~/Core Services healthy/&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;Identity Services&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;Core Services healthy; Foundation component failed: MyComponent (2147483647ms)&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Workflow Service&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;The service is running. Not implemented&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;Collector Service&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;Collector service: localhost returned a status of 0 Not implemented&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Detector Service&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;No Errors Reported; Not implemented&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;Routing Service&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;The service is running. Not implemented&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Vetting Service&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;The service is running. Not implemented&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;Notification&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;No health records available; No performance records available&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Notification Service&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;Notification server available; No performance records available&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;Test1&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;Service is running. Performance OK.&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Test2&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;Service is running. Performance OK.&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;Subscriber Service&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;No health records available; No performance records available&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Workflow Engine&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;=~/0 of \d+ workflow\(s\) are not running\. No performance records available/&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;Test3&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;Service is running. Performance OK.&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;Test4&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;-1&amp;lt;=_&amp;lt;=100&lt;/td&gt;
+		&lt;td&gt;Service is running. Performance OK.&lt;/td&gt;
+		&lt;td&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;br/&gt;&lt;table&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;Script&lt;/td&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;selenium&lt;/span&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor4"&gt;
+		&lt;td colspan="2"&gt;&lt;span class="fail"&gt;close&lt;/span&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+</content>
+          <relativePageName>QosMockup</relativePageName>
+          <instructions>
+            <instructionResult>
+              <instruction>{id='import_0_0', instruction='import', path='SeleniumFixture'}</instruction>
+              <slimResult>pass(SeleniumFixture)</slimResult>
+              <expectation>
+                <status>pass</status>
+                <instructionId>import_0_0</instructionId>
+                <col>0</col>
+                <row>1</row>
+                <type>ImportExpectation</type>
+                <evaluationMessage>SeleniumFixture</evaluationMessage>
+              </expectation>
+            </instructionResult>
+            <instructionResult>
+              <instruction>{id='scriptTable_1_0', instruction='make', instanceName='scriptTableActor', className='selenium', args=[]}</instruction>
+              <slimResult>pass(selenium)</slimResult>
+              <expectation>
+                <status>pass</status>
+                <instructionId>scriptTable_1_0</instructionId>
+                <col>1</col>
+                <row>0</row>
+                <type>ConstructionExpectation</type>
+                <evaluationMessage>selenium</evaluationMessage>
+              </expectation>
+            </instructionResult>
+            <instructionResult>
+              <instruction>{id='scriptTable_1_1', instruction='call', instanceName='scriptTableActor', methodName='setBrowser', args=[chrome]}</instruction>
+              <slimResult>pass()</slimResult>
+              <expectation>
+                <status>pass</status>
+                <instructionId>scriptTable_1_1</instructionId>
+                <col>0</col>
+                <row>1</row>
+                <type>ScriptActionExpectation</type>
+              </expectation>
+            </instructionResult>
+            <instructionResult>
+              <instruction>{id='scriptTable_1_2', instruction='call', instanceName='scriptTableActor', methodName='setTimeoutSeconds', args=[5]}</instruction>
+              <slimResult>
+              </slimResult>
+              <expectation>
+                <instructionId>scriptTable_1_2</instructionId>
+                <col>0</col>
+                <row>2</row>
+                <type>ScriptActionExpectation</type>
+              </expectation>
+            </instructionResult>
+            <instructionResult>
+              <instruction>{id='scriptTable_1_3', instruction='call', instanceName='scriptTableActor', methodName='open', args=[http://localhost/re_qos.html]}</instruction>
+              <slimResult>pass()</slimResult>
+              <expectation>
+                <status>pass</status>
+                <instructionId>scriptTable_1_3</instructionId>
+                <col>0</col>
+                <row>4</row>
+                <type>ScriptActionExpectation</type>
+              </expectation>
+            </instructionResult>
+            <instructionResult>
+              <instruction>{id='scriptTable_1_4', instruction='call', instanceName='scriptTableActor', methodName='textExists', args=[Quality Of Service Dashboard]}</instruction>
+              <slimResult>fail()</slimResult>
+              <expectation>
+                <status>fail</status>
+                <instructionId>scriptTable_1_4</instructionId>
+                <col>0</col>
+                <row>5</row>
+                <type>EnsureActionExpectation</type>
+              </expectation>
+            </instructionResult>
+            <instructionResult>
+              <instruction>{id='queryTable_2_0', instruction='make', instanceName='queryTable_2', className='ExtractTableValues', args=[xpath://table[@class='rgMasterTable' and contains(@id,'Ifci')]]}</instruction>
+              <slimResult>pass(query:extract table values)</slimResult>
+              <expectation>
+                <status>pass</status>
+                <instructionId>queryTable_2_0</instructionId>
+                <col>0</col>
+                <row>0</row>
+                <type>ConstructionExpectation</type>
+                <evaluationMessage>query:extract table values</evaluationMessage>
+              </expectation>
+            </instructionResult>
+            <instructionResult>
+              <instruction>{id='queryTable_2_2', instruction='call', instanceName='queryTable_2', methodName='query', args=[]}</instruction>
+              <slimResult>
+              </slimResult>
+              <expectation>
+                <status>error</status>
+                <instructionId>queryTable_2_2</instructionId>
+                <type>QueryTableExpectation</type>
+              </expectation>
+            </instructionResult>
+            <instructionResult>
+              <instruction>{id='scriptTable_3_0', instruction='make', instanceName='scriptTableActor', className='selenium', args=[]}</instruction>
+              <slimResult>pass(selenium)</slimResult>
+              <expectation>
+                <status>pass</status>
+                <instructionId>scriptTable_3_0</instructionId>
+                <col>1</col>
+                <row>0</row>
+                <type>ConstructionExpectation</type>
+                <evaluationMessage>selenium</evaluationMessage>
+              </expectation>
+            </instructionResult>
+            <instructionResult>
+              <instruction>{id='scriptTable_3_1', instruction='call', instanceName='scriptTableActor', methodName='close', args=[]}</instruction>
+              <slimResult>fail()</slimResult>
+              <expectation>
+                <status>fail</status>
+                <instructionId>scriptTable_3_1</instructionId>
+                <col>0</col>
+                <row>1</row>
+                <type>ScriptActionExpectation</type>
+              </expectation>
+            </instructionResult>
+          </instructions>
+        </result>
+        <executionLog>
+          <testSystem>slim:E:\Apps\FitNesse\FitSharp40\RunnerW.exe</testSystem>
+          <command>E:\Apps\FitNesse\FitSharp40\RunnerW.exe -r fitsharp.Slim.Service.Runner,E:\Apps\FitNesse\FitSharp40\fitsharp.dll "SeleniumFixture\SeleniumFixture.dll";"SupportFunctions\SupportFunctions.dll" 8085</command>
+          <exitCode>0</exitCode>
+          <stdOut>
+          </stdOut>
+          <stdErr>
+          </stdErr>
+        </executionLog>
+        <finalCounts>
+          <right>0</right>
+          <wrong>1</wrong>
+          <ignores>0</ignores>
+          <exceptions>0</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>37143</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>SeleniumSuite.ProjectDemos.QosMockup</TestName>
+        <TestResult>Failed</TestResult>
+        <ErrorMessage>Test Pages: 0 right, 1 wrong, 0 ignores, 0 exceptions. Assertions: 2 right, 2 wrong, 0 ignores, 1 exceptions. Run time: 37.143 s.</ErrorMessage>
+        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
+        <InnerTests>
+          <InnerTest>
+            <TestName>QosMockup</TestName>
+            <TestResult>Failed</TestResult>
+            <ErrorMessage>Assertions: 2 right, 2 wrong, 0 ignores, 1 exceptions. Run time: 3.306 s.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="SeleniumSuite.ProjectDemos.QosMockup-Run" result="Failed" testcasecount="1" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="5" start-time="2017-05-13T06:31:52.0000000Z" end-time="2017-05-13T06:32:29.1430000Z" engine-version="FitNesse v20161106">
+        <command-line><![CDATA[E:\Apps\FitNesse\FitSharp40\RunnerW.exe -r fitsharp.Slim.Service.Runner,E:\Apps\FitNesse\FitSharp40\fitsharp.dll "SeleniumFixture\SeleniumFixture.dll";"SupportFunctions\SupportFunctions.dll" 8085]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="SeleniumSuite.ProjectDemos.QosMockup" fullName="SeleniumSuite.ProjectDemos.QosMockup" result="Failed" testcasecount="1" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="5" start-time="2017-05-13T06:31:52.0000000Z" end-time="2017-05-13T06:32:29.1430000Z">
+          <environment />
+          <settings>
+            <setting name="TestSystem" value="slim:E:\Apps\FitNesse\FitSharp40\RunnerW.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Test Pages: 0 right, 1 wrong, 0 ignores, 0 exceptions. Assertions: 2 right, 2 wrong, 0 ignores, 1 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name="QosMockup" fullname="QosMockup" result="Failed" start-time="2017-05-13T06:31:52.0000000Z" duration="3.306" asserts="5">
+              <failure>
+                <message><![CDATA[Assertions: 2 right, 2 wrong, 0 ignores, 1 exceptions. ]]></message>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+    <expectedDetails><![CDATA[<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SeleniumSuite.ProjectDemos.QosMockup</title>
+    <style type="text/css">
+          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+          .pass { background-color: #AAFFAA; }
+          .fail { background-color: #FFAAAA; }
+          .diff { background-color: #FF6666; }
+          .error { background-color: #FFFFAA; }
+          .ignore { background-color: #CCCCCC; }
+          table, td { font-size: 1em; border-color:black; border-style:solid; }
+          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+          h1 { font-size: 2em; }
+          h2 { font-size: 1.5em; }
+          </style>
+  </head>
+  <body>
+    <h2 class="fail"><a id="#result1">QosMockup</a></h2><br/><span class="meta">variable defined: TEST_RUNNER=${FITSHARP_HOME}\RunnerW.exe</span>
+<br/><span class="meta">variable defined: SLIM_PORT=8085</span>
+<br/><br/><table>
+	<tr class="slimRowTitle">
+		<td>import</td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td><span class="pass">SeleniumFixture</span></td>
+	</tr>
+</table>
+<br/><table>
+	<tr class="slimRowTitle">
+		<td>Script</td>
+		<td colspan="2"><span class="pass">selenium</span></td>
+	</tr>
+	<tr class="slimRowColor6">
+		<td><span class="pass">set browser</span></td>
+		<td colspan="2">chrome</td>
+	</tr>
+	<tr class="slimRowColor9">
+		<td>set timeout</td>
+		<td>5</td>
+		<td>seconds</td>
+	</tr>
+	<tr class="slimRowColor8">
+		<td>note</td>
+		<td>checking for the element on the main page didn't work - menu item not visible</td>
+		<td>//text()[contains(.,'QosDashboard')]/ancestor::*[self::a]</td>
+	</tr>
+	<tr class="slimRowColor4">
+		<td><span class="pass">open</span></td>
+		<td colspan="2">http://localhost/re_qos.html</td>
+	</tr>
+	<tr class="slimRowColor8">
+		<td><span class="fail">ensure</span></td>
+		<td>text exists</td>
+		<td>Quality Of Service Dashboard</td>
+	</tr>
+</table>
+<br/><table>
+	<tr class="exception closed">
+		<td class="error"><span class="pass">query:extract table values</span></td>
+		<td colspan="4" class="error">xpath://table[@class='rgMasterTable' and contains(@id,'Ifci')]</td>
+	</tr><tr class="exception-detail closed-detail"><td colspan="5"><pre>__EXCEPTION__:System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---&gt; System.NullReferenceException: Object reference not set to an instance of an object.
+   at SeleniumFixture.ExtractTableValues.DoExtraction()
+   at SeleniumFixture.ExtractTableValues.Query()
+   --- End of inner exception stack trace ---
+   at fitSharp.Machine.Model.TypedValue.ThrowExceptionIfNotValid()
+   at fitSharp.Slim.Operators.InvokeInstructionBase.InvokeMember(Tree`1 parameters, Int32 memberIndex)
+   at fitSharp.Slim.Operators.ExecuteCall.ExecuteOperation(Tree`1 parameters)
+   at fitSharp.Slim.Operators.InvokeInstructionBase.Invoke(TypedValue instance, MemberName memberName, Tree`1 parameters)</pre></td></tr>
+	<tr class="slimRowTitle">
+		<td>Component Name</td>
+		<td>Health</td>
+		<td>Performance</td>
+		<td>Message</td>
+		<td>Timestamp (UTC)</td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>DevelopmentPortalSandbox</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>=~/\[OK\].*\[OK\]/</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>CalculationServices</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>=~/Calculation Components are running/</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Streaming Engine</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>Component is performing well</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>Packaging</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>No health records available; No performance records available</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Data Service</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>Data Service not healthy. Failing: Sync; Not implemented</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>Web Services</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>=~/Web Services not healthy\. Failing: UnitConversion;/</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Core Services</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>=~/Core Services healthy/</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>Identity Services</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>Core Services healthy; Foundation component failed: MyComponent (2147483647ms)</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Workflow Service</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>The service is running. Not implemented</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>Collector Service</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>Collector service: localhost returned a status of 0 Not implemented</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Detector Service</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>No Errors Reported; Not implemented</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>Routing Service</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>The service is running. Not implemented</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Vetting Service</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>The service is running. Not implemented</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>Notification</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>No health records available; No performance records available</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Notification Service</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>Notification server available; No performance records available</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>Test1</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>Service is running. Performance OK.</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Test2</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>Service is running. Performance OK.</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>Subscriber Service</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>No health records available; No performance records available</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Workflow Engine</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>=~/0 of \d+ workflow\(s\) are not running\. No performance records available/</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor0">
+		<td>Test3</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>Service is running. Performance OK.</td>
+		<td></td>
+	</tr>
+	<tr class="slimRowColor1">
+		<td>Test4</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>-1&lt;=_&lt;=100</td>
+		<td>Service is running. Performance OK.</td>
+		<td></td>
+	</tr>
+</table>
+<br/><table>
+	<tr class="slimRowTitle">
+		<td>Script</td>
+		<td><span class="pass">selenium</span></td>
+	</tr>
+	<tr class="slimRowColor4">
+		<td colspan="2"><span class="fail">close</span></td>
+	</tr>
+</table>
+</body>
+</html>]]></expectedDetails>
+  </testcase>
+  <testcase name="ExceptionInSource_20161106">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20161106</FitNesseVersion>
+        <rootPath>FitSharpDemos.FibonacciTest</rootPath>
+        <executionLog>
+          <testSystem>slim:e:\apps\fitnesse\fitsharp40\RunnerW.exe</testSystem>
+          <command>e:\apps\fitnesse\fitsharp40\RunnerW.exe -r fitsharp.Slim.Service.Runner,E:\Apps\FitNesse\FitSharp40\fitsharp.dll "ExtendedMathTest\ExtendedMathTest.dll" 8085</command>
+          <exitCode>0</exitCode>
+          <stdOut />
+          <stdErr />
+          <exception><![CDATA[Unable to start test system 'slim': fitnesse.slim.SlimError: Error connecting to SLiM server on localhost:8086 [Uri: http://localhost:8086/test?test&nochunk]]]></exception>
+          <stackTrace><![CDATA[test.ps1 function({param=1})]]></stackTrace>
+        </executionLog>
+        <finalCounts>
+          <right>0</right>
+          <wrong>0</wrong>
+          <ignores>0</ignores>
+          <exceptions>0</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>1012</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>FitSharpDemos.FibonacciTest</TestName>
+        <TestResult>Inconclusive</TestResult>
+        <ErrorMessage>Unable to start test system 'slim': fitnesse.slim.SlimError: Error connecting to SLiM server on localhost:8086 [Uri: http://localhost:8086/test?test&amp;nochunk]
+Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 1.012 s.</ErrorMessage>
+        <InnerTests />
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="FitSharpDemos.FibonacciTest-Run" result="Inconclusive" testcasecount="0" total="0" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" start-time="2017-02-23T15:09:58.9880000Z" end-time="2017-02-23T15:10:00.0000000Z" engine-version="FitNesse v20161106">
+        <command-line><![CDATA[e:\apps\fitnesse\fitsharp40\RunnerW.exe -r fitsharp.Slim.Service.Runner,E:\Apps\FitNesse\FitSharp40\fitsharp.dll "ExtendedMathTest\ExtendedMathTest.dll" 8085]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="FitSharpDemos.FibonacciTest" fullName="FitSharpDemos.FibonacciTest" result="Inconclusive" testcasecount="0" total="0" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" start-time="2017-02-23T15:09:58.9880000Z" end-time="2017-02-23T15:10:00.0000000Z">
+          <environment />      
+          <settings>
+            <setting name="TestSystem" value="slim:e:\apps\fitnesse\fitsharp40\RunnerW.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message>
+            <![CDATA[Unable to start test system 'slim': fitnesse.slim.SlimError: Error connecting to SLiM server on localhost:8086 [Uri: http://localhost:8086/test?test&nochunk]
+Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+            <stack-trace><![CDATA[test.ps1 function({param=1})]]></stack-trace>
+          </failure>
+          <results>
+            <test-case name="ErrorTestCase" fullname="ErrorTestCase" result="Failed" label="Error" asserts="0" start-time="2017-02-23T15:09:58.9880000Z" duration="1.012">
+              <failure>
+                <message><![CDATA[Unable to start test system 'slim': fitnesse.slim.SlimError: Error connecting to SLiM server on localhost:8086 [Uri: http://localhost:8086/test?test&nochunk]]]></message>
+                <stack-trace><![CDATA[test.ps1 function({param=1})]]></stack-trace>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+  </testcase>
+  <testcase name="XmlTagInContent">
+    <fitnesseInput>
+      <testResults>
+        <FitNesseVersion>v20161106</FitNesseVersion>
+        <rootPath>RestSuite.XmlParseErrorDemo</rootPath>
+        <result>
+          <counts>
+            <right>0</right>
+            <wrong>0</wrong>
+            <ignores>0</ignores>
+            <exceptions>0</exceptions>
+          </counts>
+          <date>2017-11-11T11:31:31+01:00</date>
+          <runTimeInMillis>114</runTimeInMillis>
+          <content>&lt;br/&gt;&lt;table&gt;
+        &lt;tr class="slimRowTitle"&gt;
+          &lt;td&gt;import&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr class="slimRowColor0"&gt;
+          &lt;td&gt;&lt;span class="pass"&gt;rest&lt;/span&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr class="slimRowColor1"&gt;
+          &lt;td&gt;&lt;span class="pass"&gt;rest.ContentHandlers&lt;/span&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+      &lt;br/&gt;&lt;table&gt;
+        &lt;tr class="slimRowTitle"&gt;
+          &lt;td&gt;script&lt;/td&gt;
+          &lt;td colspan="2"&gt;&lt;span class="pass"&gt;Content Handler&lt;/span&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr class="slimRowColor6"&gt;
+          &lt;td&gt;$response&amp;lt;-[XML Object]&lt;/td&gt;
+          &lt;td&gt;Create Object From&lt;/td&gt;
+          &lt;td&gt;&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;data/&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr class="slimRowColor9"&gt;
+          &lt;td&gt;show&lt;/td&gt;
+          &lt;td&gt;serialize&lt;/td&gt;
+          &lt;td&gt;$response-&gt;[XML Object]&lt;/td&gt;
+        &lt;td&gt;&amp;lt;?xml version="1.0" encoding="utf-8"?&amp;gt;&amp;lt;data /&amp;gt;&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+      </content>
+          <relativePageName>XmlParseErrorDemo</relativePageName>
+        </result>
+        <executionLog>
+          <testSystem>slim:C:\Apps\FitNesse\FitSharp40\Runner.exe</testSystem>
+          <command>C:\Apps\FitNesse\FitSharp40\Runner.exe -r fitsharp.Slim.Service.Runner,C:\Apps\FitNesse\FitSharp40\fitsharp.dll "Rest\Rest.dll;SupportFunctions\SupportFunctions.dll" 8476</command>
+          <exitCode>0</exitCode>
+          <stdOut>
+          </stdOut>
+          <stdErr>
+          </stdErr>
+        </executionLog>
+        <finalCounts>
+          <right>0</right>
+          <wrong>0</wrong>
+          <ignores>1</ignores>
+          <exceptions>0</exceptions>
+        </finalCounts>
+        <totalRunTimeInMillis>731</totalRunTimeInMillis>
+      </testResults>
+    </fitnesseInput>
+    <expectedOutput>
+      <SummaryResult>
+        <TestName>RestSuite.XmlParseErrorDemo</TestName>
+        <TestResult>Inconclusive</TestResult>
+        <ErrorMessage>Test Pages: 0 right, 0 wrong, 1 ignores, 0 exceptions. Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.731 s.</ErrorMessage>
+        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
+        <InnerTests>
+          <InnerTest>
+            <TestName>XmlParseErrorDemo</TestName>
+            <TestResult>Inconclusive</TestResult>
+            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.114 s.</ErrorMessage>
+          </InnerTest>
+        </InnerTests>
+      </SummaryResult>
+    </expectedOutput>
+    <expectedNUnit3Output>
+      <test-run name="RestSuite.XmlParseErrorDemo-Run" result="Inconclusive" testcasecount="1" total="1" passed="0" failed="0" inconclusive="1" skipped="0" asserts="0" start-time="2017-11-11T10:31:31.0000000Z" end-time="2017-11-11T10:31:31.7310000Z" engine-version="FitNesse v20161106">
+        <command-line><![CDATA[C:\Apps\FitNesse\FitSharp40\Runner.exe -r fitsharp.Slim.Service.Runner,C:\Apps\FitNesse\FitSharp40\fitsharp.dll "Rest\Rest.dll;SupportFunctions\SupportFunctions.dll" 8476]]></command-line>
+        <test-suite type="Assembly" runstate="Runnable" name="RestSuite.XmlParseErrorDemo" fullName="RestSuite.XmlParseErrorDemo" result="Inconclusive" testcasecount="1" total="1" passed="0" failed="0" inconclusive="1" skipped="0" asserts="0" start-time="2017-11-11T10:31:31.0000000Z" end-time="2017-11-11T10:31:31.7310000Z">
+          <environment />
+          <settings>
+            <setting name="TestSystem" value="slim:C:\Apps\FitNesse\FitSharp40\Runner.exe" />
+          </settings>
+          <properties>
+            <property name="exit-code" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[Test Pages: 0 right, 0 wrong, 1 ignores, 0 exceptions. Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+          </failure>
+          <results>
+            <test-case name="XmlParseErrorDemo" fullname="XmlParseErrorDemo" result="Inconclusive" start-time="2017-11-11T10:31:31.0000000Z" duration="0.114" asserts="0">
+              <failure>
+                <message><![CDATA[Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
+              </failure>
+            </test-case>
+          </results>
+        </test-suite>
+      </test-run>
+    </expectedNUnit3Output>
+    <expectedDetails><![CDATA[<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>RestSuite.XmlParseErrorDemo</title>
+    <style type="text/css">
+          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+          .pass { background-color: #AAFFAA; }
+          .fail { background-color: #FFAAAA; }
+          .diff { background-color: #FF6666; }
+          .error { background-color: #FFFFAA; }
+          .ignore { background-color: #CCCCCC; }
+          table, td { font-size: 1em; border-color:black; border-style:solid; }
+          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+          h1 { font-size: 2em; }
+          h2 { font-size: 1.5em; }
+          </style>
+  </head>
+  <body>
+    <h2 class="ignore"><a id="#result1">XmlParseErrorDemo</a></h2><br/><table>
+        <tr class="slimRowTitle">
+          <td>import</td>
+        </tr>
+        <tr class="slimRowColor0">
+          <td><span class="pass">rest</span></td>
+        </tr>
+        <tr class="slimRowColor1">
+          <td><span class="pass">rest.ContentHandlers</span></td>
+        </tr>
+      </table>
+      <br/><table>
+        <tr class="slimRowTitle">
+          <td>script</td>
+          <td colspan="2"><span class="pass">Content Handler</span></td>
+        </tr>
+        <tr class="slimRowColor6">
+          <td>$response&lt;-[XML Object]</td>
+          <td>Create Object From</td>
+          <td>&lt;?xml version="1.0" encoding="utf-8"?&gt;<data/></td>
+        </tr>
+        <tr class="slimRowColor9">
+          <td>show</td>
+          <td>serialize</td>
+          <td>$response->[XML Object]</td>
+        <td>&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;data /&gt;</td></tr>
+      </table>
+      </body>
+</html>]]></expectedDetails>
+  </testcase>
+</testcases>

@@ -4,15 +4,15 @@
     "friendlyName":  "Run FitNesse Test",
     "description":  "Run a FitNesse test via local deployment or calling an external instance",
     "author":  "Rik Essenius",
-    "helpMarkDown":  "Version 0.9.3",
+    "helpMarkDown":  "Version 1.0.8",
     "category":  "Azure Pipelines",
     "demands":  [
 
                 ],
     "version":  {
-                    "Major":  0,
-                    "Minor":  9,
-                    "Patch":  3
+                    "Major":  1,
+                    "Minor":  0,
+                    "Patch":  8
                 },
     "minimumAgentVersion":  "1.95.0",
     "instanceNameFormat":  "FitNesseRun $(TestSpec)",
@@ -93,21 +93,12 @@
                        "groupName":  "execute"
                    },
                    {
-                       "name":  "fixtureFolder",
-                       "type":  "filePath",
-                       "label":  "Fixture Folder",
-                       "defaultValue":  ".",
-                       "required":  false,
-                       "helpMarkDown":  "Location of the fixture assemblies (work folder of FitNesse)",
-                       "groupName":  "execute"
-                   },
-                   {
                        "name":  "appSearchRoot",
                        "type":  "filePath",
                        "label":  "Application Search Root",
                        "defaultValue":  ".",
                        "required":  false,
-                       "helpMarkDown":  "Location where the task should start searching for FitNesse and FitSharp binaries",
+                       "helpMarkDown":  "Location where the task should start searching for FitNesse Jar file (typically same as Data Folder)",
                        "groupName":  "execute"
                    },
                    {
