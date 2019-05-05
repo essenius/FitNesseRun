@@ -1,6 +1,6 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
- Copyright 2013-2017 Rik Essenius
+ Copyright 2013-2019 Rik Essenius
 
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
  compliance with the License. You may obtain a copy of the License at
@@ -96,21 +96,6 @@
         <totalRunTimeInMillis>2011</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>TestPage</TestName>
-        <TestResult>Failed</TestResult>
-        <ErrorMessage>Test Pages: 0 right, 1 wrong, 0 ignores, 0 exceptions. Assertions: 5 right, 3 wrong, 2 ignores, 1 exceptions. Run time: 2.011 s.</ErrorMessage>
-        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
-        <InnerTests>
-          <InnerTest>
-            <TestName>TestPage</TestName>
-            <TestResult>Failed</TestResult>
-            <ErrorMessage>Assertions: 5 right, 3 wrong, 2 ignores, 1 exceptions. Run time: 0.201 s.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="TestPage-Run" result="Failed" testcasecount="1" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="11" start-time="2011-10-25T23:02:03.0000000Z" end-time="2011-10-25T23:02:05.0110000Z" engine-version="FitNesse v20111026">
         <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
@@ -132,6 +117,12 @@
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -141,21 +132,23 @@
     <META http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>TestPage</title>
     <style type="text/css">
-          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
-          .pass { background-color: #AAFFAA; }
-          .fail { background-color: #FFAAAA; }
-          .diff { background-color: #FF6666; }
-          .error { background-color: #FFFFAA; }
-          .ignore { background-color: #CCCCCC; }
-          table, td { font-size: 1em; border-color:black; border-style:solid; }
-          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
-          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
-          h1 { font-size: 2em; }
-          h2 { font-size: 1.5em; }
-          </style>
+        body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+        .pass { background-color: #AAFFAA; }
+        .fail { background-color: #FFAAAA; }
+        .diff { background-color: #FF6666; }
+        .error { background-color: #FFFFAA; }
+        .ignore { background-color: #CCCCCC; }
+        .right { float:right; font-style: italic; font-weight: lighter; line-height: 1.2em; }
+        table, td { font-size: 1em; border-color:black; border-style:solid; }
+        table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+        td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+        h1 { font-size: 1.5em; }
+        h2 { font-size: 1.2em; padding: 0.3em; }
+    </style>
   </head>
   <body>
-    <h2 class="fail"><a id="#result1">TestPage</a></h2><div class="collapse_rim">
+    <h2 class="fail"><a id="#result1">TestPage</a><div class="right">Started 2011-10-26T01:02:03+02:00</div>
+    </h2><div class="collapse_rim">
 	<div style="float: right;" class="meta">
 		
  | 
@@ -238,21 +231,6 @@
         <totalRunTimeInMillis>2011</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>TestPage</TestName>
-        <TestResult>Passed</TestResult>
-        <ErrorMessage>Test Pages: 1 right, 0 wrong, 0 ignores, 0 exceptions. Assertions: 6 right, 0 wrong, 2 ignores, 0 exceptions. Run time: 2.011 s.</ErrorMessage>
-        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
-        <InnerTests>
-          <InnerTest>
-            <TestName>TestPage</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 6 right, 0 wrong, 2 ignores, 0 exceptions. Run time: 0.201 s.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="TestPage-Run" result="Passed" testcasecount="1" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="8" start-time="2011-10-25T23:02:03.0000000Z" end-time="2011-10-25T23:02:05.0110000Z" engine-version="FitNesse v20111026">
         <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
@@ -274,6 +252,12 @@
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -323,25 +307,6 @@
         <totalRunTimeInMillis>1342</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>FitSharpDemoSuite</TestName>
-        <TestResult>Error</TestResult>
-        <ErrorMessage>Test Pages: 1 right, 0 wrong, 0 ignores, 1 exceptions. Assertions: 6 right, 0 wrong, 0 ignores, 66 exceptions. Run time: 1.342 s.</ErrorMessage>
-        <InnerTests>
-          <InnerTest>
-            <TestName>FitSharpDemoSuite.BuyBeer</TestName>
-            <TestResult>Error</TestResult>
-            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 66 exceptions. Run time: 0.356 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>FitSharpDemoSuite.BuyMilk</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 6 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.066 s.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="FitSharpDemoSuite-Run" result="Failed" testcasecount="2" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="72" start-time="2011-10-25T23:02:03.0000000Z" end-time="2011-10-25T23:02:04.3420000Z" engine-version="FitNesse v20111026">
         <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
@@ -368,6 +333,12 @@
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -376,14 +347,6 @@
     <fitnesseInput>
       <testResults />
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName />
-        <TestResult>Inconclusive</TestResult>
-        <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. </ErrorMessage>
-        <InnerTests />
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="FitNesse-Run" result="Inconclusive" testcasecount="0" total="0" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" start-time="2017-02-23T15:10:00.0000000Z" end-time="2017-02-23T15:10:00.0000000Z">
         <test-suite type="Assembly" runstate="Runnable" name="FitNesse" fullName="FitNesse" result="Inconclusive" testcasecount="0" total="0" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" start-time="2017-02-23T15:10:00.0000000Z" end-time="2017-02-23T15:10:00.0000000Z">
@@ -394,6 +357,12 @@
           <results>
             <test-case name="ErrorTestCase" fullname="ErrorTestCase" result="Failed" label="Error" asserts="0" start-time="2017-02-23T15:10:00.0000000Z" duration="0" />
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -483,21 +452,6 @@
         <totalRunTimeInMillis>1398</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>FibonacciTest</TestName>
-        <TestResult>Passed</TestResult>
-        <ErrorMessage>Test Pages: 1 right, 0 wrong, 0 ignores, 0 exceptions. Assertions: 8 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 1.398 s.</ErrorMessage>
-        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
-        <InnerTests>
-          <InnerTest>
-            <TestName>FibonacciTest</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 8 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.167 s.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="FibonacciTest-Run" result="Passed" testcasecount="1" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="8" start-time="2017-02-23T15:09:58.6020000Z" end-time="2017-02-23T15:10:00.0000000Z" engine-version="FitNesse v20121220">
         <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
@@ -519,6 +473,12 @@
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -528,21 +488,23 @@
     <META http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>FibonacciTest</title>
     <style type="text/css">
-          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
-          .pass { background-color: #AAFFAA; }
-          .fail { background-color: #FFAAAA; }
-          .diff { background-color: #FF6666; }
-          .error { background-color: #FFFFAA; }
-          .ignore { background-color: #CCCCCC; }
-          table, td { font-size: 1em; border-color:black; border-style:solid; }
-          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
-          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
-          h1 { font-size: 2em; }
-          h2 { font-size: 1.5em; }
-          </style>
+        body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+        .pass { background-color: #AAFFAA; }
+        .fail { background-color: #FFAAAA; }
+        .diff { background-color: #FF6666; }
+        .error { background-color: #FFFFAA; }
+        .ignore { background-color: #CCCCCC; }
+        .right { float:right; font-style: italic; font-weight: lighter; line-height: 1.2em; }
+        table, td { font-size: 1em; border-color:black; border-style:solid; }
+        table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+        td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+        h1 { font-size: 1.5em; }
+        h2 { font-size: 1.2em; padding: 0.3em; }
+    </style>
   </head>
   <body>
-    <h2 class="pass"><a id="#result1">FibonacciTest</a></h2><div class="collapsible closed">
+    <h2 class="pass"><a id="#result1">FibonacciTest</a><div class="right">Started </div>
+    </h2><div class="collapsible closed">
 	<p class="title">Precompiled Libraries</p>
 	<div><br/></div>
 </div>
@@ -641,27 +603,8 @@
         <totalRunTimeInMillis>943</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>FitSharpDemoSuite</TestName>
-        <TestResult>Error</TestResult>
-        <ErrorMessage>Test Pages: 1 right, 0 wrong, 0 ignores, 1 exceptions. Assertions: 6 right, 0 wrong, 0 ignores, 66 exceptions. Run time: 0.943 s.</ErrorMessage>
-        <InnerTests>
-          <InnerTest>
-            <TestName>FitSharpDemoSuite.BuyBeer</TestName>
-            <TestResult>Error</TestResult>
-            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 66 exceptions. Run time: 0.163 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>FitSharpDemoSuite.BuyMilk</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 6 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.04 s.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
-      <test-run name="FitSharpDemoSuite-Run" result="Failed" testcasecount="2" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="72" start-time="2017-02-23T15:09:59.0570000Z" end-time="2017-02-23T15:10:00.0000000Z"  engine-version="FitNesse v20121220">
+      <test-run name="FitSharpDemoSuite-Run" result="Failed" testcasecount="2" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="72" start-time="2017-02-23T15:09:59.0570000Z" end-time="2017-02-23T15:10:00.0000000Z" engine-version="FitNesse v20121220">
         <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
         <test-suite type="Assembly" runstate="Runnable" name="FitSharpDemoSuite" fullName="FitSharpDemoSuite" result="Failed" testcasecount="2" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="72" start-time="2017-02-23T15:09:59.0570000Z" end-time="2017-02-23T15:10:00.0000000Z">
           <environment />
@@ -686,6 +629,12 @@
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -1627,41 +1576,6 @@
         <totalRunTimeInMillis>811</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>GameManagementSuite</TestName>
-        <TestResult>Passed</TestResult>
-        <ErrorMessage>Test Pages: 5 right, 0 wrong, 0 ignores, 0 exceptions. Assertions: 61 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.811 s.</ErrorMessage>
-        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
-        <InnerTests>
-          <InnerTest>
-            <TestName>GameManagementSuite.DuplicateCheck</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 14 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.072 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>GameManagementSuite.DynamicTableDemo</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 18 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.021 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>GameManagementSuite.EchoTestPage</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 7 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.019 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>GameManagementSuite.GameManagement</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 14 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.023 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>GameManagementSuite.OverviewPage</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 8 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.016 s.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="GameManagementSuite-Run" result="Passed" testcasecount="5" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="61" start-time="2016-06-15T13:29:51.0000000Z" end-time="2016-06-15T13:29:51.8110000Z" engine-version="FitNesse v20160515">
         <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
@@ -1703,6 +1617,12 @@
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -1712,18 +1632,19 @@
     <META http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>GameManagementSuite</title>
     <style type="text/css">
-          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
-          .pass { background-color: #AAFFAA; }
-          .fail { background-color: #FFAAAA; }
-          .diff { background-color: #FF6666; }
-          .error { background-color: #FFFFAA; }
-          .ignore { background-color: #CCCCCC; }
-          table, td { font-size: 1em; border-color:black; border-style:solid; }
-          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
-          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
-          h1 { font-size: 2em; }
-          h2 { font-size: 1.5em; }
-          </style>
+        body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+        .pass { background-color: #AAFFAA; }
+        .fail { background-color: #FFAAAA; }
+        .diff { background-color: #FF6666; }
+        .error { background-color: #FFFFAA; }
+        .ignore { background-color: #CCCCCC; }
+        .right { float:right; font-style: italic; font-weight: lighter; line-height: 1.2em; }
+        table, td { font-size: 1em; border-color:black; border-style:solid; }
+        table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+        td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+        h1 { font-size: 1.5em; }
+        h2 { font-size: 1.2em; padding: 0.3em; }
+    </style>
   </head>
   <body>
     <h1 class="pass">GameManagementSuite</h1>
@@ -1777,7 +1698,8 @@
         <td>16</td>
       </tr>
     </table>
-    <h2 class="pass"><a id="#result1">DuplicateCheck</a></h2>
+    <h2 class="pass"><a id="#result1">DuplicateCheck</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
             <div><table>
@@ -1998,7 +1920,8 @@
             </table>
             </div>
             </div>
-          <h2 class="pass"><a id="#result2">DynamicTableDemo</a></h2>
+          <h2 class="pass"><a id="#result2">DynamicTableDemo</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
             <div><table>
@@ -2154,7 +2077,8 @@
             </table>
             </div>
             </div>
-          <h2 class="pass"><a id="#result3">EchoTestPage</a></h2>
+          <h2 class="pass"><a id="#result3">EchoTestPage</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
             <div><table>
@@ -2301,7 +2225,8 @@
             </table>
             </div>
             </div>
-          <h2 class="pass"><a id="#result4">GameManagement</a></h2>
+          <h2 class="pass"><a id="#result4">GameManagement</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
             <div><table>
@@ -2502,7 +2427,8 @@
             </table>
             </div>
             </div>
-          <h2 class="pass"><a id="#result5">OverviewPage</a></h2>
+          <h2 class="pass"><a id="#result5">OverviewPage</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
             <div><table>
@@ -2631,63 +2557,6 @@
           </body>
 </html>]]></expectedDetails>
   </testcase>
-  <!--
-    <testcase name="SmallSuite_20111026">
-    <fitnesseInput>
-      <testResults>
-        <FitNesseVersion>v20111026</FitNesseVersion>
-        <rootPath>FitSharpDemoSuite</rootPath>
-        <result>
-          <counts>
-            <right>0</right>
-            <wrong>0</wrong>
-            <ignores>0</ignores>
-            <exceptions>66</exceptions>
-          </counts>
-          <runTimeInMillis>356</runTimeInMillis>
-          <relativePageName>BuyBeer</relativePageName>
-          <pageHistoryLink>FitSharpDemoSuite.BuyBeer?pageHistory&amp;resultDate=20121105110759&amp;format=xml</pageHistoryLink>
-        </result>
-        <result>
-          <counts>
-            <right>6</right>
-            <wrong>0</wrong>
-            <ignores>0</ignores>
-            <exceptions>0</exceptions>
-          </counts>
-          <runTimeInMillis>66</runTimeInMillis>
-          <relativePageName>BuyMilk</relativePageName>
-          <pageHistoryLink>FitSharpDemoSuite.BuyMilk?pageHistory&amp;resultDate=20121105110759&amp;format=xml</pageHistoryLink>
-        </result>
-        <finalCounts>
-          <right>1</right>
-          <wrong>0</wrong>
-          <ignores>0</ignores>
-          <exceptions>1</exceptions>
-        </finalCounts>
-        <totalRunTimeInMillis>1342</totalRunTimeInMillis>
-      </testResults>
-    </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>FitSharpDemoSuite</TestName>
-        <TestResult>Error</TestResult>
-        <ErrorMessage>Test results: 1 right, 0 wrong, 0 ignores and 1 exceptions.</ErrorMessage>
-        <InnerTests>
-          <InnerTest>
-            <TestName>FitSharpDemoSuite.BuyBeer</TestName>
-            <TestResult>Error</TestResult>
-            <ErrorMessage>Test case results: 0 right, 0 wrong, 0 ignores and 66 exceptions.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>FitSharpDemoSuite.BuyMilk</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Test case results: 6 right, 0 wrong, 0 ignores and 0 exceptions.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
-  </testcase> -->
   <testcase name="PassFailExceptionSuite_20160515">
     <fitnesseInput>
       <testResults>
@@ -2883,41 +2752,6 @@
         <totalRunTimeInMillis>694</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>FeatureDemoSuite.PassFailExceptionSuite</TestName>
-        <TestResult>Failed</TestResult>
-        <ErrorMessage>Test Pages: 1 right, 1 wrong, 2 ignores, 1 exceptions. Assertions: 1 right, 1 wrong, 1 ignores, 1 exceptions. Run time: 0.694 s.</ErrorMessage>
-        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
-        <InnerTests>
-          <InnerTest>
-            <TestName>FeatureDemoSuite.PassFailExceptionSuite.EmptyTest</TestName>
-            <TestResult>Inconclusive</TestResult>
-            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.023 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>FeatureDemoSuite.PassFailExceptionSuite.ExceptionTest</TestName>
-            <TestResult>Error</TestResult>
-            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 1 exceptions. Run time: 0.03 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>FeatureDemoSuite.PassFailExceptionSuite.FailingTest</TestName>
-            <TestResult>Failed</TestResult>
-            <ErrorMessage>Assertions: 0 right, 1 wrong, 0 ignores, 0 exceptions. Run time: 0.015 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>FeatureDemoSuite.PassFailExceptionSuite.IgnoreTest</TestName>
-            <TestResult>Inconclusive</TestResult>
-            <ErrorMessage>Assertions: 0 right, 0 wrong, 1 ignores, 0 exceptions. Run time: 0.005 s.</ErrorMessage>
-          </InnerTest>
-          <InnerTest>
-            <TestName>FeatureDemoSuite.PassFailExceptionSuite.PassingTest</TestName>
-            <TestResult>Passed</TestResult>
-            <ErrorMessage>Assertions: 1 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.005 s.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="FeatureDemoSuite.PassFailExceptionSuite-Run" result="Failed" testcasecount="5" total="5" passed="1" failed="2" inconclusive="2" skipped="0" asserts="4" start-time="2016-06-16T08:14:31.0000000Z" end-time="2016-06-16T08:14:31.6940000Z" engine-version="FitNesse v20160515">
         <command-line><![CDATA[C:\fitsharp\Runner.exe -r fitSharp.Slim.Service.Runner,C:\fitsharp\fitsharp.dll "SupportFunctions.dll" 8088]]></command-line>
@@ -2959,6 +2793,12 @@
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -2968,18 +2808,19 @@
     <META http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>FeatureDemoSuite.PassFailExceptionSuite</title>
     <style type="text/css">
-          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
-          .pass { background-color: #AAFFAA; }
-          .fail { background-color: #FFAAAA; }
-          .diff { background-color: #FF6666; }
-          .error { background-color: #FFFFAA; }
-          .ignore { background-color: #CCCCCC; }
-          table, td { font-size: 1em; border-color:black; border-style:solid; }
-          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
-          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
-          h1 { font-size: 2em; }
-          h2 { font-size: 1.5em; }
-          </style>
+        body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+        .pass { background-color: #AAFFAA; }
+        .fail { background-color: #FFAAAA; }
+        .diff { background-color: #FF6666; }
+        .error { background-color: #FFFFAA; }
+        .ignore { background-color: #CCCCCC; }
+        .right { float:right; font-style: italic; font-weight: lighter; line-height: 1.2em; }
+        table, td { font-size: 1em; border-color:black; border-style:solid; }
+        table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+        td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+        h1 { font-size: 1.5em; }
+        h2 { font-size: 1.2em; padding: 0.3em; }
+    </style>
   </head>
   <body>
     <h1 class="fail">FeatureDemoSuite.PassFailExceptionSuite</h1>
@@ -3033,7 +2874,8 @@
         <td>5</td>
       </tr>
     </table>
-    <h2 class="ignore"><a id="#result1">EmptyTest</a></h2>
+    <h2 class="ignore"><a id="#result1">EmptyTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
             <div><table>
@@ -3047,7 +2889,8 @@
             </div>
             </div>
             <br/>Ignore everything here<br/>
-          <h2 class="error"><a id="#result2">ExceptionTest</a></h2>
+          <h2 class="error"><a id="#result2">ExceptionTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
             <div><table>
@@ -3067,7 +2910,8 @@
             </tr>
             </table>
             <br/>
-          <h2 class="fail"><a id="#result3">FailingTest</a></h2>
+          <h2 class="fail"><a id="#result3">FailingTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
             <div><table>
@@ -3092,7 +2936,8 @@
             <td>[<span class="diff">tru</span>e] <span class="fail">expected [</span><span class="diff">fals</span><span class="fail">e]</span></td>
             </tr>
             </table>
-          <h2 class="ignore"><a id="#result4">IgnoreTest</a></h2>
+          <h2 class="ignore"><a id="#result4">IgnoreTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
             <div><table>
@@ -3117,7 +2962,8 @@
             <td><span class="ignore">hello</span></td>
             </tr>
             </table>
-          <h2 class="pass"><a id="#result5">PassingTest</a></h2>
+          <h2 class="pass"><a id="#result5">PassingTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+    </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
             <div><table>
@@ -3414,8 +3260,7 @@
             </instructionResult>
             <instructionResult>
               <instruction>{id='scriptTable_1_2', instruction='call', instanceName='scriptTableActor', methodName='setTimeoutSeconds', args=[5]}</instruction>
-              <slimResult>
-              </slimResult>
+              <slimResult></slimResult>
               <expectation>
                 <instructionId>scriptTable_1_2</instructionId>
                 <col>0</col>
@@ -3459,8 +3304,7 @@
             </instructionResult>
             <instructionResult>
               <instruction>{id='queryTable_2_2', instruction='call', instanceName='queryTable_2', methodName='query', args=[]}</instruction>
-              <slimResult>
-              </slimResult>
+              <slimResult></slimResult>
               <expectation>
                 <status>error</status>
                 <instructionId>queryTable_2_2</instructionId>
@@ -3496,10 +3340,8 @@
           <testSystem>slim:E:\Apps\FitNesse\FitSharp40\RunnerW.exe</testSystem>
           <command>E:\Apps\FitNesse\FitSharp40\RunnerW.exe -r fitsharp.Slim.Service.Runner,E:\Apps\FitNesse\FitSharp40\fitsharp.dll "SeleniumFixture\SeleniumFixture.dll";"SupportFunctions\SupportFunctions.dll" 8085</command>
           <exitCode>0</exitCode>
-          <stdOut>
-          </stdOut>
-          <stdErr>
-          </stdErr>
+          <stdOut></stdOut>
+          <stdErr></stdErr>
         </executionLog>
         <finalCounts>
           <right>0</right>
@@ -3510,21 +3352,6 @@
         <totalRunTimeInMillis>37143</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>SeleniumSuite.ProjectDemos.QosMockup</TestName>
-        <TestResult>Failed</TestResult>
-        <ErrorMessage>Test Pages: 0 right, 1 wrong, 0 ignores, 0 exceptions. Assertions: 2 right, 2 wrong, 0 ignores, 1 exceptions. Run time: 37.143 s.</ErrorMessage>
-        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
-        <InnerTests>
-          <InnerTest>
-            <TestName>QosMockup</TestName>
-            <TestResult>Failed</TestResult>
-            <ErrorMessage>Assertions: 2 right, 2 wrong, 0 ignores, 1 exceptions. Run time: 3.306 s.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="SeleniumSuite.ProjectDemos.QosMockup-Run" result="Failed" testcasecount="1" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="5" start-time="2017-05-13T06:31:52.0000000Z" end-time="2017-05-13T06:32:29.1430000Z" engine-version="FitNesse v20161106">
         <command-line><![CDATA[E:\Apps\FitNesse\FitSharp40\RunnerW.exe -r fitsharp.Slim.Service.Runner,E:\Apps\FitNesse\FitSharp40\fitsharp.dll "SeleniumFixture\SeleniumFixture.dll";"SupportFunctions\SupportFunctions.dll" 8085]]></command-line>
@@ -3546,6 +3373,12 @@
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -3555,21 +3388,23 @@
     <META http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>SeleniumSuite.ProjectDemos.QosMockup</title>
     <style type="text/css">
-          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
-          .pass { background-color: #AAFFAA; }
-          .fail { background-color: #FFAAAA; }
-          .diff { background-color: #FF6666; }
-          .error { background-color: #FFFFAA; }
-          .ignore { background-color: #CCCCCC; }
-          table, td { font-size: 1em; border-color:black; border-style:solid; }
-          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
-          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
-          h1 { font-size: 2em; }
-          h2 { font-size: 1.5em; }
-          </style>
+        body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+        .pass { background-color: #AAFFAA; }
+        .fail { background-color: #FFAAAA; }
+        .diff { background-color: #FF6666; }
+        .error { background-color: #FFFFAA; }
+        .ignore { background-color: #CCCCCC; }
+        .right { float:right; font-style: italic; font-weight: lighter; line-height: 1.2em; }
+        table, td { font-size: 1em; border-color:black; border-style:solid; }
+        table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+        td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+        h1 { font-size: 1.5em; }
+        h2 { font-size: 1.2em; padding: 0.3em; }
+    </style>
   </head>
   <body>
-    <h2 class="fail"><a id="#result1">QosMockup</a></h2><br/><span class="meta">variable defined: TEST_RUNNER=${FITSHARP_HOME}\RunnerW.exe</span>
+    <h2 class="fail"><a id="#result1">QosMockup</a><div class="right">Started 2017-05-13T08:31:52+02:00</div>
+    </h2><br/><span class="meta">variable defined: TEST_RUNNER=${FITSHARP_HOME}\RunnerW.exe</span>
 <br/><span class="meta">variable defined: SLIM_PORT=8085</span>
 <br/><br/><table>
 	<tr class="slimRowTitle">
@@ -3810,20 +3645,11 @@
         <totalRunTimeInMillis>1012</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>FitSharpDemos.FibonacciTest</TestName>
-        <TestResult>Inconclusive</TestResult>
-        <ErrorMessage>Unable to start test system 'slim': fitnesse.slim.SlimError: Error connecting to SLiM server on localhost:8086 [Uri: http://localhost:8086/test?test&amp;nochunk]
-Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 1.012 s.</ErrorMessage>
-        <InnerTests />
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="FitSharpDemos.FibonacciTest-Run" result="Inconclusive" testcasecount="0" total="0" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" start-time="2017-02-23T15:09:58.9880000Z" end-time="2017-02-23T15:10:00.0000000Z" engine-version="FitNesse v20161106">
         <command-line><![CDATA[e:\apps\fitnesse\fitsharp40\RunnerW.exe -r fitsharp.Slim.Service.Runner,E:\Apps\FitNesse\FitSharp40\fitsharp.dll "ExtendedMathTest\ExtendedMathTest.dll" 8085]]></command-line>
         <test-suite type="Assembly" runstate="Runnable" name="FitSharpDemos.FibonacciTest" fullName="FitSharpDemos.FibonacciTest" result="Inconclusive" testcasecount="0" total="0" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" start-time="2017-02-23T15:09:58.9880000Z" end-time="2017-02-23T15:10:00.0000000Z">
-          <environment />      
+          <environment />
           <settings>
             <setting name="TestSystem" value="slim:e:\apps\fitnesse\fitsharp40\RunnerW.exe" />
           </settings>
@@ -3831,8 +3657,7 @@ Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 1.012 s.</Error
             <property name="exit-code" value="0" />
           </properties>
           <failure>
-            <message>
-            <![CDATA[Unable to start test system 'slim': fitnesse.slim.SlimError: Error connecting to SLiM server on localhost:8086 [Uri: http://localhost:8086/test?test&nochunk]
+            <message><![CDATA[Unable to start test system 'slim': fitnesse.slim.SlimError: Error connecting to SLiM server on localhost:8086 [Uri: http://localhost:8086/test?test&nochunk]
 Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
             <stack-trace><![CDATA[test.ps1 function({param=1})]]></stack-trace>
           </failure>
@@ -3844,6 +3669,12 @@ Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -3896,10 +3727,8 @@ Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
           <testSystem>slim:C:\Apps\FitNesse\FitSharp40\Runner.exe</testSystem>
           <command>C:\Apps\FitNesse\FitSharp40\Runner.exe -r fitsharp.Slim.Service.Runner,C:\Apps\FitNesse\FitSharp40\fitsharp.dll "Rest\Rest.dll;SupportFunctions\SupportFunctions.dll" 8476</command>
           <exitCode>0</exitCode>
-          <stdOut>
-          </stdOut>
-          <stdErr>
-          </stdErr>
+          <stdOut></stdOut>
+          <stdErr></stdErr>
         </executionLog>
         <finalCounts>
           <right>0</right>
@@ -3910,21 +3739,6 @@ Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
         <totalRunTimeInMillis>731</totalRunTimeInMillis>
       </testResults>
     </fitnesseInput>
-    <expectedOutput>
-      <SummaryResult>
-        <TestName>RestSuite.XmlParseErrorDemo</TestName>
-        <TestResult>Inconclusive</TestResult>
-        <ErrorMessage>Test Pages: 0 right, 0 wrong, 1 ignores, 0 exceptions. Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.731 s.</ErrorMessage>
-        <DetailedResultsFile>DetailedResults.html</DetailedResultsFile>
-        <InnerTests>
-          <InnerTest>
-            <TestName>XmlParseErrorDemo</TestName>
-            <TestResult>Inconclusive</TestResult>
-            <ErrorMessage>Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. Run time: 0.114 s.</ErrorMessage>
-          </InnerTest>
-        </InnerTests>
-      </SummaryResult>
-    </expectedOutput>
     <expectedNUnit3Output>
       <test-run name="RestSuite.XmlParseErrorDemo-Run" result="Inconclusive" testcasecount="1" total="1" passed="0" failed="0" inconclusive="1" skipped="0" asserts="0" start-time="2017-11-11T10:31:31.0000000Z" end-time="2017-11-11T10:31:31.7310000Z" engine-version="FitNesse v20161106">
         <command-line><![CDATA[C:\Apps\FitNesse\FitSharp40\Runner.exe -r fitsharp.Slim.Service.Runner,C:\Apps\FitNesse\FitSharp40\fitsharp.dll "Rest\Rest.dll;SupportFunctions\SupportFunctions.dll" 8476]]></command-line>
@@ -3946,6 +3760,12 @@ Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
               </failure>
             </test-case>
           </results>
+          <attachments>
+            <attachment>
+              <filePath />
+              <description>Raw test results from FitNesse</description>
+            </attachment>
+          </attachments>
         </test-suite>
       </test-run>
     </expectedNUnit3Output>
@@ -3955,21 +3775,23 @@ Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
     <META http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>RestSuite.XmlParseErrorDemo</title>
     <style type="text/css">
-          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
-          .pass { background-color: #AAFFAA; }
-          .fail { background-color: #FFAAAA; }
-          .diff { background-color: #FF6666; }
-          .error { background-color: #FFFFAA; }
-          .ignore { background-color: #CCCCCC; }
-          table, td { font-size: 1em; border-color:black; border-style:solid; }
-          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
-          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
-          h1 { font-size: 2em; }
-          h2 { font-size: 1.5em; }
-          </style>
+        body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+        .pass { background-color: #AAFFAA; }
+        .fail { background-color: #FFAAAA; }
+        .diff { background-color: #FF6666; }
+        .error { background-color: #FFFFAA; }
+        .ignore { background-color: #CCCCCC; }
+        .right { float:right; font-style: italic; font-weight: lighter; line-height: 1.2em; }
+        table, td { font-size: 1em; border-color:black; border-style:solid; }
+        table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+        td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+        h1 { font-size: 1.5em; }
+        h2 { font-size: 1.2em; padding: 0.3em; }
+    </style>
   </head>
   <body>
-    <h2 class="ignore"><a id="#result1">XmlParseErrorDemo</a></h2><br/><table>
+    <h2 class="ignore"><a id="#result1">XmlParseErrorDemo</a><div class="right">Started 2017-11-11T11:31:31+01:00</div>
+    </h2><br/><table>
         <tr class="slimRowTitle">
           <td>import</td>
         </tr>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- Copyright 2013-2017 Rik Essenius
+ Copyright 2013-2019 Rik Essenius
 
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
  compliance with the License. You may obtain a copy of the License at
@@ -173,18 +173,19 @@
         </title>
         <style type="text/css">
           <xsl:text disable-output-escaping="yes"><![CDATA[
-          body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
-          .pass { background-color: #AAFFAA; }
-          .fail { background-color: #FFAAAA; }
-          .diff { background-color: #FF6666; }
-          .error { background-color: #FFFFAA; }
-          .ignore { background-color: #CCCCCC; }
-          table, td { font-size: 1em; border-color:black; border-style:solid; }
-          table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
-          td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
-          h1 { font-size: 2em; }
-          h2 { font-size: 1.5em; }
-          ]]></xsl:text>
+        body { font:normal 80% Verdana, Helvetica, Arial, sans-serif; padding: 0; margin: 0 2em; }
+        .pass { background-color: #AAFFAA; }
+        .fail { background-color: #FFAAAA; }
+        .diff { background-color: #FF6666; }
+        .error { background-color: #FFFFAA; }
+        .ignore { background-color: #CCCCCC; }
+        .right { float:right; font-style: italic; font-weight: lighter; line-height: 1.2em; }
+        table, td { font-size: 1em; border-color:black; border-style:solid; }
+        table { border-width: 0 0 1px 1px; border-collapse: collapse; border-spacing: 0; }
+        td { margin:0; padding: 4px; border-width: 1px 1px 0 0; }
+        h1 { font-size: 1.5em; }
+        h2 { font-size: 1.2em; padding: 0.3em; }
+    ]]></xsl:text>
         </style>
       </head>
       <body>
@@ -266,7 +267,7 @@
                 <xsl:with-param name="pageName" select="$title" />
               </xsl:call-template>
             </a>
-          </h2>
+            <div class="right">Started <xsl:value-of select="date"/></div></h2>
           <xsl:variable name="escaped_xml_start">
             <xsl:call-template name="replace">
               <xsl:with-param name="text" select="content" />

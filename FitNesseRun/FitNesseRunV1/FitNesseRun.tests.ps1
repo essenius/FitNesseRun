@@ -70,13 +70,12 @@ Describe "FitNesseRun-DidAllTestsPass" {
         it "checks pass/fail correctly for $($testcase.name)" {
             $testcase | Should -Not -BeNullOrEmpty
             $fitNesseOutput = $testcase.fitnesseInput.InnerXml
-            $expectedOutcome = $testcase.expectedOutput.SummaryResult.TestResult
+            $expectedOutcome = $testcase.expectedNUnit3Output."test-run".result
             $passed = DidAllTestsPass -FitNesseOutput $fitNesseOutput
             $passed | Should -Be ($expectedOutcome -eq "Passed")
         }
     }
 
-    $testcases = new-object System.Xml.XmlDocument;
     [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
     $testcase = $testcases.testcases.testcase
     $testcase | ForEach-Object { CheckPassFail $_ }    
@@ -141,9 +140,7 @@ Describe "FitNesseRun-ExecuteFitNesse" {
         { ExecuteFitNesse -AppSearchRoot "." } | Should -Throw "Could not find 'fitnesse*.jar' under '.'"
     }
     Mock -CommandName Find-UnderFolder -MockWith { return ".\fitnesse.jar" }
-#    it "can find FitNesse under E:\Apps, but cannot find fixture folder" {
-#        { ExecuteFitNesse -AppSearchRoot "." -FixtureFolder ".\nonexistingFolder" } | Should -Throw "Could not find fixture folder"
-#    }
+
     it "can find FitNesse under E:\Apps, can find fixture folder, but cannot find data folder" {
         { ExecuteFitNesse -AppSearchRoot "." -DataFolder ".\nonexistingFolder" } | Should -Throw "Could not find data folder"
     }
@@ -275,7 +272,7 @@ Describe "FitNesseRun-GetVersionInfo" {
 }
 
 Describe "FitNesseRun-InvokeFitNesse" {
-    # Can be called directly as well as form CommonFunctions
+    # Can be called directly as well as from CommonFunctions
     Mock -CommandName Exit-WithError -MockWith { throw $Message }
     Mock -CommandName Exit-WithError -ModuleName CommonFunctions -MockWith { throw $Message }
     Context "plain call" {
@@ -407,7 +404,6 @@ Describe "FitNesseRun-Transform To Detailed Results" {
         }
     }
 
-    $testcases = new-object System.Xml.XmlDocument;
     [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
     $testcase = $testcases.testcases.testcase | where-object { $_.expectedDetails -ne $null }
     $testcase | ForEach-Object { TransformToDetailedResults $_ }    
@@ -427,36 +423,18 @@ Describe "FitNesseRun-Transform To NUnit 3 Results" {
         }
     }
 
-    $testcases = new-object System.Xml.XmlDocument;
     [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
     $testcase = $testcases.testcases.testcase
     $testcase | ForEach-Object { TransformToNUnit3Results $_ }    
 }
 
-Describe "FitNesseRun-Transform To Summary Results" {
-    function TransformToSummaryResults($testcase) {
-        it "Transforms to generic test format correctly for $($testcase.name)" {
-            $testcase | Should -Not -BeNullOrEmpty
-            $sourceXml = [xml]($testcase.fitnesseInput.InnerXml)
-            $sourceXml | Should -Not -BeNullOrEmpty
-            $expectedXml = $testcase.expectedOutput.InnerXml
-            $expectedXml | Should -Not -BeNullOrEmpty
-            $transformed = [xml](Transform -InputXml $sourceXml -XsltFile "FitNesseToSummaryResult.xslt")
-            $transformed.SummaryResult.OuterXml | Should -Be $expectedXml
-        }
-    }
-
-    $testcases = new-object System.Xml.XmlDocument;
-    [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
-    $testcase = $testcases.testcases.testcase
-    $testcase | ForEach-Object { TransformToSummaryResults $_ }    
-}
-
 Describe "FitNesseRun-UpdateEnvironment" {
-    it "should insert the right attributes in the environment element" {
-        $settings="<settings><setting name=`"TestSystem`" value=`"slim:C:\Apps\FitNesse\fitsharp\Runner.exe`" /></settings>"
-        $xml=[xml]"<?xml version=`"1.0`" encoding=`"utf-8`"?><test-run><command-line/><test-suite><environment/>$settings</test-suite></test-run>"
-        [xml]$outXml = UpdateEnvironment -NUnitXml $xml
+    $settings="<settings><setting name=`"TestSystem`" value=`"slim:C:\Apps\FitNesse\fitsharp\Runner.exe`" /></settings>"
+    $xml=[xml]"<?xml version=`"1.0`" encoding=`"utf-8`"?><test-run><command-line/><test-suite><environment/>$settings</test-suite></test-run>"
+
+    it "should insert the right attributes in the environment element and create two attachments" {
+        [xml]$outXml = UpdateEnvironment -NUnitXml $xml -RawResults ".\fitnesse.xml" -Details ".\details.html"
+		$outXml | SHould -Not -BeNull
         $env = $outXml.SelectSingleNode("test-run/test-suite[1]").environment
         $env."framework-version" | Should -Match "fitSharp \d*\.\d*\.\d*\.\d*"
         $env."os-architecture" | Should -Match "\d{2}-bit"
@@ -466,66 +444,63 @@ Describe "FitNesseRun-UpdateEnvironment" {
     }
 }
 
-Describe "FitNesseRun-Main Helper" {
-    function GetNUnitResult($FileName) {
-        if ($FileName) {
-            $attachment="<attachments><attachment><filePath>$FileName</filePath>" +
-                "<description>HTML log of all the executed tests and their results</description></attachment></attachments>"
-        } else {
-            $attachment = ""
-        }
-#        return "<?xml version=`"1.0`"?><test-run><test-suite><results><output /></results>$attachment</test-suite></test-run>"
-        return "<?xml version=`"1.0`"?><test-run><test-suite>$attachment</test-suite></test-run>"
+Describe "FitNesseRun-UpdateAttachments" {
+	$attachments="<attachments><attachment><filePath/><description>raw test results</description></attachment></attachments>"
+	$testRun="<?xml version=`"1.0`" encoding=`"utf-8`"?><test-run><test-suite>$attachments</test-suite></test-run>"
+    $xml=[xml]$testRun
+
+    it "should update the existing attachment and add a new one" {
+        [xml]$outXml = UpdateAttachments -NUnitXml $xml -RawResults ".\fitnesse.xml" -Details ".\details.html"
+		$suite = @($outXml."test-run"."test-suite")[0]
+		$attachment = @($suite.attachments.attachment)
+		$attachment.count | Should -Be 2
+		$attachment[0].filePath | Should -Be ".\fitnesse.xml"
+		$attachment[1].filePath | Should -Be ".\details.html"
     }
 
-    $extractedResult = "<?xml version=`"1.0`"?><root><DetailedResultsFile>test.html</DetailedResultsFile></root>"
-    $nunitResultTransformed = GetNUnitResult
+	it "should insert the right attributes in the environment element and create one attachment" {
+	    $xml=[xml]$testRun
+        [xml]$outXml = UpdateAttachments -NUnitXml $xml -RawResults ".\different.xml"
+		$suite = @($outXml."test-run"."test-suite")[0]
+		$attachment = @($suite.attachments.attachment)
+		$attachment.count | Should -Be 1
+		$attachment[0].filePath | Should -Be ".\different.xml"
+    }
+
+}
+
+Describe "FitNesseRun-Main Helper" {
+    $extractedResult = "<?xml version=`"1.0`"?><root/>"
+    $nunitResult = "<?xml version=`"1.0`"?><test-run><test-suite><attachments>"+"
+		<attachment><filePath/><description>Raw test results from FitNesse</description></attachment></attachments></test-suite></test-run>"
     $detailHtml = "<html><body /></html>"
  
     Mock -CommandName Invoke-FitNesse -MockWith { return $extractedResult }
-    Mock -CommandName Transform -MockWith { return $InputXml.OuterXml } -ParameterFilter { $XsltFile -eq "FitNesseToSummaryResult.xslt" }
     Mock -CommandName Transform -MockWith { return $detailHtml } -ParameterFilter { $XsltFile -eq "FitNesseToDetailedResults.xslt" }
-    Mock -CommandName Transform -MockWith { return $nunitResultTransformed } -ParameterFilter { $XsltFile -eq "FitNesseToNUnit3.xslt" }
+    Mock -CommandName Transform -MockWith { return $nunitResult } -ParameterFilter { $XsltFile -eq "FitNesseToNUnit3.xslt" }
     $savedFiles = [System.Collections.ArrayList]@()
 
     Context "include html" {
-        Mock -CommandName Get-Parameters -MockWith { return @{'Resultfolder'='.'; 'IncludeHtml'=$true } }        
+        Mock -CommandName Get-Parameters -MockWith { return @{'ResultFolder'='.'; 'IncludeHtml'=$true } }        
         Mock -CommandName Out-File -MockWith { $savedFiles.Add(($FilePath, $InputObject)) }
         Mock -CommandName SaveXml -MockWith { $savedFiles.Add(($OutFile, $xml)) }
 
-        it "Invokes FitNesse and creates 4 result files, detail result name from summary result" {
-            $nunitResultFinal=(GetNunitResult -FileName ".\test.html")
+        it "Invokes FitNesse, creates 3 result files, and includes the attachment in nunit" {
+			$nunitFinalResult = "<?xml version=`"1.0`"?><test-run><test-suite><attachments>" +
+				"<attachment><filePath>.\fitnesse.xml</filePath><description>Raw test results from FitNesse</description></attachment>" +
+				"<attachment><filePath>.\DetailedResults.html</filePath><description>Test results in HTML</description></attachment>" + 
+				"</attachments></test-suite></test-run>"
             $savedFiles.Clear()
             $savedFiles.Count | Should -Be 0
             MainHelper
             Assert-MockCalled -CommandName Invoke-FitNesse -Times 1 -Exactly -Scope It
-            $savedFiles.Count | Should -Be 4
+            $savedFiles.Count | Should -Be 3
             $savedFiles[0][0] | Should -Be ".\FitNesse.xml"
             $savedFiles[0][1] | Should -Be $extractedResult
-            $savedFiles[1][0] | Should -Be ".\Results.xml"
-            $SavedFiles[1][1] | Should -Be $extractedResult
-            $savedFiles[2][0] | Should -Be ".\test.html"
-            $savedFiles[2][1] | Should -Be $detailHtml
-            $savedFiles[3][0] | Should -Be ".\results_nunit.xml"
-            $savedFiles[3][1] | Should -Be $nunitResultFinal
-        }
-
-        it "Invokes FitNesse and creates 4 result files, default detail result name" {
-            $nunitResultFinal=(GetNunitResult -FileName ".\DetailedResults.html")
-            $extractedResult = "<?xml version=`"1.0`"?><root />"
-            $savedFiles.Clear()
-            $savedFiles.Count | Should -Be 0
-            MainHelper
-            Assert-MockCalled -CommandName Invoke-FitNesse -Times 1 -Exactly -Scope It
-            $savedFiles.Count | Should -Be 4
-            $savedFiles[0][0] | Should -Be ".\FitNesse.xml"
-            $savedFiles[0][1] | Should -Be $extractedResult
-            $savedFiles[1][0] | Should -Be ".\Results.xml"
-            $SavedFiles[1][1] | Should -Be $extractedResult
-            $savedFiles[2][0] | Should -Be ".\DetailedResults.html"
-            $savedFiles[2][1] | Should -Be $detailHtml
-            $savedFiles[3][0] | Should -Be ".\results_nunit.xml"
-            $savedFiles[3][1] | Should -Be $nunitResultFinal
+            $savedFiles[1][0] | Should -Be ".\DetailedResults.html"
+            $savedFiles[1][1] | Should -Be $detailHtml
+            $savedFiles[2][0] | Should -Be ".\results_nunit.xml"
+            $savedFiles[2][1] | Should -Be $nunitFinalResult
         }
     }
     
@@ -537,64 +512,77 @@ Describe "FitNesseRun-Main Helper" {
 
     Context "Do not include html" {
         $extractedResult = "<?xml version=`"1.0`"?><root />"
-        $nunitResultFinal=GetNUnitResult
 		# we need to use $TestDrive instead of "TestDrive:\" because we use .Net objects
 		$script:resultFolder="$TestDrive\results"
         Mock -CommandName Get-Parameters -MockWith { return @{'ResultFolder'="$script:resultFolder"; 'IncludeHtml'=$false } }
 		Mock -CommandName DidAllTestsPass -MockWith { return $true }
-        it "Invokes FitNesse and creates 3 result files" {
+        it "Invokes FitNesse, creates 2 result files, and does not include the attachment in nunit" {
+			$nunitFinalResult = "<?xml version=`"1.0`"?><test-run><test-suite><attachments>" +
+				"<attachment><filePath>$script:resultFolder\fitnesse.xml</filePath><description>Raw test results from FitNesse</description></attachment>" +
+				"</attachments></test-suite></test-run>"
             MainHelper
 			Test-Path -Path "$script:resultFolder" | Should -Be $true
             Assert-MockCalled -CommandName Invoke-FitNesse -Times 1 -Exactly -Scope It
-			(Get-ChildItem -Path "$script:resultFolder").Count | Should -Be 3
+			(Get-ChildItem -Path "$script:resultFolder").Count | Should -Be 2
 			TestXml -ExpectedXml $extractedResult -ActualFile "$script:resultFolder\FitNesse.xml"
-			TestXml -ExpectedXml $extractedResult -ActualFile "$script:resultFolder\Results.xml"
-			TestXml -ExpectedXml $nunitResultFinal -ActualFile "$script:resultFolder\\results_nunit.xml"
+			TestXml -ExpectedXml $nunitFinalResult -ActualFile "$script:resultFolder\\results_nunit.xml"
         }
     }
 }
 
-# Ad hoc functions below - generation of test case data based on a FitNesse result
+# This function creates a xslTests.new.xml file by executing the transformation process and storing the outcome in the expecation nodes.
+# Intention is to visually compare with the current xslTests.xml (e.g .with WinMerge) to ensure the results are accurate before replacing it.
 
-Function Format-Xml([xml]$Content) {
-    $StringWriter = New-Object System.IO.StringWriter 
-    $XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter 
-    $xmlWriter.Formatting = "indented" 
-    $xmlWriter.Indentation = 2    
-    $Content.WriteContentTo($XmlWriter) 
-    $XmlWriter.Flush()
-    $StringWriter.Flush() 
-    return $StringWriter.ToString()
-}
-
-Function AddExpectation([xml]$InputXml, [Xml.XmlNode]$TargetNode, [string]$XsltFile, [string]$NodeXPath) {
-    if (!($TargetNode.SelectSingleNode($NodeXPath))) { return }
-    $transformedOutput = (Transform -InputXml $sourceXml -XsltFile $XsltFile)
-    $nodeToAddTo = $TargetNode.SelectSingleNode($NodeXPath)
-    $nodeToAddTo.RemoveAll()
-    if ($nodeXPath -eq "expectedDetails") {
-        $nodeToAdd = $TargetNode.OwnerDocument.CreateCDataSection($transformedOutput)
-    } else {
-        $transformedXml = [xml] $transformedOutput
-        $nodeToAdd = $TargetNode.OwnerDocument.ImportNode($transformedXml.DocumentElement, $true)
-    }
-    $nodeToAddTo.AppendChild($nodeToAdd)
-} 
-
-# make this a describe block to enable
 Function FitNesseRun-Save {
-    it "runs" {
-        [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
-        $testcase = $testcases.SelectSingleNode("/testcases/testcase[@name='XmlTagInContent']") 
-        $testcase | Should -Not -BeNullOrEmpty
-        $sourceXml = [xml]($testcase.fitnesseInput.InnerXml)
-        $sourceXml | Should -Not -BeNullOrEmpty
-        #AddExpectation -InputXml $sourceXml -TargetNode $testcase -XsltFile "FitNesseToSummaryResult.xslt" -NodeXPath "expectedOutput"
-        #AddExpectation -InputXml $sourceXml -TargetNode $testcase -XsltFile "FitNesseToNunit.xslt" -NodeXPath "expectedNUnitOutput"
-        #AddExpectation -InputXml $sourceXml -TargetNode $testcase -XsltFile "FitNesseToNunit3.xslt" -NodeXPath "expectedNUnit3Output"
-        AddExpectation -InputXml $sourceXml -TargetNode $testcase -XsltFile "FitNesseToDetailedResults.xslt" -NodeXPath "expectedDetails"
+	Function AddExpectation([xml]$InputXml, [Xml.XmlNode]$TargetNode, [string]$XsltFile, [string]$NodeXPath) {
+		if (!($TargetNode.SelectSingleNode($NodeXPath))) { return }
+		$transformedOutput = (Transform -InputXml $sourceXml -XsltFile $XsltFile -Now "2017-02-23T15:10:00.0000000Z" )
+		$nodeToAddTo = $TargetNode.SelectSingleNode($NodeXPath)
+		$nodeToAddTo.RemoveAll()
+		if ($nodeXPath -eq "expectedDetails") {
+			$nodeToAdd = $TargetNode.OwnerDocument.CreateCDataSection($transformedOutput)
+		} else {
+			$transformedXml = [xml] $transformedOutput
+			$nodeToAdd = $TargetNode.OwnerDocument.ImportNode($transformedXml.DocumentElement, $true)
+		}
+		$nodeToAddTo.AppendChild($nodeToAdd)
+	} 
+
+	Function Format-Xml([xml]$Content) {
+		$StringWriter = New-Object System.IO.StringWriter 
+		$XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter 
+		$xmlWriter.Formatting = "indented" 
+		$xmlWriter.Indentation = 2    
+		$Content.WriteContentTo($XmlWriter) 
+		$XmlWriter.Flush()
+		$StringWriter.Flush() 
+		return $StringWriter.ToString()
+	}
+
+    Function UpdateExpectation($testcase) {
+	    $testcase | Should -Not -BeNullOrEmpty
+	    $sourceXml = [xml]($testcase.fitnesseInput.InnerXml)
+		$sourceXml | Should -Not -BeNullOrEmpty
+        AddExpectation -InputXml $sourceXml -TargetNode $testcase -XsltFile "FitNesseToNunit3.xslt" -NodeXPath "expectedNUnit3Output"
+		if ($testcase.expectedDetails) {
+			AddExpectation -InputXml $sourceXml -TargetNode $testcase -XsltFile "FitNesseToDetailedResults.xslt" -NodeXPath "expectedDetails"
+		}
         Write-Host (Format-Xml -Content $testcase.OuterXml)
-        #$testcases.Save((join-path -Path (resolve-path ".") -ChildPath "xslTests.New.xml"))
-        $testcases.Save("$PSScriptRoot\xslTests.New.xml")
+	}
+
+    it "updates expectations" {
+        [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
+	    $testcase = $testcases.testcases.testcase
+		$testcase | ForEach-Object { updateExpectation $_ }    
+		Write-Host "Saving..."
+		$settings = New-Object System.Xml.XmlWriterSettings
+		$settings.Indent = $true
+		$settings.NewLineChars = "`r`n"
+		$writer = [System.Xml.XmlWriter]::Create("$PSScriptRoot\xslTests.New.xml", $settings)
+		try {
+			$testcases.Save($writer)
+		} finally{
+			$writer.Dispose()
+		}
     }
 }

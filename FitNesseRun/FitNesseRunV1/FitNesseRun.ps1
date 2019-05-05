@@ -368,6 +368,17 @@ function UpdateEnvironment([xml]$NUnitXml) {
 	return $NUnitXml.OuterXml
 }
 
+function UpdateAttachments([xml]$NUnitXml, [string]$RawResults, [string]$Details) {
+    Write-Host $NUnitXml.OuterXml
+	$suite = $NUnitXml.SelectSingleNode("test-run/test-suite[1]")
+	@($suite.attachments.attachment)[0].filePath = $RawResults
+	if ($Details) {
+		$attachment = [xml]"<attachment><filePath>$Details</filePath><description>Test results in HTML</description></attachment>"
+		AddNode -Base $NUnitXml -Source $attachment -TargetXPath "test-run/test-suite[1]/attachments"
+	}
+	return $NUnitXml.OuterXml
+}
+
 function DidAllTestsPass([string]$FitNesseOutput) {
 	$counts = ([xml]$fitNesseOutput).testResults.finalCounts
 	return (([int]$counts.wrong + [int]$counts.exceptions) -eq 0) -and ([int]$counts.right -gt 0)
@@ -384,34 +395,22 @@ function MainHelper() {
 	}
 	Out-Log -Message "Invoking FitNesse" -Debug
 	$xml = Invoke-FitNesse -Parameters $parameters
-	SaveXml -xml $xml -OutFile (Join-Path -Path $parameters.ResultFolder -ChildPath "fitnesse.xml")
+	$rawResultsFilePath = (Join-Path -Path $parameters.ResultFolder -ChildPath "fitnesse.xml")
+	SaveXml -xml $xml -OutFile $rawResultsFilePath
 
-	Out-Log -Message  "Transforming output to summary result format" -Debug
-	$summary = Transform -InputXml $xml -XsltFile "FitNesseToSummaryResult.xslt"
-	SaveXml -xml $summary -OutFile (Join-Path -Path $parameters.ResultFolder -ChildPath "results.xml")
 	Out-Log -Message  "Transforming output to NUnit 3 format" -Debug
 	$nUnitOutput = Transform -InputXml $xml -XsltFile "FitNesseToNUnit3.xslt"
 	$nUnitOutputWithEnvironment = [xml](UpdateEnvironment -NUnitXml $nUnitOutput)
+
+	$detailsFilePath = $null
 	if ($parameters.IncludeHtml -eq $true) {
 		Out-Log -Message "Generating detailed results file" -Debug
-		$summaryXml = [xml]$summary
-		$detailsFile = $summaryXml.DocumentElement.DetailedResultsFile
-		if (!$detailsFile) { $detailsFile = "DetailedResults.html" }
 		$details = (Transform -InputXml $xml -XsltFile "FitNesseToDetailedResults.xslt")
-		$detailsFilePath = (Join-Path -Path $parameters.ResultFolder -ChildPath $detailsFile)
+		$detailsFilePath = (Join-Path -Path $parameters.ResultFolder -ChildPath "DetailedResults.html")
 		$details | Out-File ($detailsFilePath)
-		$attachment = [xml] @"
-		<attachments>
-			<attachment>
-				<filePath>$detailsFilePath</filePath>
-				<description>HTML log of all the executed tests and their results</description>
-			</attachment>
-		</attachments>
-"@
-		Out-Log -Message "Adding attachments section to NUnit 3 test-suite" -Debug
-		AddNode -Base $nUnitOutputWithEnvironment -Source $attachment -TargetXPath "test-run/test-suite"
 	}
-	SaveXml -xml $nUnitOutputWithEnvironment.OuterXml -OutFile (Join-Path -Path $parameters.ResultFolder -ChildPath "results_nunit.xml")
+	$nUnitOutputComplete = [xml](UpdateAttachments -NUnitXml $nUnitOutputWithEnvironment -RawResults $rawResultsFilePath -Details $detailsFilePath)
+	SaveXml -xml $nUnitOutputComplete.OuterXml -OutFile (Join-Path -Path $parameters.ResultFolder -ChildPath "results_nunit.xml")
 
 	if (DidAllTestsPass -FitNesseOutput $xml) {
 		Out-Log -Message "##vso[task.complete result=Succeeded;]Test run successful"

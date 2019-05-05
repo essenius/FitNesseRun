@@ -225,49 +225,58 @@ Describe "FitNesseConfigure-Unblock-IncomingTraffic" {
 
 Describe "FitNesseConfigure-WritePropertiesFile" {
     $script:count = 0
-    $parameters=@{'port'='9123';'slimPort'='8123';'slimTimeout'='30';'slimPoolSize'='7'}
     $propertiesFile = "TestDrive:\plugins.properties"
     it "should create a new properties file, and create FitSharp entries if FitSharp was found" {
+		$parameters=@{'port'='9123';'slimPort'='8123';'slimTimeout'='30';'slimPoolSize'='7'}
         Test-Path -Path $propertiesFile | Should -Be $false
         Write-PropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder "D:\" -Parameters $parameters
         Test-Path -Path $propertiesFile | Should -Be $true
-        $propertiesFile | Should -FileContentMatch "FITSHARP_PATH=D:\\"
-        $propertiesFile | Should -FileContentMatch "Port=9123"
-        $propertiesFile | Should -FileContentMatch "SLIM_PORT=8123"
-        $propertiesFile | Should -FileContentMatch "slim.timeout=30"
-        $propertiesFile | Should -FileContentMatch "slim.pool.size=7"
-        $propertiesFile | Should -FileContentMatch 'FITNESSE_ROOT=\${FITNESSE_ROOTPATH}\\\\\${FitNesseRoot}'
-        $propertiesFile | Should -FileContentMatch 'COMMAND_PATTERN=%m -r fitsharp\.Slim\.Service\.Runner,"\$\{FITSHARP_PATH\}\\\\fitsharp\.dll" %p'
-		$propertiesFile | Should -FileContentMatch 'TEST_RUNNER=\$\{FITSHARP_PATH\}\\\\Runner.exe'
-        $script:count = (Get-Content -Path $propertiesFile).count
-        $script:count | Should -Be 10
+		$propertiesFile | Should -FileContentMatch "^TEST_SYSTEM=slim"
+        $propertiesFile | Should -FileContentMatch "^FITSHARP_PATH=D:\\"
+        $propertiesFile | Should -FileContentMatch "^Port=9123"
+        $propertiesFile | Should -FileContentMatch "^SLIM_PORT=8123"
+        $propertiesFile | Should -FileContentMatch "^slim.timeout=30"
+        $propertiesFile | Should -FileContentMatch "^slim.pool.size=7"
+        $propertiesFile | Should -FileContentMatch '^FITNESSE_ROOT=\${FITNESSE_ROOTPATH}\\\\\${FitNesseRoot}'
+        $propertiesFile | Should -FileContentMatch '^COMMAND_PATTERN=%m -r fitsharp\.Slim\.Service\.Runner,"\$\{FITSHARP_PATH\}\\\\fitsharp\.dll" %p'
+		$propertiesFile | Should -FileContentMatch '^TEST_RUNNER=\$\{FITSHARP_PATH\}\\\\Runner.exe'
+        (Get-Content -Path $propertiesFile).count | Should -Be 10
     }
     it "should not create FitSharp entries if FitSharp was not found" {
+		$parameters=@{'port'='9124';'slimPort'='8124';'slimTimeout'='25';'slimPoolSize'='8'}
         Write-PropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder $null -Parameters $parameters
         Test-Path -Path $propertiesFile | Should -Be $true
-        $propertiesFile | Should -FileContentMatch "Port=9123"
-        $propertiesFile | Should -Not -FileContentMatch "FITSHARP_PATH="
-        $propertiesFile | Should -FileContentMatch 'FITNESSE_ROOT=\${FITNESSE_ROOTPATH}\\\\\${FitNesseRoot}'
-        $propertiesFile | Should -Not -FileContentMatch 'COMMAND_PATTERN=%m -r fitsharp\.Slim\.Service\.Runner,"\$\{FITSHARP_PATH\}\\\\fitsharp\.dll" %p'
-		$propertiesFile | Should -Not -FileContentMatch 'TEST_RUNNER='
+        $propertiesFile | Should -FileContentMatch "^Port=9124"
+        $propertiesFile | Should -FileContentMatch '^FITNESSE_ROOT=\${FITNESSE_ROOTPATH}\\\\\${FitNesseRoot}'
+        $propertiesFile | Should -FileContentMatch "^SLIM_PORT=8124"
+        $propertiesFile | Should -FileContentMatch "^slim.timeout=25"
+        $propertiesFile | Should -FileContentMatch "^slim.pool.size=8"
+        $propertiesFile | Should -Not -FileContentMatch "^FITSHARP_PATH="
+        $propertiesFile | Should -Not -FileContentMatch "^COMMAND_PATTERN="
+		$propertiesFile | Should -Not -FileContentMatch "^TEST_RUNNER="
         (Get-Content -Path $propertiesFile).count | Should -Be 7
     }
     it "should overwrite an existing setting file if it exists" {
+		$parameters=@{'port'='9125';'slimPort'='8125';'slimTimeout'='20';'slimPoolSize'='9'}
         "FITSHARP_PATH=E:\\" | Out-File $propertiesFile -Encoding Default
         Write-PropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder "D:\" -Parameters $parameters
         Test-Path -Path $propertiesFile | Should -Be $true
-        $propertiesFile | Should -FileContentMatch "FITSHARP_PATH=D:\\"
-        $propertiesFile | Should -FileContentMatch "slim.timeout=30"
+        $propertiesFile | Should -FileContentMatch "^FITSHARP_PATH=D:\\"
+        $propertiesFile | Should -FileContentMatch "^Port=9125"
+        (Get-Content -Path $propertiesFile).count | Should -Be 10
     }
     it "should include content of extra plugins.properties.* files" {
-        Out-File -FilePath "TestDrive:\plugins.properties.1" -InputObject "SymbolTypes=PiSymbolType"
+		$parameters=@{'port'='9126';'slimPort'='8126';'slimTimeout'='15';'slimPoolSize'='10'}
+	    Out-File -FilePath "TestDrive:\plugins.properties.1" -InputObject "SymbolTypes=PiSymbolType"
         Out-File -FilePath "TestDrive:\plugins.properties.2" -InputObject "SymbolTypes=InsertSymbolType,PiSymbolType"
         Out-File -FilePath "TestDrive:\plugins.properties.3" -InputObject "SymbolTypes=InsertSymbolType,FitNessePathSymbolType"
         Write-PropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder "D:\" -Parameters $parameters
         Test-Path -Path $propertiesFile | Should -Be $true
-        $propertiesFile | Should -FileContentMatch "FITSHARP_PATH=D:\\"
-        $propertiesFile | Should -FileContentMatch "SymbolTypes=FitNessePathSymbolType,InsertSymbolType,PiSymbolType"
-        (Get-Content -Path $propertiesFile).Count | Should -Be ($script:count + 1)
+		$propertiesFile | Should -FileContentMatch "^TEST_SYSTEM=slim"
+        $propertiesFile | Should -FileContentMatch "^Port=9126"
+        $propertiesFile | Should -FileContentMatch "^FITSHARP_PATH=D:\\"
+        $propertiesFile | Should -FileContentMatch "^SymbolTypes=FitNessePathSymbolType,InsertSymbolType,PiSymbolType"
+        (Get-Content -Path $propertiesFile).Count | Should -Be 11
     }
 }
 

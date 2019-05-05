@@ -227,6 +227,12 @@
             </test-case>
           </xsl:for-each>
         </results>
+        <attachments>
+          <attachment>
+            <filePath/>
+            <description>Raw test results from FitNesse</description>
+          </attachment>
+        </attachments>
       </test-suite>
     </test-run>
   </xsl:template>

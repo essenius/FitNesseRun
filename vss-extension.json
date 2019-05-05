@@ -2,7 +2,7 @@
     "manifestVersion":  1,
     "id":  "FitnesseRun",
     "name":  "FitNesseRun",
-    "version":  "1.0.8",
+    "version":  "1.0.14",
     "publisher":  "rikessenius",
     "targets":  [
                     {
@@ -119,9 +119,6 @@
                   },
                   {
                       "path":  "FitNesseRun/FitNesseRunV1/FitNesseToNUNit3.xslt"
-                  },
-                  {
-                      "path":  "FitNesseRun/FitNesseRunV1/FitNesseToSummaryResult.xslt"
                   },
                   {
                       "path":  "FitNesseRun/FitNesseRunV1/icon.png"

@@ -190,12 +190,12 @@ Function Write-PropertiesFile {
     $propertiesFile = Join-Path -Path $TargetFolder -ChildPath $configFile
     Out-Log " Creating properties file $propertiesFile"
     [string[]] $properties = "# first line must be a comment",
-    "Port=$($Parameters.Port)",
     "TEST_SYSTEM=slim",
+    'FITNESSE_ROOT=${FITNESSE_ROOTPATH}\\${FitNesseRoot}',
+    "Port=$($Parameters.Port)",
     "SLIM_PORT=$($Parameters.SlimPort)",
     "slim.timeout=$($Parameters.SlimTimeout)", 
-    "slim.pool.size=$($Parameters.SlimPoolSize)",
-    'FITNESSE_ROOT=${FITNESSE_ROOTPATH}\\${FitNesseRoot}'
+    "slim.pool.size=$($Parameters.SlimPoolSize)"
 	if ($FitSharpFolder) {
 		$properties += "FITSHARP_PATH=$($FitSharpFolder.Replace("\","\\"))",
 					   'COMMAND_PATTERN=%m -r fitsharp.Slim.Service.Runner,"${FITSHARP_PATH}\\fitsharp.dll" %p',
