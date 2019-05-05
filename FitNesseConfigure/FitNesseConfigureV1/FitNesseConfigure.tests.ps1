@@ -47,13 +47,6 @@ Describe "FitNesseConfigure-AddFirefoxBinaryToPath" {
     }
 }
 
-Describe "FitNesseConfigure-GetModuleFolder" {
-    Mock -CommandName TestOnAgent -MockWith { return $true }
-    it "should return $PSScriptRoot" {
-        GetModuleFolder | Should -Be $PSScriptRoot
-    }
-}
-
 Describe "FitNesseConfigure-ConvertToPortList" {
         # -ModuleName means that the mock is called from the context of the function (not where it's defined)
         Mock -ModuleName CommonFunctions -CommandName Exit-WithError -MockWith { throw $Message }
@@ -81,11 +74,11 @@ Describe "FitNesseConfigure-FindFitSharp" {
 		$script:file = "e:\a\dbfit.dll"
 	    Mock -CommandName Find-UnderFolder -MockWith { return $script:file }
 		it "should find FitSharp" {
-			Find-FitSharp | should -Be "e:\a"
+			FindFitSharp | should -Be "e:\a"
 		}
 		$script:file = $null
 		it "should not find FitSharp" {
-			Find-FitSharp | should -BeNull
+			FindFitSharp | should -BeNull
 		}
 }
 
@@ -117,6 +110,13 @@ Describe "FitNesseConfigure-GetIntersection" {
         GetIntersection -x @(1,2,3,4) -y (3,4,5,6) | Should -Be @(3,4)
         GetIntersection -x @(1,2,3,4) -y (5,6) | Should -BeNullOrEmpty
         GetIntersection -x @(1,7,8,23) -y (23,1) | Should -Be @(1,23)
+    }
+}
+
+Describe "FitNesseConfigure-GetModuleFolder" {
+    Mock -CommandName TestOnAgent -MockWith { return $true }
+    it "should return $PSScriptRoot" {
+        GetModuleFolder | Should -Be $PSScriptRoot
     }
 }
 
@@ -194,7 +194,7 @@ Describe "FitNesseConfigure-TestRuleOk" {
     }
 }
 
-Describe "FitNesseConfigure-Unblock-IncomingTraffic" {
+Describe "FitNesseConfigure-UnblockIncomingTraffic" {
     Mock -CommandName ShowBlockedPorts -MockWith {}
     Mock -CommandName New-NetFirewallRule -MockWith {}
     Mock -CommandName Set-NetFirewallRule -MockWith {}
@@ -203,7 +203,7 @@ Describe "FitNesseConfigure-Unblock-IncomingTraffic" {
         it "should set the rule" {
             $script:Message = ""
             Mock -CommandName Get-NetFirewallRule -MockWith { return @{'Action'='Allow'} }
-            Unblock-IncomingTraffic -Port 123 -Description "MyApp"
+            UnblockIncomingTraffic -Port 123 -Description "MyApp"
             $script:Message | Should -Be " Updating existing firewall rule 'MyApp (port 123)' to allow incoming traffic"
             Assert-MockCalled -CommandName New-NetFirewallRule -Times 0 -Exactly -Scope It
             Assert-MockCalled -CommandName Set-NetFirewallRule -Times 1 -Exactly -Scope It
@@ -214,7 +214,7 @@ Describe "FitNesseConfigure-Unblock-IncomingTraffic" {
         it "should create the rule" {
             $script:Message=""
             Mock -CommandName Get-NetFirewallRule -MockWith { return $null }
-            Unblock-IncomingTraffic -Port 123 -PoolSize 3 -Description "MyMultiPortApp"
+            UnblockIncomingTraffic -Port 123 -PoolSize 3 -Description "MyMultiPortApp"
             $script:Message | Should -Be " Creating new firewall rule 'MyMultiPortApp (port 123-125)' to allow incoming traffic"
             Assert-MockCalled -CommandName New-NetFirewallRule -Times 1 -Exactly -Scope It
             Assert-MockCalled -CommandName Set-NetFirewallRule -Times 0 -Exactly -Scope It
@@ -229,7 +229,7 @@ Describe "FitNesseConfigure-WritePropertiesFile" {
     it "should create a new properties file, and create FitSharp entries if FitSharp was found" {
 		$parameters=@{'port'='9123';'slimPort'='8123';'slimTimeout'='30';'slimPoolSize'='7'}
         Test-Path -Path $propertiesFile | Should -Be $false
-        Write-PropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder "D:\" -Parameters $parameters
+        WritePropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder "D:\" -Parameters $parameters
         Test-Path -Path $propertiesFile | Should -Be $true
 		$propertiesFile | Should -FileContentMatch "^TEST_SYSTEM=slim"
         $propertiesFile | Should -FileContentMatch "^FITSHARP_PATH=D:\\"
@@ -244,7 +244,7 @@ Describe "FitNesseConfigure-WritePropertiesFile" {
     }
     it "should not create FitSharp entries if FitSharp was not found" {
 		$parameters=@{'port'='9124';'slimPort'='8124';'slimTimeout'='25';'slimPoolSize'='8'}
-        Write-PropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder $null -Parameters $parameters
+        WritePropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder $null -Parameters $parameters
         Test-Path -Path $propertiesFile | Should -Be $true
         $propertiesFile | Should -FileContentMatch "^Port=9124"
         $propertiesFile | Should -FileContentMatch '^FITNESSE_ROOT=\${FITNESSE_ROOTPATH}\\\\\${FitNesseRoot}'
@@ -259,7 +259,7 @@ Describe "FitNesseConfigure-WritePropertiesFile" {
     it "should overwrite an existing setting file if it exists" {
 		$parameters=@{'port'='9125';'slimPort'='8125';'slimTimeout'='20';'slimPoolSize'='9'}
         "FITSHARP_PATH=E:\\" | Out-File $propertiesFile -Encoding Default
-        Write-PropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder "D:\" -Parameters $parameters
+        WritePropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder "D:\" -Parameters $parameters
         Test-Path -Path $propertiesFile | Should -Be $true
         $propertiesFile | Should -FileContentMatch "^FITSHARP_PATH=D:\\"
         $propertiesFile | Should -FileContentMatch "^Port=9125"
@@ -270,7 +270,7 @@ Describe "FitNesseConfigure-WritePropertiesFile" {
 	    Out-File -FilePath "TestDrive:\plugins.properties.1" -InputObject "SymbolTypes=PiSymbolType"
         Out-File -FilePath "TestDrive:\plugins.properties.2" -InputObject "SymbolTypes=InsertSymbolType,PiSymbolType"
         Out-File -FilePath "TestDrive:\plugins.properties.3" -InputObject "SymbolTypes=InsertSymbolType,FitNessePathSymbolType"
-        Write-PropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder "D:\" -Parameters $parameters
+        WritePropertiesFile -TargetFolder "TestDrive:\" -FitSharpFolder "D:\" -Parameters $parameters
         Test-Path -Path $propertiesFile | Should -Be $true
 		$propertiesFile | Should -FileContentMatch "^TEST_SYSTEM=slim"
         $propertiesFile | Should -FileContentMatch "^Port=9126"
@@ -280,14 +280,14 @@ Describe "FitNesseConfigure-WritePropertiesFile" {
     }
 }
 
-Describe "FitNesseConfigure-MainHelper" {
+Describe "FitNesseConfigure-InvokeMainTask" {
     Mock -CommandName AddFirefoxBinaryToPath -MockWith { }
     Mock -CommandName Find-UnderFolder -MockWith { return "c:\a\b.jar" }
     Mock -CommandName Write-OutputVariable -MockWith { $script:variable += "$Name = $Value;" }
     Mock -CommandName Get-NetFirewallPortFilter -MockWith { return $null }
     Mock -CommandName New-NetFirewallRule -MockWith { $script:Rule += $DisplayName }
     Mock -CommandName Set-NetFirewallRule -MockWith { $script:Rule += $DisplayName }
-    $script:basePath = 'Testdrive:\FitNesseDeploy_MainHelper'
+    $script:basePath = 'Testdrive:\FitNesseDeploy_InvokeMainTask'
 	$propertiesFile = "$script:basePath\plugins.properties"
 
     It "should find FitSharp, and create new rules if not existing" {
@@ -297,7 +297,7 @@ Describe "FitNesseConfigure-MainHelper" {
         $script:Rule = @()
 
         $script:variable = ""
-        MainHelper
+        InvokeMainTask
 
         (Test-Path -Path $propertiesFile) | Should -Be $true
         $propertiesFile | Should -FileContentMatch "FITSHARP_PATH=c:\\\\a"
@@ -309,11 +309,11 @@ Describe "FitNesseConfigure-MainHelper" {
     }
     it "should not find FitSharp, and update existing rules" {
 		# Just doing two tests at once, not related
-		Mock -CommandName Find-FitSharp -MockWith { return $null }
+		Mock -CommandName FindFitSharp -MockWith { return $null }
         Mock Get-TaskParameter { return @{'TargetFolder'= "$($script:basePath)";'Port'='5';'SlimPort'='6';'SlimPoolSize'='7';'SlimTimeout'='8';'UnblockPorts'='true' } }
         Mock -CommandName Get-NetFirewallRule -MockWith { return "not null" }
         $script:Rule = @()
-        MainHelper
+        InvokeMainTask
         (Get-ChildItem -Recurse -Path $basePath).Count | Should -Be 1
 	    $propertiesFile | Should -Not -FileContentMatch "FITSHARP_PATH="
         Assert-MockCalled -CommandName Set-NetFirewallRule -Times 2 -Exactly -Scope It
@@ -321,8 +321,8 @@ Describe "FitNesseConfigure-MainHelper" {
     }
     it "should not try to unblock ports if not requested" {
         Mock Get-TaskParameter { return @{'TargetFolder'= "$($script:basePath)";'Port'='5';'SlimPort'='6';'SlimPoolSize'='7';'SlimTimeout'='8';'UnblockPorts'='false' } }
-        Mock -CommandName Unblock-IncomingTraffic -MockWith {}
-        MainHelper
-        Assert-MockCalled -CommandName Unblock-IncomingTraffic -Times 0 -Exactly -Scope It
+        Mock -CommandName UnblockIncomingTraffic -MockWith {}
+        InvokeMainTask
+        Assert-MockCalled -CommandName UnblockIncomingTraffic -Times 0 -Exactly -Scope It
     }
 }

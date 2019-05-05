@@ -65,45 +65,70 @@ function CallRest([string]$Uri, [string]$ReadWriteTimeoutSeconds = "default") {
 		$reader = New-Object System.IO.StreamReader $responseStream
 		$callResult = $reader.ReadToEnd()
 	} catch {
-		$stackTrace = GetStackTrace
-		return Get-ErrorResponse -Exception $_.Exception -Uri $Uri -Duration (GetDuration -StartTime $startTime) -stackTrace $stackTrace
+		#$stackTrace = GetStackTrace
+		return GetErrorResponse -Exception $_.Exception -Uri $Uri -Duration (GetDuration -StartTime $startTime) -stackTrace (GetStackTrace)
 	}
 	return $callResult
 }
 
-# Execute a command and retrieve the output
-function Execute([string]$Command, [string]$Arguments) {
-	Out-Log -Message "Executing: $Command $Arguments" -Command
-	$processStartInfo = [System.Diagnostics.ProcessStartInfo]@{
-        FileName = $Command;
-        Arguments = $Arguments;
-        RedirectStandardOutput = $true;
-        RedirectStandardError = $true;
-        WorkingDirectory = (Get-Location).Path;
-        UseShellExecute = $false;
-        CreateNoWindow = $true;
+function ConvertXml([xml]$InputXml, [string]$XsltFile, [string]$Now = (Get-Date).ToUniversalTime().ToString("o")) {
+    $xslt = New-Object Xml.Xsl.XslCompiledTransform
+	$xsltSettings = New-Object Xml.Xsl.XsltSettings($true,$false)
+	$xsltSettings.EnableScript = $true
+	$XmlUrlResolver = New-Object System.Xml.XmlUrlResolver
+    $xslt.Load((Join-Path -Path $PSScriptRoot -ChildPath $XsltFile), $xsltSettings, $XmlUrlResolver)
+
+    $target = New-Object System.IO.MemoryStream
+	$reader = New-Object System.IO.StreamReader($target)
+    try {
+		$xslArguments = New-Object Xml.Xsl.XsltArgumentList
+        $xslArguments.AddParam("Now", "", $Now);
+		$xslt.Transform($InputXml, $xslArguments, $target)
+        $target.Position = 0
+		return $reader.ReadToEnd()
+    } Finally {
+		$reader.Close()
+        $target.Close()
     }
+}
 
+function EditEnvironment([xml]$NUnitXml) {
+	$env = $NUnitXml.SelectSingleNode("test-run/test-suite/environment")
+	if (!($env)) { return $NUnitXml.OuterXml }
+	$os = $os=get-ciminstance -classname win32_operatingsystem
+	$testSystem=($NUnitXml.SelectSingleNode("test-run/test-suite[1]/settings").setting |
+		Where-Object {$_.name -eq "TestSystem"}).Value
+	if ($testSystem) {
+		$assembly = $testSystem.Split(":",2)[1]
+		$versionInfo = GetVersionInfo -Assembly $assembly
+		if ($versionInfo) {
+			$env.SetAttribute("framework-version", $versionInfo)
+			$clrVersion = GetClrVersionInfo($assembly)
+			if ($clrVersion) { $env.SetAttribute("clr-version", $clrVersion) }
+		}
+	}
+	$env.SetAttribute("os-architecture", $os.OSArchitecture)
+	$env.SetAttribute("os-version", $os.Version)
+	# VSTS can't deal with the platform attribute.
+	# $env.SetAttribute("platform", $os.Caption)
+	$env.SetAttribute("cwd", ".")
+	$env.SetAttribute("machine-name", $os.CSName)
+	$user = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name.Split("\")
+	$env.SetAttribute("user", $user[1])
+	$env.SetAttribute("user-domain", $user[0])
+	$env.SetAttribute("culture", (Get-Culture).Name)
+	$env.SetAttribute("uiculture", (Get-UICulture).Name)
+	return $NUnitXml.OuterXml
+}
 
-    $process = [System.Diagnostics.Process]@{StartInfo = $processStartInfo}
-
-	# This is a somewhat convoluted way to read the error and output streams, and is intended to prevent deadlocks
-	# We read one stream synchronously and one stream asynchronously.
-	$errorBuilder = [System.Text.StringBuilder]@{}
-	$appendScript = {
-        if (! [String]::IsNullOrEmpty($EventArgs.Data)) { $Event.MessageData.AppendLine($EventArgs.Data) }
-    }
-	$errorEvent = Register-ObjectEvent -InputObject $process -Action $appendScript -EventName 'ErrorDataReceived' -MessageData $errorBuilder
-	$process.Start() | Out-Null
-	$process.BeginErrorReadLine()
-	$returnValue = New-Object ExecutionResult
-	# ReadToEnd needs to be done before WaitForExit to prevent deadlocks
-	$returnValue.output = $process.StandardOutput.ReadToEnd()
-	$process.WaitForExit()
-	Unregister-Event -SourceIdentifier $errorEvent.Name
-	$returnValue.error = $errorBuilder.ToString()
-	$returnValue.exitCode = $process.ExitCode
-	return $returnValue
+function EditAttachments([xml]$NUnitXml, [string]$RawResults, [string]$Details) {
+	$suite = $NUnitXml.SelectSingleNode("test-run/test-suite[1]")
+	@($suite.attachments.attachment)[0].filePath = $RawResults
+	if ($Details) {
+		$attachment = [xml]"<attachment><filePath>$Details</filePath><description>Test results in HTML</description></attachment>"
+		AddNode -Base $NUnitXml -Source $attachment -TargetXPath "test-run/test-suite[1]/attachments"
+	}
+	return $NUnitXml.OuterXml
 }
 
 # Run FitNesse on the local machine in 'single shot mode', and get the XML result
@@ -112,13 +137,13 @@ function ExecuteFitNesse([string]$AppSearchRoot, [string]$DataFolder, [string]$P
 	$java = Find-InPath -Command "java.exe" -Description "Java" -Assert
 	Exit-If -Condition (!(Test-Path -Path $DataFolder)) -Message "Could not find data folder '$DataFolder'"
 	Assert-IsPositive -Value $Port -Parameter "Port"
-	$usedPort = NextFreePort -DesiredPort $Port
+	$usedPort = GetNextFreePort -DesiredPort $Port
 	$originalLocation = Get-Location
 	try {
 		Set-Location -Path $DataFolder
 		Out-Log -Message "Executing [$java] [$fitNesse], port=[$usedPort], data@[$DataFolder], command=[$restCommand]" -Debug
 		# -o ensures that FitNesse doesn't try to update - so we don't need the "properties" file
-		$commandResult = Execute -Command $java -Arguments (
+		$commandResult = InvokeProcess -Command $java -Arguments (
 			"-jar", "`"$fitNesse`"", "-d", "`"$DataFolder`"", "-p", $usedPort, "-o", "-c", "`"$restCommand`"")
 	} finally {
 		Set-Location -Path $originalLocation
@@ -200,7 +225,7 @@ function GetDuration([DateTime]$StartTime) {
 	return ((Get-Date).Subtract($StartTime)).TotalMilliseconds
 }
 
-function GetErrorFromHtmlString([string]$InputHtml) {
+function GetErrorFromHtmlString([string]$InputHtml, [string]$Default) {
 	$html = New-Object -Com "HTMLFile"
 	try {
 		# Only works when Office is installed (e.g. on my machine)
@@ -210,10 +235,12 @@ function GetErrorFromHtmlString([string]$InputHtml) {
 		$source = [System.Text.Encoding]::Unicode.GetBytes($InputHtml)
 		$html.write($source)
 	}
-	return ($html.all.tags("span") | Where-Object {$_.className -eq "error"}).InnerText
+	$result= ($html.all.tags("span") | Where-Object {$_.className -eq "error"}).InnerText
+	if ($result) { return $result }
+	return $Default
 }
 
-function Get-ErrorResponse([exception]$Exception, [string]$Uri, [double]$Duration, [string]$StackTrace) {
+function GetErrorResponse([exception]$Exception, [string]$Uri, [double]$Duration, [string]$StackTrace) {
 	$errorMessage = $Exception.Message
 	if ($errorMessage -notlike "*$($Exception.InnerException.InnerException.Message)*") {
 		 $errorMessage += ": $($Exception.InnerException.InnerException.Message)"
@@ -227,6 +254,12 @@ function Get-ErrorResponse([exception]$Exception, [string]$Uri, [double]$Duratio
 	  "<finalCounts><exceptions>1</exceptions></finalCounts>" +
 	  "<totalRunTimeInMillis>$Duration</totalRunTimeInMillis>"+
 	"</testResults>"
+}
+
+function GetNextFreePort([int]$DesiredPort) {
+	$selectedPort = $DesiredPort;
+	while (!(TestTcpPortAvailable -Port $selectedPort)) { $selectedPort++ }
+	return $selectedPort
 }
 
 function GetStackTrace() {
@@ -252,6 +285,38 @@ function GetVersionInfo([string]$Assembly) {
 	return ""
 }
 
+# Execute a command and retrieve the output
+function InvokeProcess([string]$Command, [string]$Arguments) {
+	Out-Log -Message "Executing: $Command $Arguments" -Command
+	$processStartInfo = [System.Diagnostics.ProcessStartInfo]@{
+        FileName = $Command;
+        Arguments = $Arguments;
+        RedirectStandardOutput = $true;
+        RedirectStandardError = $true;
+        WorkingDirectory = (Get-Location).Path;
+        UseShellExecute = $false;
+        CreateNoWindow = $true;
+    }
+    $process = [System.Diagnostics.Process]@{StartInfo = $processStartInfo}
+
+	# This is a somewhat convoluted way to read the error and output streams, and is intended to prevent deadlocks
+	# We read one stream synchronously and one stream asynchronously. Also, ReadToEnd must happen before WaitForExit.
+	$outputBuilder = [System.Text.StringBuilder]@{}
+	$appendScript = {
+        if ($EventArgs.Data) { $Event.MessageData.AppendLine($EventArgs.Data) }
+    }
+	$outputEvent = Register-ObjectEvent -InputObject $process -Action $appendScript -EventName 'OutputDataReceived' -MessageData $outputBuilder
+	$process.Start() | Out-Null
+	$process.BeginOutputReadLine()
+	$returnValue = New-Object ExecutionResult
+	$returnValue.error = $process.StandardError.ReadToEnd()
+	$process.WaitForExit()
+	Unregister-Event -SourceIdentifier $outputEvent.Name
+	$returnValue.output = $outputBuilder.ToString()
+	$returnValue.exitCode = $process.ExitCode
+	return $returnValue
+}
+
 function Invoke-FitNesse([hashtable]$Parameters) {
 	# The FitNesse xml format doesn't always contain an exception on complete failure. The HTML result usually contains
 	# more clues. So if we get a xml result without results node, we retry the command in HTML, and grab the error message
@@ -264,47 +329,37 @@ function Invoke-FitNesse([hashtable]$Parameters) {
 	if ($Parameters.Command -eq 'call') {
 		$uri = New-Object System.Uri([System.Uri]$Parameters.BaseUri, $restCommand)
 		$xml = CallRest -Uri $uri -ReadWriteTimeoutSeconds $Parameters.TimeoutSeconds
-		if (MayHaveMissedError -InputXml $xml) {
+		if (TestMissedError -InputXml $xml) {
 			$htmlRequest = $uri.ToString().Replace("format=xml","format=html")
 			$htmlText = CallRest -Uri $htmlRequest -ReadWriteTimeoutSeconds $Parameters.TimeoutSeconds
 		}
 	} else { # Execute
 		$xml = [xml](ExecuteFitNesse -AppSearchRoot $Parameters.AppSearchRoot -DataFolder $Parameters.DataFolder `
 									 -Port $Parameters.Port -RestCommand $restCommand)
-		if (MayHaveMissedError -InputXml $xml) {
+		if (TestMissedError -InputXml $xml) {
 			$htmlRestCommand = $restCommand.Replace("format=xml","format=html")
 			$htmlText = ExecuteFitNesse -AppSearchRoot $Parameters.AppSearchRoot -DataFolder $Parameters.DataFolder `
 										-Port $Parameters.Port -RestCommand $htmlRestCommand
 		}
 	}
 	if ($htmlText) { # Look for an exception message in the HTML page and insert that
-		$missedErrorMessage =  GetErrorFromHtmlString -InputHtml $htmlText
-		if (!$missedErrorMessage) {
-			$missedErrorMessage = "No test results found"
-		}
+		$missedErrorMessage =  GetErrorFromHtmlString -InputHtml $htmlText -Default "No test results found"
 		Out-Log "Retried via HTML: $missedErrorMessage" -Debug
-		$xPath= "/testResults/executionLog"
-		if (!($xml.SelectSingleNode($xPath))) {
-			$executionLog = [xml]"<executionLog/>"
-			AddNode -Base $xml -Source $executionLog -TargetXPath "/testResults"
-		}
-		$exceptionXml = [xml]"<exception><![CDATA[$missedErrorMessage]]></exception>"
-		$stackTraceXml = [xml]"<stackTrace><![CDATA[$(GetStackTrace)]]></stackTrace>"
-		AddNode -Base $xml -Source $exceptionXml -TargetXPath $xPath
-		AddNode -Base $xml -Source $stackTraceXml -TargetXPath $xPath
+		SaveExceptionMessage -xml $xml -Message $missedErrorMessage -StackTraceMessage (GetStackTrace)
 	}
-	# todo: change this to returning an XML object
 	return $xml.OuterXml
 }
 
-function MayHaveMissedError([xml]$InputXml) {
-	return (!$xml.testResults.result) -and (!$xml.testResults.executionLog.exception)
-}
-
-function NextFreePort([int]$DesiredPort) {
-	$selectedPort = $DesiredPort;
-	while (!(TcpPortAvailable -Port $selectedPort)) { $selectedPort++ }
-	return $selectedPort
+function SaveExceptionMessage([xml]$xml, [string]$Message, [string]$StackTraceMessage) {
+	$xPath= "/testResults/executionLog"
+	if (!($xml.SelectSingleNode($xPath))) {
+		$executionLog = [xml]"<executionLog/>"
+		AddNode -Base $xml -Source $executionLog -TargetXPath "/testResults"
+	}
+	$exceptionXml = [xml]"<exception><![CDATA[$Message]]></exception>"
+	$stackTraceXml = [xml]"<stackTrace><![CDATA[$StackTraceMessage]]></stackTrace>"
+	AddNode -Base $xml -Source $exceptionXml -TargetXPath $xPath
+	AddNode -Base $xml -Source $stackTraceXml -TargetXPath $xPath
 }
 
 function SaveXml([string]$xml, [string]$OutFile) {
@@ -312,102 +367,44 @@ function SaveXml([string]$xml, [string]$OutFile) {
 	$xmlObject.Save($OutFile)
 }
 
-function TcpPortAvailable([int]$Port) {
-    $ipGlobalProperties = [System.Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties()
-    return 0 -eq ($ipGlobalProperties.GetActiveTcpListeners() | where-object {$_.Port -eq $Port}).Count
-}
-
-function Transform([xml]$InputXml, [string]$XsltFile, [string]$Now = (Get-Date).ToUniversalTime().ToString("o")) {
-    $xslt = New-Object Xml.Xsl.XslCompiledTransform
-	$xsltSettings = New-Object Xml.Xsl.XsltSettings($true,$false)
-	$xsltSettings.EnableScript = $true
-	$XmlUrlResolver = New-Object System.Xml.XmlUrlResolver
-    $xslt.Load((Join-Path -Path $PSScriptRoot -ChildPath $XsltFile), $xsltSettings, $XmlUrlResolver)
-
-    $target = New-Object System.IO.MemoryStream
-	$reader = New-Object System.IO.StreamReader($target)
-    try {
-		$xslArguments = New-Object Xml.Xsl.XsltArgumentList
-        $xslArguments.AddParam("Now", "", $Now);
-		$xslt.Transform($InputXml, $xslArguments, $target)
-        $target.Position = 0
-		return $reader.ReadToEnd()
-    } Finally {
-		$reader.Close()
-        $target.Close()
-    }
-}
-
-function UpdateEnvironment([xml]$NUnitXml) {
-	$env = $NUnitXml.SelectSingleNode("test-run/test-suite/environment")
-	if (!($env)) { return $NUnitXml.OuterXml }
-	$os = $os=get-ciminstance -classname win32_operatingsystem
-	$testSystem=($NUnitXml.SelectSingleNode("test-run/test-suite[1]/settings").setting |
-		Where-Object {$_.name -eq "TestSystem"}).Value
-	if ($testSystem) {
-		$assembly = $testSystem.Split(":",2)[1]
-		$versionInfo = GetVersionInfo -Assembly $assembly
-		if ($versionInfo) {
-			$env.SetAttribute("framework-version", $versionInfo)
-			$clrVersion = GetClrVersionInfo($assembly)
-			if ($clrVersion) { $env.SetAttribute("clr-version", $clrVersion) }
-		}
-	}
-	$env.SetAttribute("os-architecture", $os.OSArchitecture)
-	$env.SetAttribute("os-version", $os.Version)
-	# VSTS can't deal with the platform attribute.
-	# $env.SetAttribute("platform", $os.Caption)
-	$env.SetAttribute("cwd", ".")
-	$env.SetAttribute("machine-name", $os.CSName)
-	$user = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name.Split("\")
-	$env.SetAttribute("user", $user[1])
-	$env.SetAttribute("user-domain", $user[0])
-	$env.SetAttribute("culture", (Get-Culture).Name)
-	$env.SetAttribute("uiculture", (Get-UICulture).Name)
-	return $NUnitXml.OuterXml
-}
-
-function UpdateAttachments([xml]$NUnitXml, [string]$RawResults, [string]$Details) {
-	$suite = $NUnitXml.SelectSingleNode("test-run/test-suite[1]")
-	@($suite.attachments.attachment)[0].filePath = $RawResults
-	if ($Details) {
-		$attachment = [xml]"<attachment><filePath>$Details</filePath><description>Test results in HTML</description></attachment>"
-		AddNode -Base $NUnitXml -Source $attachment -TargetXPath "test-run/test-suite[1]/attachments"
-	}
-	return $NUnitXml.OuterXml
-}
-
 function TestAllTestsPassed([string]$FitNesseOutput) {
 	$counts = ([xml]$fitNesseOutput).testResults.finalCounts
 	return (([int]$counts.wrong + [int]$counts.exceptions) -eq 0) -and ([int]$counts.right -gt 0)
 }
 
-function MainHelper() {
-	$parameters = Get-TaskParameter -ParameterNames "command", "testSpec", "includeHtml", # All
-		"port", "dataFolder", "appSearchRoot",  # Execute
-		"baseUri", "timeoutSeconds", # Call
-		"resultFolder", "extraParam" # All
+function TestMissedError([xml]$InputXml) {
+	return (!$xml.testResults.result) -and (!$xml.testResults.executionLog.exception)
+}
 
-	if (!(Test-Path -Path $parameters.ResultFolder)) {
-		New-Item -Path $parameters.ResultFolder -ItemType directory | out-null
-	}
+
+function TestTcpPortAvailable([int]$Port) {
+    $ipGlobalProperties = [System.Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties()
+    return 0 -eq ($ipGlobalProperties.GetActiveTcpListeners() | where-object {$_.Port -eq $Port}).Count
+}
+
+function InvokeMainTask() {
+	$parameters = Get-TaskParameter -ParameterNames "command", "testSpec", "includeHtml", "resultFolder", "extraParam", # All
+		"port", "dataFolder", "appSearchRoot",  # Execute
+		"baseUri", "timeoutSeconds" # Call
+
+	New-FolderIfNeeded -Path $parameters.ResultFolder
 	Out-Log -Message "Invoking FitNesse" -Debug
 	$xml = Invoke-FitNesse -Parameters $parameters
 	$rawResultsFilePath = (Join-Path -Path $parameters.ResultFolder -ChildPath "fitnesse.xml")
 	SaveXml -xml $xml -OutFile $rawResultsFilePath
 
 	Out-Log -Message  "Transforming output to NUnit 3 format" -Debug
-	$nUnitOutput = Transform -InputXml $xml -XsltFile "FitNesseToNUnit3.xslt"
-	$nUnitOutputWithEnvironment = [xml](UpdateEnvironment -NUnitXml $nUnitOutput)
+	$nUnitOutput = ConvertXml -InputXml $xml -XsltFile "FitNesseToNUnit3.xslt"
+	$nUnitOutputWithEnvironment = [xml](EditEnvironment -NUnitXml $nUnitOutput)
 
 	$detailsFilePath = $null
 	if ($parameters.IncludeHtml -eq $true) {
 		Out-Log -Message "Generating detailed results file" -Debug
-		$details = (Transform -InputXml $xml -XsltFile "FitNesseToDetailedResults.xslt")
+		$details = (ConvertXml -InputXml $xml -XsltFile "FitNesseToDetailedResults.xslt")
 		$detailsFilePath = (Join-Path -Path $parameters.ResultFolder -ChildPath "DetailedResults.html")
 		$details | Out-File ($detailsFilePath)
 	}
-	$nUnitOutputComplete = [xml](UpdateAttachments -NUnitXml $nUnitOutputWithEnvironment -RawResults $rawResultsFilePath -Details $detailsFilePath)
+	$nUnitOutputComplete = [xml](EditAttachments -NUnitXml $nUnitOutputWithEnvironment -RawResults $rawResultsFilePath -Details $detailsFilePath)
 	SaveXml -xml $nUnitOutputComplete.OuterXml -OutFile (Join-Path -Path $parameters.ResultFolder -ChildPath "results_nunit.xml")
 
 	if (TestAllTestsPassed -FitNesseOutput $xml) {
@@ -418,4 +415,4 @@ function MainHelper() {
 }
 
 ######## Start of script ########
-if (TestOnAgent) { MainHelper } else { Exit-WithError -Message "Not running on an agent. Exiting." }
+if (TestOnAgent) { InvokeMainTask } else { Exit-WithError -Message "Not running on an agent. Exiting." }

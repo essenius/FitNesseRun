@@ -97,7 +97,7 @@ function GetPropertyValues {
 
 # Find the FitSharp folder. We look for dbFit since that's not used in the .net Core version, and we want the classic .Net version
 # This is a bit of a hack, so TODO: find more structural way to identify the right FitSharp version
-function Find-FitSharp {
+function FindFitSharp {
     param([string]$SearchRoot)
     $dbFit = Find-UnderFolder -FileName "dbfit.dll" -Description "DBFit" -SearchRoot $SearchRoot
 	if ($dbFit) {
@@ -157,7 +157,7 @@ function TestRuleOk {
 
 # Unblock incoming TCP traffic on a port range for the domain. Port is the start port, Poolsize is the number of consecutive ports to use.
 # E.g. -Port 8005 -Poolsize 5 will unblock ports 8085-8089
-function Unblock-IncomingTraffic {
+function UnblockIncomingTraffic {
     param([string]$Port, [string]$PoolSize=1, [string]$Description)
     $PortRange = ConvertToPortRange -Port $Port -PoolSize $PoolSize
     $portList = ConvertToPortList -PortSpec $portRange
@@ -183,7 +183,7 @@ function Unblock-IncomingTraffic {
 
 
 # Create a new plugins.properties file using the parameters and the identified FitSharp location
-Function Write-PropertiesFile {
+Function WritePropertiesFile {
     param([string]$TargetFolder, [string]$FitSharpFolder, [hashtable]$Parameters)
     New-FolderIfNeeded -Path $TargetFolder
     $configFile = "plugins.properties"
@@ -218,7 +218,7 @@ Function Write-PropertiesFile {
 
 # Orchestrate the process: get the parameters, validate them, create/clean target folder as needed, find FitSharp, create properties file,
 # copy any demos to the right locations, and open firewall ports if desired
-function MainHelper {
+function InvokeMainTask {
     $parameters = Get-TaskParameter -ParameterNames "targetFolder","port","slimPort","slimPoolSize","slimTimeout","unblockPorts"
     Assert-IsPositive -Value $parameters.Port -Parameter 'port'
     Assert-IsPositive -Value $parameters.SlimPort -Parameter 'slimPort'
@@ -226,8 +226,8 @@ function MainHelper {
     Assert-IsPositive -Value $parameters.SlimTimeout -Parameter 'slimTimeout'
 
     Out-Log -Message "Generating plugins.properties and setting output variables.." -Debug
-    $fitSharpFolder = Find-FitSharp -SearchRoot $parameters.TargetFolder
-    Write-PropertiesFile -TargetFolder $Parameters.TargetFolder -FitSharpFolder $fitSharpFolder -Parameters $parameters
+    $fitSharpFolder = FindFitSharp -SearchRoot $parameters.TargetFolder
+    WritePropertiesFile -TargetFolder $Parameters.TargetFolder -FitSharpFolder $fitSharpFolder -Parameters $parameters
     $fitNesse = Find-UnderFolder -FileName "fitnesse*.jar" -Description "FitNesse" -SearchRoot $parameters.TargetFolder -Assert
     Write-OutputVariable -Name "FitNesse.StartCommand" -Value "java -jar $fitNesse -d $($parameters.TargetFolder) -e 0 -o"
 
@@ -239,10 +239,10 @@ function MainHelper {
 
     if ($parameters.UnblockPorts -eq 'true') {
         Out-Log -Message "Unblocking incoming traffic" -Debug
-        Unblock-IncomingTraffic -Port $parameters.Port -Description "FitNesse"
-        Unblock-IncomingTraffic -Port $parameters.SlimPort -PoolSize $parameters.SlimPoolSize -Description "FitSharp"
+        UnblockIncomingTraffic -Port $parameters.Port -Description "FitNesse"
+        UnblockIncomingTraffic -Port $parameters.SlimPort -PoolSize $parameters.SlimPoolSize -Description "FitSharp"
     }
 }
 
 ######## Start of script ########
-if (TestOnAgent) { MainHelper } else { Exit-WithError -Message "Not running on an agent. Exiting." }
+if (TestOnAgent) { InvokeMainTask } else { Exit-WithError -Message "Not running on an agent. Exiting." }

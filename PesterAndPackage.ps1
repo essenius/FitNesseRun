@@ -17,24 +17,24 @@ function ExitScript {
 	exit 1
 }
 
-function Exit-WithError {
+function ExitWithError {
     param([string]$Message)
-	Out-Log -Message $Message
+	OutLog -Message $Message
 	ExitScript
 }
 
-function Get-Version {
+function GetVersion {
     param([string]$FilePath)
     $vssExtension = Get-Content -Raw -Path $FilePath | ConvertFrom-Json
     return New-Object -TypeName System.Version -ArgumentList $vssExtension.Version
 }
 
-function Get-NextVersion {
+function GetNextVersion {
     param([System.Version]$Version)
     return New-Object -TypeName System.Version -ArgumentList $Version.Major, $Version.Minor, ($Version.Build + 1)
 }
 
-function Invoke-Test {
+function InvokeTest {
     param([string]$Folder, [string[]]$CodeCoverage, [string]$MainVersion)
 	if ($MainVersion) {
 		$basePath = Join-Path -Path $Folder -ChildPath "$($Folder)V$MainVersion"
@@ -48,27 +48,32 @@ function Invoke-Test {
     $scripts = Join-Path -Path $basePath -ChildPath "*.tests.ps1"
     $testResult = invoke-Pester -PassThru -Script $scripts -CodeCoverage $CodeCoverage
     if ($testResult.FailedCount -gt 0) {
-        Exit-WithError -Message "$($basePath): $($testResult.FailedCount) test(s) failed"
+        ExitWithError -Message "$($basePath): $($testResult.FailedCount) test(s) failed"
     }
     if ($testResult.PassedCount -eq 0) {
-        Exit-WithError -Message "$($basePath): no passing tests"
+        ExitWithError -Message "$($basePath): no passing tests"
     }
     $coverage = $testResult.CodeCoverage
     $coveragePercentage = ($coverage.NumberOfCommandsExecuted / $coverage.NumberOfCommandsAnalyzed) * 100
     $missedCommands = $coverage.NumberOfCommandsAnalyzed - $coverage.NumberOfCommandsExecuted
     $coverageOK = ($missedCommands -le 5)
     if (!$coverageOK) {
-        Exit-WithError -Message "$($Folder): Missed $missedCommands (more than 5) commands; code coverage is $coveragePercentage%"
+        ExitWithError -Message "$($Folder): Missed $missedCommands (more than 5) commands; code coverage is $coveragePercentage%"
     }
 }
 
-function Out-Log {
+function InvokeTfx {
+    param()
+    tfx extension create --manifest-globs vss-extension.json --output-path Archive
+}
+
+function OutLog {
     param([string]$Message)
 	$InformationPreference = "Continue"
 	Write-Information $Message
 }
 
-function Save-ToJson {
+function SaveToJson {
     param($Object, [string]$FilePath)
     $backupFilePath = [System.IO.Path]::ChangeExtension($FilePath,"backup")
     if (Test-Path -Path $backupFilePath) {
@@ -80,15 +85,15 @@ function Save-ToJson {
     $Object | ConvertTo-Json -depth 10 | Out-File -FilePath $FilePath -Encoding "UTF8"
 }
 
-function Save-VersionInExtension {
+function SaveVersionInExtension {
     param([string]$FilePath, [System.Version]$Version)
     $extensionFile = $FilePath
     $vssExtension = Get-Content -Raw -Path $extensionFile | ConvertFrom-Json
     $vssExtension.Version = "$Version"
-    Save-ToJson -Object $vssExtension -FilePath $extensionFile
+    SaveToJson -Object $vssExtension -FilePath $extensionFile
 }
 
-function Save-VersionInTask {
+function SaveVersionInTask {
     param([string]$TaskName, [System.Version]$Version, [string]$MainVersion)
 	if ($MainVersion) {
 	    $task = (Split-Path -Path $TaskName -Leaf)
@@ -102,39 +107,34 @@ function Save-VersionInTask {
     $task.Version.Major = $Version.Major
     $task.Version.Minor = $Version.Minor
     $task.Version.Patch = $Version.Build
-    Save-ToJson -Object $task -FilePath $taskFile
+    SaveToJson -Object $task -FilePath $taskFile
 }
 
-function Invoke-Tfx {
-    param()
-    tfx extension create --manifest-globs vss-extension.json --output-path Archive
-}
-
-function MainHelper {
+function InvokeMainTask {
     param([string]$VersionAction, [bool]$NoTest, [bool]$NoPackage)
 	$mainVersion = 1
     if (!$NoTest) {
-        Invoke-Test -Folder "Common" -CodeCoverage "Common\CommonFunctions.psm1"
-        Invoke-Test -Folder "FitNesseConfigure" -MainVersion $mainVersion
-        Invoke-Test -Folder "FitNesseRun" -MainVersion $mainVersion
+        InvokeTest -Folder "Common" -CodeCoverage "Common\CommonFunctions.psm1"
+        InvokeTest -Folder "FitNesseConfigure" -MainVersion $mainVersion
+        InvokeTest -Folder "FitNesseRun" -MainVersion $mainVersion
     }
-    $version = Get-Version -FilePath "vss-extension.json"
-    Out-Log -Message "Current version: $version"
+    $version = GetVersion -FilePath "vss-extension.json"
+    OutLog -Message "Current version: $version"
     if ($VersionAction -ne "Ignore") {
         if ($VersionAction -eq "Next") {
-            $versionToApply = Get-NextVersion -Version $version
+            $versionToApply = GetNextVersion -Version $version
         } else {
             $versionToApply = $version
         }
-        Save-VersionInExtension -FilePath "vss-extension.json" -Version $versionToApply
-        Save-VersionInTask -TaskName "FitNesseConfigure" -Version $versionToApply -MainVersion $mainVersion
-        Save-VersionInTask -TaskName "FitNesseRun" -Version $versionToApply -MainVersion $mainVersion
+        SaveVersionInExtension -FilePath "vss-extension.json" -Version $versionToApply
+        SaveVersionInTask -TaskName "FitNesseConfigure" -Version $versionToApply -MainVersion $mainVersion
+        SaveVersionInTask -TaskName "FitNesseRun" -Version $versionToApply -MainVersion $mainVersion
     }
     if (!$NoPackage) {
-        Invoke-Tfx
+        InvokeTfx
     }
 }
 
 if ($MyInvocation.InvocationName -ne '.') {
-    MainHelper -VersionAction $VersionAction -NoTest $NoTest.IsPresent -NoPackage $NoPackage.IsPresent
+    InvokeMainTask -VersionAction $VersionAction -NoTest $NoTest.IsPresent -NoPackage $NoPackage.IsPresent
 }
