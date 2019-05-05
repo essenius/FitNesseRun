@@ -377,7 +377,7 @@ function DidAllTestsPass([string]$FitNesseOutput) {
 
 function MainHelper() {
 	#$originalLocation = Get-Location
-	$parameters = Get-Parameters -ParameterNames "command", "testSpec", "includeHtml", # All
+	$parameters = Get-TaskParameter -ParameterNames "command", "testSpec", "includeHtml", # All
 		"port", "dataFolder", "fixtureFolder", "appSearchRoot",  # Execute
 		"baseUri", "timeoutSeconds", # Call
 		"resultFolder", "extraParam" # All

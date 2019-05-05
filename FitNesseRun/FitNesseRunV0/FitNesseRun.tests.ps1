@@ -510,7 +510,7 @@ Describe "FitNesseRun-Main Helper" {
     $savedFiles = [System.Collections.ArrayList]@()
 
     Context "include html" {
-        Mock -CommandName Get-Parameters -MockWith { return @{'Resultfolder'='.'; 'IncludeHtml'=$true } }        
+        Mock -CommandName Get-TaskParameter -MockWith { return @{'Resultfolder'='.'; 'IncludeHtml'=$true } }        
         Mock -CommandName Out-File -MockWith { $savedFiles.Add(($FilePath, $InputObject)) }
         Mock -CommandName SaveXml -MockWith { $savedFiles.Add(($OutFile, $xml)) }
 
@@ -561,7 +561,7 @@ Describe "FitNesseRun-Main Helper" {
         $nunitResultFinal=GetNUnitResult
 		# we need to use $TestDrive instead of "TestDrive:\" because we use .Net objects
 		$script:resultFolder="$TestDrive\results"
-        Mock -CommandName Get-Parameters -MockWith { return @{'ResultFolder'="$script:resultFolder"; 'IncludeHtml'=$false } }
+        Mock -CommandName Get-TaskParameter -MockWith { return @{'ResultFolder'="$script:resultFolder"; 'IncludeHtml'=$false } }
 		Mock -CommandName DidAllTestsPass -MockWith { return $true }
         it "Invokes FitNesse and creates 3 result files" {
             MainHelper

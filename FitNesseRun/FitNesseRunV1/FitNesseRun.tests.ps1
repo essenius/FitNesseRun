@@ -1,6 +1,6 @@
-# Copyright 2017-2019 Rik Essenius
+﻿# Copyright 2017-2019 Rik Essenius
 #
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
 # compliance with the License. You may obtain a copy of the License at
 #
 #   http://www.apache.org/licenses/LICENSE-2.0
@@ -49,7 +49,7 @@ Describe "FitNesseRun-CallRest" {
     it "inserts an exception message with a connection issue, adding inner exception" {
         $emptyPort = NextFreePort -DesiredPort 8500
         $uri = "http://localhost:$($emptyPort)?a=b"
-        $expectedError = "Exception calling `"GetResponse`" with `"0`" argument(s): `"Unable to connect to the remote server`"" + 
+        $expectedError = "Exception calling `"GetResponse`" with `"0`" argument(s): `"Unable to connect to the remote server`"" +
         ": No connection could be made because the target machine actively refused it 127.0.0.1:$($emptyPort) [Uri: http://localhost:$($emptyPort)?a=b]"
         $expectedResult = ($resultTemplate -f $expectedError,$uri,"")
         $result = CallRest -Uri $uri
@@ -65,20 +65,20 @@ Describe "FitNesseRun-CallRest" {
     }
 }
 
-Describe "FitNesseRun-DidAllTestsPass" {
+Describe "FitNesseRun-TestAllTestsPassed" {
     function CheckPassFail($testcase) {
         it "checks pass/fail correctly for $($testcase.name)" {
             $testcase | Should -Not -BeNullOrEmpty
             $fitNesseOutput = $testcase.fitnesseInput.InnerXml
             $expectedOutcome = $testcase.expectedNUnit3Output."test-run".result
-            $passed = DidAllTestsPass -FitNesseOutput $fitNesseOutput
+            $passed = TestAllTestsPassed -FitNesseOutput $fitNesseOutput
             $passed | Should -Be ($expectedOutcome -eq "Passed")
         }
     }
 
     [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
     $testcase = $testcases.testcases.testcase
-    $testcase | ForEach-Object { CheckPassFail $_ }    
+    $testcase | ForEach-Object { CheckPassFail $_ }
 }
 
 Describe "FitNesseRun-ExtractTestSpec" {
@@ -114,19 +114,19 @@ Describe "FitNesseRun-Execute" {
         $result.error | Should -Match ".* version .*"
     }
     It "executes java --version" {
-        $result = Execute -Command "java.exe" -Arguments "--unrecognized" 
+        $result = Execute -Command "java.exe" -Arguments "--unrecognized"
         $result.ExitCode | Should -Be 1
         $result.output |  Should -Be ""
         $result.error  | Should -Match "unrecognized option: --unrecognized"
     }
     It "executes java WorkFolder" {
-        $result = Execute -Command "java.exe" -Arguments ("-cp", "$PSScriptRoot", "WorkFolder") 
+        $result = Execute -Command "java.exe" -Arguments ("-cp", "$PSScriptRoot", "WorkFolder")
         $result.ExitCode | Should -Be 0
         $result.output |  Should -Be ((get-location).path + "\.`r`n")
         $result.error  | Should -Be ""
     }
     It "executes find to test multiple arguments" {
-        $result = Execute -Command "find" -Arguments ("/c", '"java WorkFolder"', "$PSScriptRoot\FitNesseRun.tests.ps1" ) 
+        $result = Execute -Command "find" -Arguments ("/c", '"java WorkFolder"', "$PSScriptRoot\FitNesseRun.tests.ps1" )
         $result.ExitCode | Should -Be 0
         $result.output |  Should -BeLike "*FITNESSERUN.TESTS.PS1: 2`r`n"
         $result.error  | Should -Be ""
@@ -178,7 +178,7 @@ Describe "FitNesseRun-ExtractResponse" {
         }
 
         $dataSets = ( ("", "", 1), ("", "error", 1) )
-        $dataSets | ForEach-Object { TestExtractResponse @_ }   
+        $dataSets | ForEach-Object { TestExtractResponse @_ }
     }
 }
 
@@ -234,7 +234,7 @@ Describe "FitNesseRun-GetErrorFromHtmlString" {
         $html = "<html><body><span class=`"error`">Exception from FitNesse</span>" +
                 "<span class=`"response`">Response</span></body></html>"
         GetErrorFromHtmlString -InputHtml $html | Should -Be "Exception from FitNesse"
-    }    
+    }
     it "should return empty string if no error" {
         $html="<html><body><span class=`"response`">Response</span></body></html>"
         GetErrorFromHtmlString -InputHtml $html | Should -BeNullOrEmpty
@@ -280,19 +280,19 @@ Describe "FitNesseRun-InvokeFitNesse" {
         Mock -CommandName MayHaveMissedError -MockWith { return $false }
         it "executes a plain call right with html included" {
             $script:calledUri = ""
-            $extractedResult = "<?xml version=`"1.0`"?><root><DetailedResultsFile>test.html</DetailedResultsFile></root>"      
+            $extractedResult = "<?xml version=`"1.0`"?><root><DetailedResultsFile>test.html</DetailedResultsFile></root>"
             $parameters=@{'Command'='Call';'TestSpec'='JavaTest';'BaseUri'='http://localhost:8080';
                         'Resultfolder'='.';'ExtraParam'= 'param1=value1';'IncludeHtml' = $true}
             $xml = Invoke-FitNesse -Parameters $parameters
             Assert-MockCalled -CommandName CallRest -Times 1 -Exactly -Scope It
-            $script:calledUri | Should -Be "http://localhost:8080/JavaTest?test&format=xml&nochunk&includehtml&param1=value1" 
+            $script:calledUri | Should -Be "http://localhost:8080/JavaTest?test&format=xml&nochunk&includehtml&param1=value1"
             $xml | Should -Be $extractedResult
         }
     }
     Context "Call with missed error" {
         it "tries getting additional exception info when the call returns nothing" {
             $script:calledUri = ""
-            $xmlResult = "<?xml version=`"1.0`"?><testResults><executionLog /></testResults>" 
+            $xmlResult = "<?xml version=`"1.0`"?><testResults><executionLog /></testResults>"
             Mock -CommandName GetErrorFromHtmlString -MockWith { return "Exception Message" }
             Mock -CommandName CallRest -MockWith { $script:calledUri = $Uri; return [xml]$xmlResult }
             Mock -CommandName MayHaveMissedError -MockWith { return $true }
@@ -304,13 +304,13 @@ Describe "FitNesseRun-InvokeFitNesse" {
 			"</executionLog></testResults>"
             $resultXml | Should -Be $expectedResult
             Assert-MockCalled -CommandName CallRest -Times 2 -Exactly -Scope It
-            $script:calledUri | Should -Be "http://localhost:8080/JavaTest?test&format=html&nochunk&includehtml" 
+            $script:calledUri | Should -Be "http://localhost:8080/JavaTest?test&format=html&nochunk&includehtml"
         }
     }
     Context "plain execute" {
-        $extractedResult = "<?xml version=`"1.0`"?><root><DetailedResultsFile>test.html</DetailedResultsFile></root>"   
+        $extractedResult = "<?xml version=`"1.0`"?><root><DetailedResultsFile>test.html</DetailedResultsFile></root>"
         $rawResult = "aaa"+ $extractedResult + "bbb"
-        Mock -CommandName Execute -MockWith { 
+        Mock -CommandName Execute -MockWith {
             $script:Command = $Command
             $script:Arguments = $Arguments
             return [ExecutionResult]@{ output = $rawResult; error = ""; exitCode = 0} }
@@ -330,14 +330,14 @@ Describe "FitNesseRun-InvokeFitNesse" {
     }
     Context "execute with missed error" {
         $script:xmlContent = "<executionLog />"
-        Mock -CommandName Execute -MockWith { 
+        Mock -CommandName Execute -MockWith {
             $script:Command = $Command
             $script:Arguments = $Arguments
-            $xmlResult = "<?xml version=`"1.0`"?><testResults>$($script:xmlContent)</testResults>" 
-            return [ExecutionResult]@{ output = $xmlResult; error = ""; exitCode = 0} 
+            $xmlResult = "<?xml version=`"1.0`"?><testResults>$($script:xmlContent)</testResults>"
+            return [ExecutionResult]@{ output = $xmlResult; error = ""; exitCode = 0}
         }
-        $script:ExceptionMessage = "Exception Message" 
-        Mock -CommandName Find-UnderFolder -MockWith { return "E:\My Apps\fitnesse.jar" }        
+        $script:ExceptionMessage = "Exception Message"
+        Mock -CommandName Find-UnderFolder -MockWith { return "E:\My Apps\fitnesse.jar" }
         Mock -CommandName GetErrorFromHtmlString -MockWith { return $script:ExceptionMessage }
         Mock -CommandName MayHaveMissedError -MockWith { return $true }
         $parameters=@{'Command'='Execute';'TestSpec'='JavaTest';'Port'='9123';'AppSearchRoot'='E:\My Apps';'DataFolder'='.';'ResultFolder'='.'}
@@ -397,7 +397,7 @@ Describe "FitNesseRun-Transform To Detailed Results" {
             $testcase | Should -Not -BeNullOrEmpty
             $sourceXml = [xml]($testcase.fitnesseInput.InnerXml)
             $sourceXml | Should -Not -BeNullOrEmpty
-            $expectedDetails = $testcase.expectedDetails.InnerText 
+            $expectedDetails = $testcase.expectedDetails.InnerText
             $expectedDetails | Should -Not -BeNullOrEmpty
             $actualDetails = (Transform -InputXml $sourceXml -XsltFile "FitNesseToDetailedResults.xslt") -replace "`r`n", "`n"
             $actualDetails | Should -Be $expectedDetails
@@ -406,7 +406,7 @@ Describe "FitNesseRun-Transform To Detailed Results" {
 
     [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
     $testcase = $testcases.testcases.testcase | where-object { $_.expectedDetails -ne $null }
-    $testcase | ForEach-Object { TransformToDetailedResults $_ }    
+    $testcase | ForEach-Object { TransformToDetailedResults $_ }
 }
 
 Describe "FitNesseRun-Transform To NUnit 3 Results" {
@@ -425,7 +425,7 @@ Describe "FitNesseRun-Transform To NUnit 3 Results" {
 
     [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
     $testcase = $testcases.testcases.testcase
-    $testcase | ForEach-Object { TransformToNUnit3Results $_ }    
+    $testcase | ForEach-Object { TransformToNUnit3Results $_ }
 }
 
 Describe "FitNesseRun-UpdateEnvironment" {
@@ -474,21 +474,21 @@ Describe "FitNesseRun-Main Helper" {
     $nunitResult = "<?xml version=`"1.0`"?><test-run><test-suite><attachments>"+"
 		<attachment><filePath/><description>Raw test results from FitNesse</description></attachment></attachments></test-suite></test-run>"
     $detailHtml = "<html><body /></html>"
- 
+
     Mock -CommandName Invoke-FitNesse -MockWith { return $extractedResult }
     Mock -CommandName Transform -MockWith { return $detailHtml } -ParameterFilter { $XsltFile -eq "FitNesseToDetailedResults.xslt" }
     Mock -CommandName Transform -MockWith { return $nunitResult } -ParameterFilter { $XsltFile -eq "FitNesseToNUnit3.xslt" }
     $savedFiles = [System.Collections.ArrayList]@()
 
     Context "include html" {
-        Mock -CommandName Get-Parameters -MockWith { return @{'ResultFolder'='.'; 'IncludeHtml'=$true } }        
+        Mock -CommandName Get-TaskParameter -MockWith { return @{'ResultFolder'='.'; 'IncludeHtml'=$true } }
         Mock -CommandName Out-File -MockWith { $savedFiles.Add(($FilePath, $InputObject)) }
         Mock -CommandName SaveXml -MockWith { $savedFiles.Add(($OutFile, $xml)) }
 
         it "Invokes FitNesse, creates 3 result files, and includes the attachment in nunit" {
 			$nunitFinalResult = "<?xml version=`"1.0`"?><test-run><test-suite><attachments>" +
 				"<attachment><filePath>.\fitnesse.xml</filePath><description>Raw test results from FitNesse</description></attachment>" +
-				"<attachment><filePath>.\DetailedResults.html</filePath><description>Test results in HTML</description></attachment>" + 
+				"<attachment><filePath>.\DetailedResults.html</filePath><description>Test results in HTML</description></attachment>" +
 				"</attachments></test-suite></test-run>"
             $savedFiles.Clear()
             $savedFiles.Count | Should -Be 0
@@ -503,19 +503,19 @@ Describe "FitNesseRun-Main Helper" {
             $savedFiles[2][1] | Should -Be $nunitFinalResult
         }
     }
-    
+
 	function TestXml([string]$ExpectedXml, [string]$ActualFile) {
 		Test-Path -Path $ActualFile | Should -Be $true
 		[xml]$actualXml = Get-Content -Path $ActualFile
-		$actualXml.OuterXml | Should -Be $ExpectedXml 
+		$actualXml.OuterXml | Should -Be $ExpectedXml
 	}
 
     Context "Do not include html" {
         $extractedResult = "<?xml version=`"1.0`"?><root />"
 		# we need to use $TestDrive instead of "TestDrive:\" because we use .Net objects
 		$script:resultFolder="$TestDrive\results"
-        Mock -CommandName Get-Parameters -MockWith { return @{'ResultFolder'="$script:resultFolder"; 'IncludeHtml'=$false } }
-		Mock -CommandName DidAllTestsPass -MockWith { return $true }
+        Mock -CommandName Get-TaskParameter -MockWith { return @{'ResultFolder'="$script:resultFolder"; 'IncludeHtml'=$false } }
+		Mock -CommandName TestAllTestsPassed -MockWith { return $true }
         it "Invokes FitNesse, creates 2 result files, and does not include the attachment in nunit" {
 			$nunitFinalResult = "<?xml version=`"1.0`"?><test-run><test-suite><attachments>" +
 				"<attachment><filePath>$script:resultFolder\fitnesse.xml</filePath><description>Raw test results from FitNesse</description></attachment>" +
@@ -532,8 +532,8 @@ Describe "FitNesseRun-Main Helper" {
 
 # This function creates a xslTests.new.xml file by executing the transformation process and storing the outcome in the expecation nodes.
 # Intention is to visually compare with the current xslTests.xml (e.g .with WinMerge) to ensure the results are accurate before replacing it.
-
-Function FitNesseRun-Save {
+# Make it a Describe instead of a function to enable in Pester.
+Function Save-XslTestData {
 	Function AddExpectation([xml]$InputXml, [Xml.XmlNode]$TargetNode, [string]$XsltFile, [string]$NodeXPath) {
 		if (!($TargetNode.SelectSingleNode($NodeXPath))) { return }
 		$transformedOutput = (Transform -InputXml $sourceXml -XsltFile $XsltFile -Now "2017-02-23T15:10:00.0000000Z" )
@@ -546,16 +546,16 @@ Function FitNesseRun-Save {
 			$nodeToAdd = $TargetNode.OwnerDocument.ImportNode($transformedXml.DocumentElement, $true)
 		}
 		$nodeToAddTo.AppendChild($nodeToAdd)
-	} 
+	}
 
 	Function Format-Xml([xml]$Content) {
-		$StringWriter = New-Object System.IO.StringWriter 
-		$XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter 
-		$xmlWriter.Formatting = "indented" 
-		$xmlWriter.Indentation = 2    
-		$Content.WriteContentTo($XmlWriter) 
+		$StringWriter = New-Object System.IO.StringWriter
+		$XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
+		$xmlWriter.Formatting = "indented"
+		$xmlWriter.Indentation = 2
+		$Content.WriteContentTo($XmlWriter)
 		$XmlWriter.Flush()
-		$StringWriter.Flush() 
+		$StringWriter.Flush()
 		return $StringWriter.ToString()
 	}
 
@@ -567,14 +567,14 @@ Function FitNesseRun-Save {
 		if ($testcase.expectedDetails) {
 			AddExpectation -InputXml $sourceXml -TargetNode $testcase -XsltFile "FitNesseToDetailedResults.xslt" -NodeXPath "expectedDetails"
 		}
-        Write-Host (Format-Xml -Content $testcase.OuterXml)
+        Write-Output (Format-Xml -Content $testcase.OuterXml)
 	}
 
     it "updates expectations" {
         [xml]$testcases = [xml](Get-Content "$PSScriptRoot\xslTests.xml")
 	    $testcase = $testcases.testcases.testcase
-		$testcase | ForEach-Object { updateExpectation $_ }    
-		Write-Host "Saving..."
+		$testcase | ForEach-Object { updateExpectation $_ }
+		Write-Output "Saving..."
 		$settings = New-Object System.Xml.XmlWriterSettings
 		$settings.Indent = $true
 		$settings.NewLineChars = "`r`n"

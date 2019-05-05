@@ -1,6 +1,6 @@
-# Copyright 2017-2019 Rik Essenius
+﻿# Copyright 2017-2019 Rik Essenius
 #
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
 # compliance with the License. You may obtain a copy of the License at
 #
 #   http://www.apache.org/licenses/LICENSE-2.0
@@ -25,7 +25,7 @@ function Exit-WithError {
 
 function Get-Version {
     param([string]$FilePath)
-    $vssExtension = Get-Content -Raw -Path $FilePath | ConvertFrom-Json 
+    $vssExtension = Get-Content -Raw -Path $FilePath | ConvertFrom-Json
     return New-Object -TypeName System.Version -ArgumentList $vssExtension.Version
 }
 
@@ -34,20 +34,20 @@ function Get-NextVersion {
     return New-Object -TypeName System.Version -ArgumentList $Version.Major, $Version.Minor, ($Version.Build + 1)
 }
 
-function Invoke-Tests {
+function Invoke-Test {
     param([string]$Folder, [string[]]$CodeCoverage, [string]$MainVersion)
 	if ($MainVersion) {
 		$basePath = Join-Path -Path $Folder -ChildPath "$($Folder)V$MainVersion"
 	} else {
 		$basePath = $Folder
 	}
-    if (!$CodeCoverage) { 
+    if (!$CodeCoverage) {
         $CodeCoverage = (Join-Path -Path $basePath -ChildPath "$(Split-Path -Path $Folder -Leaf).ps1")
     }
 
     $scripts = Join-Path -Path $basePath -ChildPath "*.tests.ps1"
     $testResult = invoke-Pester -PassThru -Script $scripts -CodeCoverage $CodeCoverage
-    if ($testResult.FailedCount -gt 0) { 
+    if ($testResult.FailedCount -gt 0) {
         Exit-WithError -Message "$($basePath): $($testResult.FailedCount) test(s) failed"
     }
     if ($testResult.PassedCount -eq 0) {
@@ -65,7 +65,7 @@ function Invoke-Tests {
 function Out-Log {
     param([string]$Message)
 	$InformationPreference = "Continue"
-	Write-Information $Message 
+	Write-Information $Message
 }
 
 function Save-ToJson {
@@ -80,19 +80,19 @@ function Save-ToJson {
     $Object | ConvertTo-Json -depth 10 | Out-File -FilePath $FilePath -Encoding "UTF8"
 }
 
-function Set-VersionInExtension {
+function Save-VersionInExtension {
     param([string]$FilePath, [System.Version]$Version)
     $extensionFile = $FilePath
     $vssExtension = Get-Content -Raw -Path $extensionFile | ConvertFrom-Json
     $vssExtension.Version = "$Version"
-    Save-ToJson -Object $vssExtension -FilePath $extensionFile 
+    Save-ToJson -Object $vssExtension -FilePath $extensionFile
 }
 
-function Set-VersionInTask {
+function Save-VersionInTask {
     param([string]$TaskName, [System.Version]$Version, [string]$MainVersion)
 	if ($MainVersion) {
 	    $task = (Split-Path -Path $TaskName -Leaf)
-		$subFolder = "\$($task)V$MainVersion" 
+		$subFolder = "\$($task)V$MainVersion"
 	} else {
 		$subFolder = ""
 	}
@@ -114,27 +114,27 @@ function MainHelper {
     param([string]$VersionAction, [bool]$NoTest, [bool]$NoPackage)
 	$mainVersion = 1
     if (!$NoTest) {
-        Invoke-Tests -Folder "Common" -CodeCoverage "Common\CommonFunctions.psm1"
-        Invoke-Tests -Folder "FitNesseConfigure" -MainVersion $mainVersion
-        Invoke-Tests -Folder "FitNesseRun" -MainVersion $mainVersion
+        Invoke-Test -Folder "Common" -CodeCoverage "Common\CommonFunctions.psm1"
+        Invoke-Test -Folder "FitNesseConfigure" -MainVersion $mainVersion
+        Invoke-Test -Folder "FitNesseRun" -MainVersion $mainVersion
     }
     $version = Get-Version -FilePath "vss-extension.json"
     Out-Log -Message "Current version: $version"
-    if ($VersionAction -ne "Ignore") {        
+    if ($VersionAction -ne "Ignore") {
         if ($VersionAction -eq "Next") {
             $versionToApply = Get-NextVersion -Version $version
         } else {
             $versionToApply = $version
         }
-        Set-VersionInExtension -FilePath "vss-extension.json" -Version $versionToApply
-        Set-VersionInTask -TaskName "FitNesseConfigure" -Version $versionToApply -MainVersion $mainVersion
-        Set-VersionInTask -TaskName "FitNesseRun" -Version $versionToApply -MainVersion $mainVersion
+        Save-VersionInExtension -FilePath "vss-extension.json" -Version $versionToApply
+        Save-VersionInTask -TaskName "FitNesseConfigure" -Version $versionToApply -MainVersion $mainVersion
+        Save-VersionInTask -TaskName "FitNesseRun" -Version $versionToApply -MainVersion $mainVersion
     }
     if (!$NoPackage) {
         Invoke-Tfx
     }
 }
 
-if ($MyInvocation.InvocationName -ne '.') { 
+if ($MyInvocation.InvocationName -ne '.') {
     MainHelper -VersionAction $VersionAction -NoTest $NoTest.IsPresent -NoPackage $NoPackage.IsPresent
 }

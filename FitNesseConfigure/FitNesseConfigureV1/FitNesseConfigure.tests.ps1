@@ -131,7 +131,7 @@ Describe "FitNesseConfigure-MergeProperties" {
     it "should join multiple occurrences of a property into one line separated by commas" {
         MergeProperties -Properties @() | Should -Be @()
         MergeProperties -Properties @("test=a") | Should -Be @("test=a")
-        MergeProperties -Properties @("SymbolTypes=a","SymbolTypes=b","SymbolTypes=a,c","test1=c","SlimTables=3","q=e","SlimTables=q") | 
+        MergeProperties -Properties @("SymbolTypes=a","SymbolTypes=b","SymbolTypes=a,c","test1=c","SlimTables=3","q=e","SlimTables=q") |
             Should -Be @("test1=c","q=e","SymbolTypes=a,b,c","SlimTables=3,q")
     }
 }
@@ -292,13 +292,13 @@ Describe "FitNesseConfigure-MainHelper" {
 
     It "should find FitSharp, and create new rules if not existing" {
 		# Just doing two tests at once, not related
-        Mock Get-Parameters { return @{'TargetFolder'= "$($script:basePath)";'Port'='1';'SlimPort'='2';'SlimPoolSize'='3';'SlimTimeout'='4';'UnblockPorts'='true' } }
+        Mock Get-TaskParameter { return @{'TargetFolder'= "$($script:basePath)";'Port'='1';'SlimPort'='2';'SlimPoolSize'='3';'SlimTimeout'='4';'UnblockPorts'='true' } }
         Mock -CommandName Get-NetFirewallRule -MockWith { return $null }
         $script:Rule = @()
-        
+
         $script:variable = ""
         MainHelper
-        
+
         (Test-Path -Path $propertiesFile) | Should -Be $true
         $propertiesFile | Should -FileContentMatch "FITSHARP_PATH=c:\\\\a"
         (Get-ChildItem -Recurse -Path $basePath).Count | Should -Be 1
@@ -310,7 +310,7 @@ Describe "FitNesseConfigure-MainHelper" {
     it "should not find FitSharp, and update existing rules" {
 		# Just doing two tests at once, not related
 		Mock -CommandName Find-FitSharp -MockWith { return $null }
-        Mock Get-Parameters { return @{'TargetFolder'= "$($script:basePath)";'Port'='5';'SlimPort'='6';'SlimPoolSize'='7';'SlimTimeout'='8';'UnblockPorts'='true' } }
+        Mock Get-TaskParameter { return @{'TargetFolder'= "$($script:basePath)";'Port'='5';'SlimPort'='6';'SlimPoolSize'='7';'SlimTimeout'='8';'UnblockPorts'='true' } }
         Mock -CommandName Get-NetFirewallRule -MockWith { return "not null" }
         $script:Rule = @()
         MainHelper
@@ -320,7 +320,7 @@ Describe "FitNesseConfigure-MainHelper" {
         $script:Rule | Should -be @('FitNesse (port 5)','FitSharp (port 6-12)')
     }
     it "should not try to unblock ports if not requested" {
-        Mock Get-Parameters { return @{'TargetFolder'= "$($script:basePath)";'Port'='5';'SlimPort'='6';'SlimPoolSize'='7';'SlimTimeout'='8';'UnblockPorts'='false' } }
+        Mock Get-TaskParameter { return @{'TargetFolder'= "$($script:basePath)";'Port'='5';'SlimPort'='6';'SlimPoolSize'='7';'SlimTimeout'='8';'UnblockPorts'='false' } }
         Mock -CommandName Unblock-IncomingTraffic -MockWith {}
         MainHelper
         Assert-MockCalled -CommandName Unblock-IncomingTraffic -Times 0 -Exactly -Scope It

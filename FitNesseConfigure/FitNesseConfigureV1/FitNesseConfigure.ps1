@@ -1,6 +1,6 @@
 ﻿# Copyright 2018-2019 Rik Essenius
 #
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
 # compliance with the License. You may obtain a copy of the License at
 #
 #   http://www.apache.org/licenses/LICENSE-2.0
@@ -17,12 +17,12 @@ set-psdebug -strict
 # if the environment variable AGENT_WORKFOLDER has a value, we run on an agent. Else we're likely to run under Pester.
 function TestOnAgent() {	return !!$Env:AGENT_WORKFOLDER }
 
-# We don't want to duplicate the common functions during development, so we get the module from its folder. 
+# We don't want to duplicate the common functions during development, so we get the module from its folder.
 # The deployment to vsix copies them over to the task folders because tasks can only use their own folders.
-function GetModuleFolder() { 
-	if (TestOnAgent) { 
-		return $PSScriptRoot 
-	} else { 
+function GetModuleFolder() {
+	if (TestOnAgent) {
+		return $PSScriptRoot
+	} else {
 		return (Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath "Common")
 	}
 }
@@ -82,16 +82,16 @@ function GetFirefoxInstallFolderFromRegisty {
 # Get the list of values that are in both lists
 function GetIntersection {
     param([string[]]$x, [string[]]$y)
-    $r = $x | where-object {$y -contains $_} 
+    $r = $x | Where-Object {$y -contains $_}
     return $r
 }
 
 # Extract all property values from a list of merged plugins.properties
 # We need that because multiple occurrences of properties like SymbolTypes and Responder need to become comma separated lists on one line.
 function GetPropertyValues {
-    param ([string]$Property, [string[]]$Properties) 
+    param ([string]$Property, [string[]]$Properties)
     $allItems = @()
-    $Properties | foreach { if ($_ -match "\b$Property\b\s*=") { $name,$items = $_.split("=").split(",").trim(); $allItems += $items } }
+    $Properties | Foreach-Object { if ($_ -match "\b$Property\b\s*=") { $name,$items = $_.split("=").split(",").trim(); $allItems += $items } }
     return ($allItems | Sort-Object | Get-Unique)
 }
 
@@ -100,8 +100,8 @@ function GetPropertyValues {
 function Find-FitSharp {
     param([string]$SearchRoot)
     $dbFit = Find-UnderFolder -FileName "dbfit.dll" -Description "DBFit" -SearchRoot $SearchRoot
-	if ($dbFit) { 
-		return Split-Path -Parent $dbFit 
+	if ($dbFit) {
+		return Split-Path -Parent $dbFit
 	} else {
 		return $null
 	}
@@ -112,10 +112,10 @@ function MergeProperties {
     param([string[]]$Properties)
     $keywords = @("SymbolTypes","Responders", "SlimTables", "CustomComparators")
     $result = @()
-    $Properties | foreach { if ($_ -notmatch "\b($($keywords -join "|"))\b\s*=") { $result += $_ } }
+    $Properties | Foreach-Object { if ($_ -notmatch "\b($($keywords -join "|"))\b\s*=") { $result += $_ } }
     foreach ($keyword in $keywords) {
         $items = GetPropertyValues -Property $keyword -Properties $properties
-        if ($items) { 
+        if ($items) {
             $result += "$keyword=$($items -join ",")"
         }
     }
@@ -126,13 +126,13 @@ function MergeProperties {
 function ShowBlockedPorts {
     param([string[]]$PortRange)
     $portList = ConvertToPortList -PortSpec $PortRange
-    $portFiltersRaw = Get-NetFirewallPortFilter -Protocol "TCP" 
-    $portsOfInterest = $PortFiltersRaw | where-object { (GetIntersection -x (ConvertToPortList -PortSpec $_.LocalPort) -y $portList) } 
+    $portFiltersRaw = Get-NetFirewallPortFilter -Protocol "TCP"
+    $portsOfInterest = $PortFiltersRaw | where-object { (GetIntersection -x (ConvertToPortList -PortSpec $_.LocalPort) -y $portList) }
     if ($portsOfInterest) {
         $rules = $portsOfInterest | Get-NetFirewallRule | Where-Object { TestRuleOk($_)}
-        $blockedPortRule = @($rules | Where-Object { ($_.Action -eq "Block") } ) 
+        $blockedPortRule = @($rules | Where-Object { ($_.Action -eq "Block") } )
         if ($blockedPortRule) {
-            $subMessage = if ($blockedPortRule.Count -gt 1) { "are already firewall rules" } else { "is already a firewall rule"}			
+            $subMessage = if ($blockedPortRule.Count -gt 1) { "are already firewall rules" } else { "is already a firewall rule"}
             $message = "There $subMessage '$($blockedPortRule.DisplayName -join ", ")' blocking incoming traffic on ports in the range '$PortRange'." +
             " This overrules a firewall rule allowing it. Please resolve this manually."
             Out-Issue -Message $message -Warning
@@ -148,8 +148,8 @@ function TestRuleAppliesTo {
 
 # A rule is considered OK if it is enabled, if the profile applies to Domain, if the protocol applies to TCP, and direction is inbound
 function TestRuleOk {
-    param([PSObject]$Rule) 
-    $result = ($Rule.Enabled -eq "True") -and 
+    param([PSObject]$Rule)
+    $result = ($Rule.Enabled -eq "True") -and
             (TestRuleAppliesTo -RuleValue $Rule.Profile -FilterValue "Domain") -and
             ($Rule.Direction -eq "Inbound")
     return $result
@@ -194,7 +194,7 @@ Function Write-PropertiesFile {
     'FITNESSE_ROOT=${FITNESSE_ROOTPATH}\\${FitNesseRoot}',
     "Port=$($Parameters.Port)",
     "SLIM_PORT=$($Parameters.SlimPort)",
-    "slim.timeout=$($Parameters.SlimTimeout)", 
+    "slim.timeout=$($Parameters.SlimTimeout)",
     "slim.pool.size=$($Parameters.SlimPoolSize)"
 	if ($FitSharpFolder) {
 		$properties += "FITSHARP_PATH=$($FitSharpFolder.Replace("\","\\"))",
@@ -216,14 +216,14 @@ Function Write-PropertiesFile {
     Out-File -InputObject $properties -FilePath $propertiesFile -Encoding Default
 }
 
-# Orchestrate the process: get the parameters, validate them, create/clean target folder as needed, find FitSharp, create properties file, 
+# Orchestrate the process: get the parameters, validate them, create/clean target folder as needed, find FitSharp, create properties file,
 # copy any demos to the right locations, and open firewall ports if desired
 function MainHelper {
-    $parameters = Get-Parameters -ParameterNames "targetFolder","port","slimPort","slimPoolSize","slimTimeout","unblockPorts"
-    Assert-IsPositive -Value $parameters.Port -Parameter 'port' 
-    Assert-IsPositive -Value $parameters.SlimPort -Parameter 'slimPort' 
-    Assert-IsPositive -Value $parameters.SlimPoolSize -Parameter 'slimPoolSize' 
-    Assert-IsPositive -Value $parameters.SlimTimeout -Parameter 'slimTimeout' 
+    $parameters = Get-TaskParameter -ParameterNames "targetFolder","port","slimPort","slimPoolSize","slimTimeout","unblockPorts"
+    Assert-IsPositive -Value $parameters.Port -Parameter 'port'
+    Assert-IsPositive -Value $parameters.SlimPort -Parameter 'slimPort'
+    Assert-IsPositive -Value $parameters.SlimPoolSize -Parameter 'slimPoolSize'
+    Assert-IsPositive -Value $parameters.SlimTimeout -Parameter 'slimTimeout'
 
     Out-Log -Message "Generating plugins.properties and setting output variables.." -Debug
     $fitSharpFolder = Find-FitSharp -SearchRoot $parameters.TargetFolder
@@ -233,7 +233,7 @@ function MainHelper {
 
 	$fixtureFolder = $Parameters.TargetFolder
     Write-OutputVariable -Name "FitNesse.WorkFolder" -Value $fixtureFolder
-    
+
 	#This doesn't really fit here, but I didn't feel like creating a separate task for it.
     AddFirefoxBinaryToPath
 

@@ -213,7 +213,7 @@ Function Write-PropertiesFile {
 # Orchestrate the process: get the parameters, validate them, create/clean target folder as needed, find FitSharp, create properties file, 
 # copy any demos to the right locations, and open firewall ports if desired
 function MainHelper {
-    $parameters = Get-Parameters -ParameterNames "targetFolder","packageFolder","port","slimPort","slimPoolSize","slimTimeout",
+    $parameters = Get-TaskParameter -ParameterNames "targetFolder","packageFolder","port","slimPort","slimPoolSize","slimTimeout",
                                                  "cleanupTarget","unblockPorts"
     Assert-IsPositive -Value $parameters.Port -Parameter 'port' 
     Assert-IsPositive -Value $parameters.SlimPort -Parameter 'slimPort' 
@@ -240,11 +240,11 @@ function MainHelper {
     Copy-FromPackage -TargetPath $Parameters.TargetFolder -SourceBase $Parameters.PackageFolder -SourceFolder "content"
     $wikiPath = Join-Path -Path $Parameters.TargetFolder -ChildPath "wiki"
     $fitnesseRoot = Join-Path -Path $Parameters.TargetFolder -ChildPath "FitNesseRoot"
-    Move-FolderContents -Path $wikiPath -Destination $fitNesseRoot
+    Move-FolderContent -Path $wikiPath -Destination $fitNesseRoot
 
     Copy-FromPackage -TargetPath $fixtureFolder -SourceBase $Parameters.PackageFolder -SourceFolder "tools"
 	$browserDriverFolder = Join-Path -path $fixtureFolder -ChildPath "BrowserDriver"
-    Move-FolderContents -Path $browserDriverFolder -Destination $fixtureFolder
+    Move-FolderContent -Path $browserDriverFolder -Destination $fixtureFolder
     
     AddFirefoxBinaryToPath
 

@@ -127,7 +127,7 @@ InModuleScope CommonFunctions {
         }
     }
 
-    Describe "CommonFunctions-Get-Parameters" {
+    Describe "CommonFunctions-Get-TaskParameter" {
     # not using mocks here as I don't want to take a dependency on the *-Vsts-* functions
         Function Get-VstsInput([string]$Name)  { return $Name }
         Function Import-VstsLocStrings {}
@@ -135,7 +135,7 @@ InModuleScope CommonFunctions {
         Function Trace-VstsLeavingInvocation {}
 
         It "gets parameters correctly and applies the right casing" {
-            $params= Get-Parameters -ParameterNames "targetFolder","port","slimPoolSize"
+            $params= Get-TaskParameter -ParameterNames "targetFolder","port","slimPoolSize"
             $params.Count | should be 3
             $keys = $params.Keys.Split('`n')
             $keys[0] | Should -BeExactly "Port" 
@@ -147,7 +147,7 @@ InModuleScope CommonFunctions {
         }
     }
 
-    Describe "CommonFunctions-Move-FolderContents" {
+    Describe "CommonFunctions-Move-FolderContent" {
         Mock -CommandName "Exit-WithError" -MockWith { throw $Message }
         $source = "TestDrive:\source"
         $target = "TestDrive:\Target"
@@ -156,7 +156,7 @@ InModuleScope CommonFunctions {
                 new-item -Path "$source\file1" -Force
                 new-item -Path "$source\Folder\file2" -Force
                 (Get-ChildItem -Path $source -Recurse).Count | Should -Be 3
-                Move-FolderContents -Path $source -Destination $target
+                Move-FolderContent -Path $source -Destination $target
                 (Test-Path -Path $source -PathType Container) | Should -Be $false
                 (Get-ChildItem -Path $target -Recurse).Count | Should -Be 3
             }
@@ -168,7 +168,7 @@ InModuleScope CommonFunctions {
                 new-item -Path "$source\file1" -Force
                 new-item -Path "$source\Folder\file2" -Force
                 new-item -Path "$target\file3" -Force
-                Move-FolderContents -Path $source -Destination $target
+                Move-FolderContent -Path $source -Destination $target
                 (Test-Path -Path $source -PathType Container) | Should -Be $false
                 (Get-ChildItem -Path $target -Recurse).Count | Should -Be 4
             }
@@ -179,7 +179,7 @@ InModuleScope CommonFunctions {
                 new-item -Path "$source\Folder\file2" -Force
                 (Get-ChildItem -Path $source -Recurse).Count | Should -Be 3
                 new-item -Path $target
-                { Move-FolderContents -Path $source -Destination $target } | Should Throw "already exists as a file"
+                { Move-FolderContent -Path $source -Destination $target } | Should Throw "already exists as a file"
                 (Get-ChildItem -Path $source -Recurse).Count | Should -Be 3
                 (Test-Path -Path $target -PathType Container) | should -Be $false
             }
@@ -190,7 +190,7 @@ InModuleScope CommonFunctions {
                 new-item -Path "$source\file1" -Force
                 new-item -Path "$source\Folder\file2" -Force
                 Set-ItemProperty -Path "$source\file1" -Name "Attributes" -Value "Hidden"
-                Move-FolderContents -Path $source -Destination $target 
+                Move-FolderContent -Path $source -Destination $target 
                 # need the backticks because the brackets are special characters for the Like operator
                 $script:Message | Should -BeLike "##vso``[task.logissue type=warning;``]Could not remove * after moving contents to *"
             }

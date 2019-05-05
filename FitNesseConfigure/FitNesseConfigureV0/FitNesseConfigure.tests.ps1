@@ -260,7 +260,7 @@ Describe "FitNesseConfigure-MainHelper" {
     $script:packagePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath "TestData"
 
     It "should not clean up if not told to, copy all folders and files to the right locations, and create new rules if not existing" {
-        Mock Get-Parameters { return @{'TargetFolder'= "$($script:basePath)"; 'PackageFolder'="$($script:packagePath)";
+        Mock Get-TaskParameter { return @{'TargetFolder'= "$($script:basePath)"; 'PackageFolder'="$($script:packagePath)";
             'Port'='1';'SlimPort'='2';'SlimPoolSize'='3';'SlimTimeout'='4';'CleanupTarget'='true';'UnblockPorts'='true' } }
         Mock -CommandName Get-NetFirewallRule -MockWith { return $null }
         $script:Rule = @()
@@ -288,7 +288,7 @@ Describe "FitNesseConfigure-MainHelper" {
         $script:Rule | Should -be @('FitNesse (port 1)','FitSharp (port 2-4)')
     }
     it "should not clean up if told not to, and update existing rules" {
-        Mock Get-Parameters { return @{'TargetFolder'= "$($script:basePath)"; 'PackageFolder'="$($script:packagePath)";
+        Mock Get-TaskParameter { return @{'TargetFolder'= "$($script:basePath)"; 'PackageFolder'="$($script:packagePath)";
             'Port'='5';'SlimPort'='6';'SlimPoolSize'='7';'SlimTimeout'='8';'CleanupTarget'='false';'UnblockPorts'='true' } }
         Mock -CommandName Get-NetFirewallRule -MockWith { return "not null" }
         $script:Rule = @()
@@ -300,7 +300,7 @@ Describe "FitNesseConfigure-MainHelper" {
         $script:Rule | Should -be @('FitNesse (port 5)','FitSharp (port 6-12)')
     }
     it "should not try to unblock ports if not requested" {
-        Mock Get-Parameters { return @{'TargetFolder'= "$($script:basePath)"; 'PackageFolder'="$($script:packagePath)";
+        Mock Get-TaskParameter { return @{'TargetFolder'= "$($script:basePath)"; 'PackageFolder'="$($script:packagePath)";
             'Port'='5';'SlimPort'='6';'SlimPoolSize'='7';'SlimTimeout'='8';'CleanupTarget'='false';'UnblockPorts'='false' } }
         Mock -CommandName Unblock-IncomingTraffic -MockWith {}
         MainHelper

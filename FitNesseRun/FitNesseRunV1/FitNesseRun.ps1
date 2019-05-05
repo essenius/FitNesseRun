@@ -1,6 +1,6 @@
 # Copyright 2017-2019 Rik Essenius
 #
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
 # compliance with the License. You may obtain a copy of the License at
 #
 #   http://www.apache.org/licenses/LICENSE-2.0
@@ -17,12 +17,12 @@ set-psdebug -strict
 # if the environment variable AGENT_WORKFOLDER has a value, we run on an agent. Else we're likely to run under Pester.
 function TestOnAgent() {	return !!$Env:AGENT_WORKFOLDER }
 
-# We don't want to duplicate the common functions during development, so we get the module from its folder. 
+# We don't want to duplicate the common functions during development, so we get the module from its folder.
 # The deployment to vsix copies them over to the task folders because tasks can only use their own folders.
-function GetModuleFolder() { 
-	if (TestOnAgent) { 
-		return $PSScriptRoot 
-	} else { 
+function GetModuleFolder() {
+	if (TestOnAgent) {
+		return $PSScriptRoot
+	} else {
 		return (Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath "Common")
 	}
 }
@@ -32,7 +32,7 @@ Import-Module -DisableNameChecking -Name (Join-Path -Path (GetModuleFolder) -Chi
 
 class ExecutionResult {
 	[string]$output
-	[string]$error 
+	[string]$error
 	[int]$exitCode
 }
 
@@ -54,7 +54,7 @@ function CallRest([string]$Uri, [string]$ReadWriteTimeoutSeconds = "default") {
 	# try/catch to be able to report e.g. connectivity issues
 	try {
 		# Using WebRequest, since it is not possible to set the ReadWriteTimeout with Invoke-RestMethod (TimeoutSec is something else)
-		# Standard ReadWriteTimeout is 5 minutes, and that may not be enough for long running FitNesse tests. 
+		# Standard ReadWriteTimeout is 5 minutes, and that may not be enough for long running FitNesse tests.
 		$timeout = GetTimeout -TimeoutSeconds $ReadWriteTimeoutSeconds
 		$request = [System.Net.Webrequest]::Create($Uri)
 		if ($timeout -ne "default") {
@@ -65,7 +65,6 @@ function CallRest([string]$Uri, [string]$ReadWriteTimeoutSeconds = "default") {
 		$reader = New-Object System.IO.StreamReader $responseStream
 		$callResult = $reader.ReadToEnd()
 	} catch {
-	    $duration = ((Get-Date).Subtract($startTime)).TotalMilliseconds
 		$stackTrace = GetStackTrace
 		return Get-ErrorResponse -Exception $_.Exception -Uri $Uri -Duration (GetDuration -StartTime $startTime) -stackTrace $stackTrace
 	}
@@ -79,13 +78,13 @@ function Execute([string]$Command, [string]$Arguments) {
         FileName = $Command;
         Arguments = $Arguments;
         RedirectStandardOutput = $true;
-        RedirectStandardError = $true; 
+        RedirectStandardError = $true;
         WorkingDirectory = (Get-Location).Path;
-        UseShellExecute = $false; 
+        UseShellExecute = $false;
         CreateNoWindow = $true;
     }
 
-	
+
     $process = [System.Diagnostics.Process]@{StartInfo = $processStartInfo}
 
 	# This is a somewhat convoluted way to read the error and output streams, and is intended to prevent deadlocks
@@ -94,7 +93,7 @@ function Execute([string]$Command, [string]$Arguments) {
 	$appendScript = {
         if (! [String]::IsNullOrEmpty($EventArgs.Data)) { $Event.MessageData.AppendLine($EventArgs.Data) }
     }
-	$errorEvent = Register-ObjectEvent -InputObject $process -Action $appendScript -EventName 'ErrorDataReceived' -MessageData $errorBuilder 
+	$errorEvent = Register-ObjectEvent -InputObject $process -Action $appendScript -EventName 'ErrorDataReceived' -MessageData $errorBuilder
 	$process.Start() | Out-Null
 	$process.BeginErrorReadLine()
 	$returnValue = New-Object ExecutionResult
@@ -130,11 +129,11 @@ function ExecuteFitNesse([string]$AppSearchRoot, [string]$DataFolder, [string]$P
 }
 
 # For execution results: extract the response from the response object. Can be the output string or the error string
-# weak typing is deliberate here - see 
+# weak typing is deliberate here - see
 # http://stackoverflow.com/questions/36804102/powershell-5-and-classes-cannot-convert-the-x-value-of-type-x-to-type-x
 function ExtractResponse($Result) {
-	# FitNesse can return non-zero exit codes e.g. when tests fail. For us this is business as usual which shouldn't result in 
-	# exceptions. Also, FitNesse can return non-fatal messages on the error stream (e.g. missing plugins.properties). 
+	# FitNesse can return non-zero exit codes e.g. when tests fail. For us this is business as usual which shouldn't result in
+	# exceptions. Also, FitNesse can return non-fatal messages on the error stream (e.g. missing plugins.properties).
 	# Therefore, we assume that the process has succeeded if the output stream contains data, even if there were errors
 	if ($Result.output) {
 		if ($Result.error) {
@@ -142,15 +141,15 @@ function ExtractResponse($Result) {
 		}
 		return $Result.output
 	}
-    # At this stage we know the output stream was empty. If the exit code was zero (e.g. the case with java -version) 
-    # we just return the error stream (which may be empty). Otherwise raise an exception. 
+    # At this stage we know the output stream was empty. If the exit code was zero (e.g. the case with java -version)
+    # we just return the error stream (which may be empty). Otherwise raise an exception.
 	if ($Result.exitCode -eq 0) {
 		return $Result.error
 	}
-	Exit-WithError -Message "Java returned exit code $($Result.exitCode). Error: $($Result.error)" 
+	Exit-WithError -Message "Java returned exit code $($Result.exitCode). Error: $($Result.error)"
 }
 
-# Extract the test specification (name and runtype) from the specified name: testName[:type]. 
+# Extract the test specification (name and runtype) from the specified name: testName[:type].
 function ExtractTestSpec([string]$TestSpec) {
 	Set-Variable -Option Constant -name "suite" -value "suite";
 	Set-Variable -Option Constant -name "examples" -value "examples";
@@ -182,7 +181,7 @@ function ExtractXmlOrHtml([string]$RawInput) {
 	if ($startLocation -eq -1) { $startLocation = $rawInput.IndexOf("<!DOCTYPE html", $ordinal) }
 	$endLocation = $RawInput.LastIndexOf(">", $ordinal) + 1;
 	if (($startLocation -eq -1) -or ($endLocation -eq 0)) {
-		Exit-WithError -Message "Could not find an XML or HTML section in the result. Raw result: $RawInput" 
+		Exit-WithError -Message "Could not find an XML or HTML section in the result. Raw result: $RawInput"
 	}
 	$result = $RawInput.Substring($startLocation, $endLocation - $startLocation)
 	return $result
@@ -221,7 +220,7 @@ function Get-ErrorResponse([exception]$Exception, [string]$Uri, [double]$Duratio
 	}
 	return "<?xml version=`"1.0`"?><testResults>"+
 	  "<rootPath>Exception</rootPath>" +
-	  "<executionLog>" + 
+	  "<executionLog>" +
 	    "<exception><![CDATA[$errorMessage [URI: $Uri]]]></exception>" +
 	    "<stackTrace><![CDATA[$StackTrace]]></stackTrace>" +
 	  "</executionLog>" +
@@ -237,7 +236,7 @@ function GetStackTrace() {
 
 function GetTimeout([string]$TimeoutSeconds) {
 	if ($TimeoutSeconds -eq "default") { return "default" }
-	if($TimeoutSeconds -eq "infinite") { return [System.Threading.Timeout]::Infinite } 
+	if($TimeoutSeconds -eq "infinite") { return [System.Threading.Timeout]::Infinite }
 	$converted = 0
 	$isNumeric = [System.Double]::TryParse($TimeoutSeconds, [ref]$converted)
 	if ($isNumeric) { return $converted * 1000 }
@@ -250,12 +249,12 @@ function GetVersionInfo([string]$Assembly) {
 	if ($assemblyItem) {
 		return "$($assemblyItem.VersionInfo.ProductName) $($assemblyItem.VersionInfo.FileVersion)"
 	}
-	return ""	
+	return ""
 }
 
 function Invoke-FitNesse([hashtable]$Parameters) {
-	# The FitNesse xml format doesn't always contain an exception on complete failure. The HTML result usually contains 
-	# more clues. So if we get a xml result without results node, we retry the command in HTML, and grab the error message 
+	# The FitNesse xml format doesn't always contain an exception on complete failure. The HTML result usually contains
+	# more clues. So if we get a xml result without results node, we retry the command in HTML, and grab the error message
 	# from there. We put it into testResults/executionLog/exception as that is where the history pages keep them too.
 	$htmlText = ""
 	[xml]$xml = $null
@@ -324,11 +323,11 @@ function Transform([xml]$InputXml, [string]$XsltFile, [string]$Now = (Get-Date).
 	$xsltSettings.EnableScript = $true
 	$XmlUrlResolver = New-Object System.Xml.XmlUrlResolver
     $xslt.Load((Join-Path -Path $PSScriptRoot -ChildPath $XsltFile), $xsltSettings, $XmlUrlResolver)
-	
+
     $target = New-Object System.IO.MemoryStream
 	$reader = New-Object System.IO.StreamReader($target)
     try {
-		$xslArguments = New-Object Xml.Xsl.XsltArgumentList	
+		$xslArguments = New-Object Xml.Xsl.XsltArgumentList
         $xslArguments.AddParam("Now", "", $Now);
 		$xslt.Transform($InputXml, $xslArguments, $target)
         $target.Position = 0
@@ -343,7 +342,7 @@ function UpdateEnvironment([xml]$NUnitXml) {
 	$env = $NUnitXml.SelectSingleNode("test-run/test-suite/environment")
 	if (!($env)) { return $NUnitXml.OuterXml }
 	$os = $os=get-ciminstance -classname win32_operatingsystem
-	$testSystem=($NUnitXml.SelectSingleNode("test-run/test-suite[1]/settings").setting | 
+	$testSystem=($NUnitXml.SelectSingleNode("test-run/test-suite[1]/settings").setting |
 		Where-Object {$_.name -eq "TestSystem"}).Value
 	if ($testSystem) {
 		$assembly = $testSystem.Split(":",2)[1]
@@ -355,21 +354,20 @@ function UpdateEnvironment([xml]$NUnitXml) {
 		}
 	}
 	$env.SetAttribute("os-architecture", $os.OSArchitecture)
-	$env.SetAttribute("os-version", $os.Version) 
+	$env.SetAttribute("os-version", $os.Version)
 	# VSTS can't deal with the platform attribute.
 	# $env.SetAttribute("platform", $os.Caption)
-	$env.SetAttribute("cwd", ".") 
-	$env.SetAttribute("machine-name", $os.CSName) 
+	$env.SetAttribute("cwd", ".")
+	$env.SetAttribute("machine-name", $os.CSName)
 	$user = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name.Split("\")
-	$env.SetAttribute("user", $user[1]) 
-	$env.SetAttribute("user-domain", $user[0]) 
-	$env.SetAttribute("culture", (Get-Culture).Name) 
+	$env.SetAttribute("user", $user[1])
+	$env.SetAttribute("user-domain", $user[0])
+	$env.SetAttribute("culture", (Get-Culture).Name)
 	$env.SetAttribute("uiculture", (Get-UICulture).Name)
 	return $NUnitXml.OuterXml
 }
 
 function UpdateAttachments([xml]$NUnitXml, [string]$RawResults, [string]$Details) {
-    Write-Host $NUnitXml.OuterXml
 	$suite = $NUnitXml.SelectSingleNode("test-run/test-suite[1]")
 	@($suite.attachments.attachment)[0].filePath = $RawResults
 	if ($Details) {
@@ -379,17 +377,17 @@ function UpdateAttachments([xml]$NUnitXml, [string]$RawResults, [string]$Details
 	return $NUnitXml.OuterXml
 }
 
-function DidAllTestsPass([string]$FitNesseOutput) {
+function TestAllTestsPassed([string]$FitNesseOutput) {
 	$counts = ([xml]$fitNesseOutput).testResults.finalCounts
 	return (([int]$counts.wrong + [int]$counts.exceptions) -eq 0) -and ([int]$counts.right -gt 0)
 }
 
 function MainHelper() {
-	$parameters = Get-Parameters -ParameterNames "command", "testSpec", "includeHtml", # All
+	$parameters = Get-TaskParameter -ParameterNames "command", "testSpec", "includeHtml", # All
 		"port", "dataFolder", "appSearchRoot",  # Execute
 		"baseUri", "timeoutSeconds", # Call
 		"resultFolder", "extraParam" # All
-	
+
 	if (!(Test-Path -Path $parameters.ResultFolder)) {
 		New-Item -Path $parameters.ResultFolder -ItemType directory | out-null
 	}
@@ -412,7 +410,7 @@ function MainHelper() {
 	$nUnitOutputComplete = [xml](UpdateAttachments -NUnitXml $nUnitOutputWithEnvironment -RawResults $rawResultsFilePath -Details $detailsFilePath)
 	SaveXml -xml $nUnitOutputComplete.OuterXml -OutFile (Join-Path -Path $parameters.ResultFolder -ChildPath "results_nunit.xml")
 
-	if (DidAllTestsPass -FitNesseOutput $xml) {
+	if (TestAllTestsPassed -FitNesseOutput $xml) {
 		Out-Log -Message "##vso[task.complete result=Succeeded;]Test run successful"
 	} else {
 		Out-Log -Message "##vso[task.complete result=Failed;]Test run failed"

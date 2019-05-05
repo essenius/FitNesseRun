@@ -1,6 +1,6 @@
-# Copyright 2018 Rik Essenius
+﻿# Copyright 2018 Rik Essenius
 #
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
 # compliance with the License. You may obtain a copy of the License at
 #
 #   http://www.apache.org/licenses/LICENSE-2.0
@@ -10,11 +10,11 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 #Add a folder to the path for next tasks
-function Add-ToPath([string] $Path) { 
-    Out-Log -Message "##vso[task.prependpath]$Path" 
+function Add-ToPath([string] $Path) {
+    Out-Log -Message "##vso[task.prependpath]$Path"
 }
 
-function Assert-IsPositive { 
+function Assert-IsPositive {
 	param([string]$Parameter, [string]$Value)
 	$caption = if ($Parameter) { "$($Parameter): " } else { '' }
 	Exit-If -Condition (!(Test-IsPositive($Value))) -Message "$($caption)'$Value' is no positive number"
@@ -39,10 +39,10 @@ function Copy-Folder {
 # In all packages under the sourcebase, copy (recursively) the content of the source folder to the target path
 function Copy-FromPackage {
 	param([string]$TargetPath, [string]$SourceBase, [string]$SourceFolder)
-	Get-ChildItem $SourceBase -Directory -Recurse | 
-	    Where-Object {$_.FullName -like "*packages\*\$SourceFolder"} | 
+	Get-ChildItem $SourceBase -Directory -Recurse |
+	    Where-Object {$_.FullName -like "*packages\*\$SourceFolder"} |
 	    Get-ChildItem -Directory |
-		ForEach-Object { Copy-Folder -TargetPath $TargetPath -SourcePath $_.FullName -TargetFolder $_.Name }    
+		ForEach-Object { Copy-Folder -TargetPath $TargetPath -SourcePath $_.FullName -TargetFolder $_.Name }
 }
 
 # Exit the script with an error message if the condition is true
@@ -55,7 +55,7 @@ function ExitScript {
 	exit 1
 }
 
-# Exit the script with an error message to allow Azure DevOps to pick it up 
+# Exit the script with an error message to allow Azure DevOps to pick it up
 function Exit-WithError {
     param([string]$Message)
 	Out-Issue -Message $Message
@@ -65,8 +65,8 @@ function Exit-WithError {
 
 # Find an application in the environment path. If Assert is set, exit if it could not be found
 function Find-InPath {
-    param([string]$Command, [switch]$Assert) 
-	$CommandPath = (Get-Command -Name $Command -CommandType Application -ErrorAction SilentlyContinue | 
+    param([string]$Command, [switch]$Assert)
+	$CommandPath = (Get-Command -Name $Command -CommandType Application -ErrorAction SilentlyContinue |
 					Select-Object -First 1).Path
 	if ($Assert.IsPresent) {
 		Exit-If -Condition (!$CommandPath) -Message "Could not find '$Command'"
@@ -89,7 +89,7 @@ function Get-EnvironmentVariable([string]$Key) {
 }
 
 #Get the parameter values from Azure DevOps
-Function Get-Parameters {
+Function Get-TaskParameter {
 	param([string[]]$ParameterNames)
 	$hashTable = @{}
 	Trace-VstsEnteringInvocation $MyInvocation
@@ -100,11 +100,11 @@ Function Get-Parameters {
 		}
 	} finally {
 		Trace-VstsLeavingInvocation $MyInvocation
-	} 
+	}
 	return $hashTable
 }
 
-function Move-FolderContents {
+function Move-FolderContent {
 	param([string]$Path, [string]$Destination)
 	If (Test-Path -Path $Path) {
 		if (Test-Path -Path $Destination -PathType Leaf) {
@@ -120,10 +120,12 @@ function Move-FolderContents {
 	}
 
 }
-# Create a folder if it didn't already exist
+# Create a folder if it didn't already exist. ScriptAnalyzer chokes on the New verb and insists on a SupportsShouldProcess,
+# but we want to run this unattended so we're not implementing it.
 Function New-FolderIfNeeded {
+    [CmdLetBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
 	param ([string]$Path)
-	if (!(Test-Path -Path $Path)) { New-Item -Path $Path -ItemType Directory | out-null }	
+	if (!(Test-Path -Path $Path)) { New-Item -Path $Path -ItemType Directory | out-null }
 }
 
 # Write an issue to the log. Can be a warning or an error
@@ -139,7 +141,7 @@ function Out-Log {
 	$InformationPreference = "Continue"
 	If ($Debug.IsPresent) {
 		Write-Information -MessageData "##[debug]$Message"
-	} Else { 
+	} Else {
 		If ($Command.IsPresent) {
 			Write-Information -MessageData "##[Command]$Message"
 		} Else {
@@ -158,4 +160,4 @@ Function Write-OutputVariable {
 }
 
 # Export all functions with a dash in them.
-Export-ModuleMember -function *-* 
+Export-ModuleMember -function *-*
