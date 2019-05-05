@@ -48,7 +48,7 @@ Describe "FitNesseConfigure-AddFirefoxBinaryToPath" {
 }
 
 Describe "FitNesseConfigure-GetModuleFolder" {
-    Mock -CommandName RunningOnAgent -MockWith { return $true }
+    Mock -CommandName TestOnAgent -MockWith { return $true }
     it "should return $PSScriptRoot" {
         GetModuleFolder | Should -Be $PSScriptRoot
     }

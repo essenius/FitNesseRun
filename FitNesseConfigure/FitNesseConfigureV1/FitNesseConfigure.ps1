@@ -15,12 +15,12 @@ param()
 set-psdebug -strict
 
 # if the environment variable AGENT_WORKFOLDER has a value, we run on an agent. Else we're likely to run under Pester.
-function RunningOnAgent() {	return !!$Env:AGENT_WORKFOLDER }
+function TestOnAgent() {	return !!$Env:AGENT_WORKFOLDER }
 
 # We don't want to duplicate the common functions during development, so we get the module from its folder. 
 # The deployment to vsix copies them over to the task folders because tasks can only use their own folders.
 function GetModuleFolder() { 
-	if (RunningOnAgent) { 
+	if (TestOnAgent) { 
 		return $PSScriptRoot 
 	} else { 
 		return (Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath "Common")
@@ -245,4 +245,4 @@ function MainHelper {
 }
 
 ######## Start of script ########
-if (RunningOnAgent) { MainHelper } else { Exit-WithError -Message "Not running on an agent. Exiting." }
+if (TestOnAgent) { MainHelper } else { Exit-WithError -Message "Not running on an agent. Exiting." }

@@ -19,7 +19,7 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 . "$here\$sut"
 
 Describe "FitNesseRun-GetModuleFolder" {
-    Mock -CommandName RunningOnAgent -MockWith { return $true }
+    Mock -CommandName TestOnAgent -MockWith { return $true }
     it "should return $PSScriptRoot" {
         GetModuleFolder | Should -Be $PSScriptRoot
     }
