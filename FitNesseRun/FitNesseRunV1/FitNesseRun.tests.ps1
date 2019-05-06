@@ -551,7 +551,7 @@ Describe "FitNesseRun-InvokeMainTask" {
     }
 }
 
-# This function creates a xslTests.new.xml file by executing the transformation process and storing the outcome in the expecation nodes.
+# This function creates a xslTests.New.xml file by executing the transformation process and storing the outcome in the expecation nodes.
 # Intention is to visually compare with the current xslTests.xml (e.g .with WinMerge) to ensure the results are accurate before replacing it.
 # Make it a Describe instead of a function to enable in Pester.
 Function Save-XslTestData {

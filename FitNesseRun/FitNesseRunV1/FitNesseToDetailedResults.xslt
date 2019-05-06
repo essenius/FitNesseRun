@@ -17,9 +17,7 @@
   xmlns:msxsl="urn:schemas-microsoft-com:xslt"
   exclude-result-prefixes="msxsl"
 >
-
-<!--<xsl:output method="xml" version="1.0" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" indent="yes"/> -->
-
+  
 <xsl:output method="html" doctype-system="about:legacy-compat" encoding="UTF-8" indent="yes" />
 
   <!-- a bit of a hack. In the REST fixture, we create XML documents on the fly.
@@ -267,7 +265,7 @@
                 <xsl:with-param name="pageName" select="$title" />
               </xsl:call-template>
             </a>
-            <div class="right">Started <xsl:value-of select="date"/></div></h2>
+            <div class="right"><xsl:value-of select="date"/> (<xsl:value-of select="runTimeInMillis"/> ms)</div></h2>
           <xsl:variable name="escaped_xml_start">
             <xsl:call-template name="replace">
               <xsl:with-param name="text" select="content" />

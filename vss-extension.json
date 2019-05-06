@@ -2,8 +2,9 @@
     "manifestVersion":  1,
     "id":  "FitnesseRun",
     "name":  "FitNesseRun",
-    "version":  "1.0.16",
+    "version":  "1.0.19",
     "publisher":  "rikessenius",
+    "public":  true,
     "targets":  [
                     {
                         "id":  "Microsoft.VisualStudio.Services"

@@ -147,7 +147,7 @@
     </style>
   </head>
   <body>
-    <h2 class="fail"><a id="#result1">TestPage</a><div class="right">Started 2011-10-26T01:02:03+02:00</div>
+    <h2 class="fail"><a id="#result1">TestPage</a><div class="right">2011-10-26T01:02:03+02:00 (201 ms)</div>
     </h2><div class="collapse_rim">
 	<div style="float: right;" class="meta">
 		
@@ -503,7 +503,7 @@
     </style>
   </head>
   <body>
-    <h2 class="pass"><a id="#result1">FibonacciTest</a><div class="right">Started </div>
+    <h2 class="pass"><a id="#result1">FibonacciTest</a><div class="right"> (167 ms)</div>
     </h2><div class="collapsible closed">
 	<p class="title">Precompiled Libraries</p>
 	<div><br/></div>
@@ -1698,7 +1698,7 @@
         <td>16</td>
       </tr>
     </table>
-    <h2 class="pass"><a id="#result1">DuplicateCheck</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+    <h2 class="pass"><a id="#result1">DuplicateCheck</a><div class="right">2016-06-15T15:29:51+02:00 (72 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
@@ -1920,7 +1920,7 @@
             </table>
             </div>
             </div>
-          <h2 class="pass"><a id="#result2">DynamicTableDemo</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+          <h2 class="pass"><a id="#result2">DynamicTableDemo</a><div class="right">2016-06-15T15:29:51+02:00 (21 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
@@ -2077,7 +2077,7 @@
             </table>
             </div>
             </div>
-          <h2 class="pass"><a id="#result3">EchoTestPage</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+          <h2 class="pass"><a id="#result3">EchoTestPage</a><div class="right">2016-06-15T15:29:51+02:00 (19 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
@@ -2225,7 +2225,7 @@
             </table>
             </div>
             </div>
-          <h2 class="pass"><a id="#result4">GameManagement</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+          <h2 class="pass"><a id="#result4">GameManagement</a><div class="right">2016-06-15T15:29:51+02:00 (23 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
@@ -2427,7 +2427,7 @@
             </table>
             </div>
             </div>
-          <h2 class="pass"><a id="#result5">OverviewPage</a><div class="right">Started 2016-06-15T15:29:51+02:00</div>
+          <h2 class="pass"><a id="#result5">OverviewPage</a><div class="right">2016-06-15T15:29:51+02:00 (16 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: GameManagementSuite.ScenarioLibrary] </p>
@@ -2874,7 +2874,7 @@
         <td>5</td>
       </tr>
     </table>
-    <h2 class="ignore"><a id="#result1">EmptyTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+    <h2 class="ignore"><a id="#result1">EmptyTest</a><div class="right">2016-06-16T10:14:31+02:00 (23 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
@@ -2889,7 +2889,7 @@
             </div>
             </div>
             <br/>Ignore everything here<br/>
-          <h2 class="error"><a id="#result2">ExceptionTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+          <h2 class="error"><a id="#result2">ExceptionTest</a><div class="right">2016-06-16T10:14:31+02:00 (30 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
@@ -2910,7 +2910,7 @@
             </tr>
             </table>
             <br/>
-          <h2 class="fail"><a id="#result3">FailingTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+          <h2 class="fail"><a id="#result3">FailingTest</a><div class="right">2016-06-16T10:14:31+02:00 (15 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
@@ -2936,7 +2936,7 @@
             <td>[<span class="diff">tru</span>e] <span class="fail">expected [</span><span class="diff">fals</span><span class="fail">e]</span></td>
             </tr>
             </table>
-          <h2 class="ignore"><a id="#result4">IgnoreTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+          <h2 class="ignore"><a id="#result4">IgnoreTest</a><div class="right">2016-06-16T10:14:31+02:00 (5 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
@@ -2962,7 +2962,7 @@
             <td><span class="ignore">hello</span></td>
             </tr>
             </table>
-          <h2 class="pass"><a id="#result5">PassingTest</a><div class="right">Started 2016-06-16T10:14:31+02:00</div>
+          <h2 class="pass"><a id="#result5">PassingTest</a><div class="right">2016-06-16T10:14:31+02:00 (5 ms)</div>
     </h2>
             <div class="collapsible closed">
             <p class="title">[Included page: FeatureDemoSuite.PassFailExceptionSuite.SetUp] </p>
@@ -3403,7 +3403,7 @@
     </style>
   </head>
   <body>
-    <h2 class="fail"><a id="#result1">QosMockup</a><div class="right">Started 2017-05-13T08:31:52+02:00</div>
+    <h2 class="fail"><a id="#result1">QosMockup</a><div class="right">2017-05-13T08:31:52+02:00 (3306 ms)</div>
     </h2><br/><span class="meta">variable defined: TEST_RUNNER=${FITSHARP_HOME}\RunnerW.exe</span>
 <br/><span class="meta">variable defined: SLIM_PORT=8085</span>
 <br/><br/><table>
@@ -3790,7 +3790,7 @@ Assertions: 0 right, 0 wrong, 0 ignores, 0 exceptions. ]]></message>
     </style>
   </head>
   <body>
-    <h2 class="ignore"><a id="#result1">XmlParseErrorDemo</a><div class="right">Started 2017-11-11T11:31:31+01:00</div>
+    <h2 class="ignore"><a id="#result1">XmlParseErrorDemo</a><div class="right">2017-11-11T11:31:31+01:00 (114 ms)</div>
     </h2><br/><table>
         <tr class="slimRowTitle">
           <td>import</td>

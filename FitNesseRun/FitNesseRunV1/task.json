@@ -4,7 +4,7 @@
     "friendlyName":  "Run FitNesse Test",
     "description":  "Run a FitNesse test via local deployment or calling an external instance",
     "author":  "Rik Essenius",
-    "helpMarkDown":  "Version 1.0.16",
+    "helpMarkDown":  "Version 1.0.19",
     "category":  "Azure Pipelines",
     "demands":  [
 
@@ -12,7 +12,7 @@
     "version":  {
                     "Major":  1,
                     "Minor":  0,
-                    "Patch":  16
+                    "Patch":  19
                 },
     "minimumAgentVersion":  "1.95.0",
     "instanceNameFormat":  "FitNesseRun $(TestSpec)",
