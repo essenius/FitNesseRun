@@ -92,6 +92,24 @@ Describe "PesterAndPackage-InvokeTest" {
     }
 }
 
+Describe "PesterAndPackage-OutLog" {
+	Mock -CommandName Write-Information -MockWith { $script:result = $MessageData }
+	it "should show the message in red" {
+		OutLog -Message "Failure" -Fail
+		($script:result).Message | Should -Be "Failure"
+		($script:result).ForegroundColor | Should -Be "Red"
+	}
+		it "should show the message in green" {
+		OutLog -Message "Success" -Pass
+		($script:result).Message | Should -Be "Success"
+		($script:result).ForegroundColor | Should -Be "Green"
+	}
+	it "should show a normal text" {
+		OutLog -Message "Neutral"
+		$script:result | Should -Be "Neutral"	
+	}
+
+}
 Describe "PesterAndPackage-SaveToJson" {
     $object = @{'id'='FitNesseRun';'version'='1.2.3'}
     $expected = '{"id":"FitNesseRun","version":"1.2.3"}'

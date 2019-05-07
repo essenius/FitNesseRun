@@ -9,6 +9,8 @@
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
+using namespace System.Management.Automation # for OutLog colors
+
 param([ValidateSet("Next","Sync","Ignore")][string]$VersionAction="Ignore", [switch]$NoTest, [switch]$NoPackage)
 
 set-psdebug -strict
@@ -18,8 +20,8 @@ function ExitScript {
 }
 
 function ExitWithError {
-    param([string]$Message)
-	OutLog -Message $Message
+	param([string]$Message)
+	OutLog -Message $message -Fail
 	ExitScript
 }
 
@@ -68,9 +70,18 @@ function InvokeTfx {
 }
 
 function OutLog {
-    param([string]$Message)
-	$InformationPreference = "Continue"
-	Write-Information $Message
+    param([string]$Message, [switch]$Fail, [switch]$Pass)
+	if ($Fail.IsPresent -or $Pass.IsPresent) {
+		$informationMessage = [HostInformationMessage]@{
+			Message         = $Message
+			ForegroundColor = if ($Fail.IsPresent) { "Red" } else { "Green" }
+			BackgroundColor = $Host.UI.RawUI.BackgroundColor
+			NoNewline       = $false
+		}
+		Write-Information -MessageData $informationMessage -InformationAction "Continue"
+	} else {
+		Write-Information -MessageData $Message -InformationAction "Continue"
+	}
 }
 
 function SaveToJson {
@@ -117,6 +128,7 @@ function InvokeMainTask {
         InvokeTest -Folder "Common" -CodeCoverage "Common\CommonFunctions.psm1"
         InvokeTest -Folder "FitNesseConfigure" -MainVersion $mainVersion
         InvokeTest -Folder "FitNesseRun" -MainVersion $mainVersion
+		OutLog -Message "All tests passed" -Pass
     }
     $version = GetVersion -FilePath "vss-extension.json"
     OutLog -Message "Current version: $version"
