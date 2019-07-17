@@ -86,7 +86,7 @@ function OutLog {
 
 function SaveToJson {
     param($Object, [string]$FilePath)
-    $backupFilePath = [System.IO.Path]::ChangeExtension($FilePath,"backup")
+    $backupFilePath = [System.IO.Path]::ChangeExtension($FilePath, "backup")
     if (Test-Path -Path $backupFilePath) {
         Remove-Item -Path $backupFilePath
     }
