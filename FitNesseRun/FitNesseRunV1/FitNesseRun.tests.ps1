@@ -69,10 +69,11 @@ Describe "FitNesseRun-CallRest" {
 Describe "FitNesseRun-EditEnvironment" {
     $settings="<settings><setting name=`"TestSystem`" value=`"slim:C:\Apps\FitNesse\fitsharp\Runner.exe`" /></settings>"
     $xml=[xml]"<?xml version=`"1.0`" encoding=`"utf-8`"?><test-run><command-line/><test-suite><environment/>$settings</test-suite></test-run>"
+    Mock -CommandName GetVersionInfo -MockWith { return "fitsharp 1.2.3.4" }
 
     it "should insert the right attributes in the environment element and create two attachments" {
         [xml]$outXml = EditEnvironment -NUnitXml $xml -RawResults ".\fitnesse.xml" -Details ".\details.html"
-		$outXml | SHould -Not -BeNull
+		$outXml | Should -Not -BeNull
         $env = $outXml.SelectSingleNode("test-run/test-suite[1]").environment
         $env."framework-version" | Should -Match "fitSharp \d*\.\d*\.\d*\.\d*"
         $env."os-architecture" | Should -Match "\d{2}-bit"
@@ -129,6 +130,8 @@ Describe "FitNesseRun-ExtractTestSpec" {
     }
 
     $dataSets = (
+        ("", "", ""),
+        (":shutdown", "", "shutdown"),
         ("MyTestCase", "MyTestCase", "test"),
         ("MySuite.MyTestCase", "MySuite.MyTestCase", "test"),
         ("MySuite", "MySuite", "suite"),
@@ -138,7 +141,6 @@ Describe "FitNesseRun-ExtractTestSpec" {
         ("MySuite:test", "MySuite", "test"),
         ("MyTest:suite", "MyTest", "suite"),
         ("MySuite.MyTestCase:suite", "MySuite.MyTestCase", "suite"),
-        ("", "", "test"),
         ("MyTestCase:wrongtype", "MyTestCase", "test")
     )
     $dataSets | ForEach-Object { TestExtractTestCommand @_ }
@@ -289,6 +291,17 @@ Describe "FitNesseRun-InvokeFitNesse" {
             $script:calledUri | Should -Be "http://localhost:8080/JavaTest?test&format=xml&nochunk&includehtml&param1=value1"
             $xml | Should -Be $extractedResult
         }
+        it "executes a call without testspec and fails" {
+            $script:calledUri = ""
+            $parameters=@{'Command'='Call';'BaseUri'='http://localhost:8080'}
+            { Invoke-FitNesse -Parameters $parameters } | Should -Throw "No Rest command identified"
+		}
+        it "executes a call with a shutdown and succeeds without data" {
+            $script:calledUri = ""
+            $extractedResult = '<?xml version="1.0"?><root/>'
+            $parameters=@{'Command'='Call';'TestSpec'=':shutdown';'BaseUri'='http://localhost:8080'}
+            Invoke-FitNesse -Parameters $parameters | Should -BeNull 
+		}
     }
     Context "Call with missed error" {
         it "tries getting additional exception info when the call returns nothing" {
@@ -314,7 +327,9 @@ Describe "FitNesseRun-InvokeFitNesse" {
         Mock -CommandName InvokeProcess -MockWith {
             $script:Command = $Command
             $script:Arguments = $Arguments
-            return [ExecutionResult]@{ output = $rawResult; error = ""; exitCode = 0} }
+            if ($Wait) { return [ExecutionResult]@{ output = $rawResult; error = ""; exitCode = 0} }
+            return [ExecutionResult]@{ exitCode = 0; id = 1234}
+        }
         Mock -CommandName TestMissedError -MockWith { return $false }
         Mock -CommandName Find-UnderFolder -MockWith { return "E:\My Apps\fitnesse.jar" }
         Mock -CommandName Find-InPath -MockWith { return "C:\Program Files\java.exe" }
@@ -327,6 +342,16 @@ Describe "FitNesseRun-InvokeFitNesse" {
             $script:command | Should -Be "C:\Program Files\java.exe"
             $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o -c `"JavaTest?test&format=xml&nochunk&includehtml`""
             $xml | Should -Be $extractedResult
+        }
+        it "executes an execute without test spec right" {
+            $script:command = ""
+            $script:arguments = ""
+            $parameters=@{'Command'='Execute'; 'Port'='9123';
+						  'AppSearchRoot'='E:\My Apps'; 'DataFolder'='.'; 'ResultFolder'='.' }
+            $xml = Invoke-FitNesse -Parameters $parameters
+            $script:command | Should -Be "C:\Program Files\java.exe"
+            $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o"
+            $xml | Should -Be "<?xml version=`"1.0`"?><root><port>9123</port><id>1234</id></root>"
         }
     }
     Context "execute with missed error" {
@@ -367,28 +392,36 @@ Describe "FitNesseRun-InvokeFitNesse" {
 
 Describe "FitNesseRun-InvokeProcess" {
     It "executes java -version" {
-        $result = InvokeProcess -Command "java.exe" -Arguments "-version"
+        $result = InvokeProcess -Command "java.exe" -Arguments "-version" -Wait $true
         $result.ExitCode | Should -Be 0
         $result.output | Should -Be ""
         $result.error | Should -Match ".* version .*"
+        $result.id | Should -Be 0
     }
     It "executes java --version" {
-        $result = InvokeProcess -Command "java.exe" -Arguments "--unrecognized"
+        $result = InvokeProcess -Command "java.exe" -Arguments "--unrecognized" -Wait $true
         $result.ExitCode | Should -Be 1
         $result.output |  Should -Be ""
         $result.error  | Should -Match "unrecognized option: --unrecognized"
     }
     It "executes java WorkFolder" {
-        $result = InvokeProcess -Command "java.exe" -Arguments ("-cp", "$PSScriptRoot", "WorkFolder")
+        $result = InvokeProcess -Command "java.exe" -Arguments ("-cp", "$PSScriptRoot", "WorkFolder") -Wait $true
         $result.ExitCode | Should -Be 0
         $result.output |  Should -Be ((get-location).path + "\.`r`n")
         $result.error  | Should -Be ""
     }
     It "executes find to test multiple arguments" {
-        $result = InvokeProcess -Command "find" -Arguments ("/c", '"java WorkFolder"', "$PSScriptRoot\FitNesseRun.tests.ps1" )
+        $result = InvokeProcess -Command "find" -Arguments ("/c", '"java WorkFolder"', "$PSScriptRoot\FitNesseRun.tests.ps1" ) -Wait $true
         $result.ExitCode | Should -Be 0
-        $result.output |  Should -BeLike "*FITNESSERUN.TESTS.PS1: 2`r`n"
+        $result.output |  Should -BeLike "*FITNESSERUN.TESTS.PS1: 3*"
         $result.error  | Should -Be ""
+    }
+    It "executes and doesn't wait" {
+        $result = InvokeProcess -Command "find" -Arguments ("/c", '"java WorkFolder"', "$PSScriptRoot\FitNesseRun.tests.ps1" ) -Wait $false
+        $result.ExitCode | Should -Be 0
+        $result.output |  Should -BeNull
+        $result.error  | Should -BeNull
+        $result.id | Should -BeGreaterThan 0
     }
 }
 
@@ -502,7 +535,7 @@ Describe "FitNesseRun-InvokeMainTask" {
     $savedFiles = [System.Collections.ArrayList]@()
 
     Context "include html" {
-        Mock -CommandName Get-TaskParameter -MockWith { return @{'ResultFolder'='.'; 'IncludeHtml'=$true } }
+        Mock -CommandName Get-TaskParameter -MockWith { return @{'ResultFolder'='.'; 'TestSpec'='test'; 'IncludeHtml'=$true } }
         Mock -CommandName Out-File -MockWith { $savedFiles.Add(($FilePath, $InputObject)) }
         Mock -CommandName SaveXml -MockWith { $savedFiles.Add(($OutFile, $xml)) }
 
@@ -535,7 +568,7 @@ Describe "FitNesseRun-InvokeMainTask" {
         $extractedResult = "<?xml version=`"1.0`"?><root />"
 		# we need to use $TestDrive instead of "TestDrive:\" because we use .Net objects
 		$script:resultFolder="$TestDrive\results"
-        Mock -CommandName Get-TaskParameter -MockWith { return @{'ResultFolder'="$script:resultFolder"; 'IncludeHtml'=$false } }
+        Mock -CommandName Get-TaskParameter -MockWith { return @{'ResultFolder'="$script:resultFolder"; 'TestSpec'='test';  'IncludeHtml'=$false } }
 		Mock -CommandName TestAllTestsPassed -MockWith { return $true }
         it "Invokes FitNesse, creates 2 result files, and does not include the attachment in nunit" {
 			$nunitFinalResult = "<?xml version=`"1.0`"?><test-run><test-suite><attachments>" +
@@ -549,6 +582,37 @@ Describe "FitNesseRun-InvokeMainTask" {
 			TestXml -ExpectedXml $nunitFinalResult -ActualFile "$script:resultFolder\\results_nunit.xml"
         }
     }
+
+    Context "Start FitNesse" {
+        it "Starts FitNesse and keeps it running. Returns process Id and port" {
+   		    $script:resultFolder="$TestDrive\results"
+            $script:variable = ""
+            Mock -CommandName Get-TaskParameter -MockWith { return @{'ResultFolder'="$script:resultFolder" } }
+            Mock -CommandName Invoke-FitNesse -MockWith { return "<root><port>6789</port><id>12345</id></root>"}
+            Mock -CommandName Write-OutputVariable -MockWith { $script:variable += "$Name = $Value;" }
+
+            InvokeMainTask
+            Assert-MockCalled -CommandName Invoke-FitNesse -Times 1 -Exactly -Scope It
+            $script:variable | should -Be "FitNesse.Port = 6789;FitNesse.ProcessId = 12345;"
+            Test-Path -Path (Join-Path -Path "$script:resultFolder" -ChildPath "fitnesse.xml") | Should -Be $false
+        }
+    }
+
+    Context "Shutdown FitNesse" {
+        it "Shuts down a running FitNesse via a Rest call" {
+   		    $script:resultFolder="$TestDrive\results"
+            $script:variable = ""
+            Mock -CommandName Get-TaskParameter -MockWith { return @{'ResultFolder'="$script:resultFolder"; 'TestSpec'=":shutdown" } }
+            Mock -CommandName Invoke-FitNesse -MockWith { return $null }
+            Mock -CommandName Out-Log -MockWith { $script:Message = $Message }
+
+            InvokeMainTask
+            Assert-MockCalled -CommandName Invoke-FitNesse -Times 1 -Exactly -Scope It
+            $script:Message | should -Be "##vso[task.complete result=Succeeded]Operation succeeded (without generating output)"
+            Test-Path -Path (Join-Path -Path "$script:resultFolder" -ChildPath "fitnesse.xml") | Should -Be $false
+        }
+    }
+
 }
 
 # This function creates a xslTests.New.xml file by executing the transformation process and storing the outcome in the expecation nodes.

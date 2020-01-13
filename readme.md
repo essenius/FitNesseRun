@@ -15,11 +15,13 @@ Azure Pipelines task to run a FitNesse test or suite on an existing FitNesse (ht
 ### For Call:
 - **Base URI**: the URI of the existing FitNesse instance used
 - **Timeout in Seconds**: the read timeout in seconds. Can be 'default' (normally 300s), or 'infinite' to wait forever
+- For **Test or Suite to run**, you can enter ':shutdown' (notice the colon) to shut down the FitNesse instance being called
 
 ### For Execute:
+- Leave **Test or Suite to run** empty if you only want to start FitNesse (this allows for using a subsequent FitNesseRun Call)
 - **Desired Port**: the port that the FitNesse to be executed should run on (will take the next free port if occupied)
 - **Data Folder**: the folder for the FitNesse data (i.e. parent of the FitNesseRoot folder). This is also where the fixtures are expected
-- **Application Search Root**: the root folder where the task starts searching for FitNesse (typically same as Data Folder). It will take the first match it finds.
+- **Application Search Root**: the root folder where the task starts searching for FitNesse (typically same as Data Folder). It will take the first match it finds
 
 ## Results
 The result file is called **results_nunit.xml** and is in NUnit 3 format, which can be read by the standard Publish Test Result task (version 2.\*). Each test page translates to a **test-case** entity. A summary of the assertions per page is provided in the **failure/message** entity of the test-case, since this was the only entity that could be used for this purpose. It will also be used if there are no failures, to make clear how many assertions there were on the page. 
@@ -51,3 +53,4 @@ The task can also unblock the Wiki and Slim ports in the firewall, should be req
 |Date|Note|
 |---|---|
 |3-May-2019|First release of V1 (V0 is also still available)|
+|6-Jan-2020|Introduced mechanism to start and shutdown FitNesse as separate activities|

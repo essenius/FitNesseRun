@@ -34,6 +34,7 @@ class ExecutionResult {
 	[string]$output
 	[string]$error
 	[int]$exitCode
+	[int]$id
 }
 
 class TestSpec {
@@ -131,7 +132,9 @@ function EditAttachments([xml]$NUnitXml, [string]$RawResults, [string]$Details) 
 	return $NUnitXml.OuterXml
 }
 
-# Run FitNesse on the local machine in 'single shot mode', and get the XML result
+# Run FitNesse on the local machine 
+# If there is a RestCommand, run in 'single shot mode', and get the XML result
+# If not, start it and keep it running, and return the port number 
 function ExecuteFitNesse([string]$AppSearchRoot, [string]$DataFolder, [string]$Port, [string]$RestCommand) {
 	$fitNesse = Find-UnderFolder -FileName "fitnesse*.jar" -Description "FitNesse" -SearchRoot $AppSearchRoot -Assert
 	$java = Find-InPath -Command "java.exe" -Description "Java" -Assert
@@ -143,8 +146,14 @@ function ExecuteFitNesse([string]$AppSearchRoot, [string]$DataFolder, [string]$P
 		Set-Location -Path $DataFolder
 		Out-Log -Message "Executing [$java] [$fitNesse], port=[$usedPort], data@[$DataFolder], command=[$restCommand]" -Debug
 		# -o ensures that FitNesse doesn't try to update - so we don't need the "properties" file
-		$commandResult = InvokeProcess -Command $java -Arguments (
-			"-jar", "`"$fitNesse`"", "-d", "`"$DataFolder`"", "-p", $usedPort, "-o", "-c", "`"$restCommand`"")
+		$commandArguments = "-jar", "`"$fitNesse`"", "-d", "`"$DataFolder`"", "-p", $usedPort, "-o"
+		if ($RestCommand) {
+			$commandArguments += "-c", "`"$restCommand`""
+		}
+		$commandResult = InvokeProcess -Command $java -Arguments $commandArguments -Wait (!!$restCommand)
+		if (!$RestCommand) {
+			return "<?xml version=`"1.0`"?><root><port>$usedPort</port><id>$($commandResult.id)</id></root>"
+		}
 	} finally {
 		Set-Location -Path $originalLocation
 	}
@@ -178,13 +187,19 @@ function ExtractResponse($Result) {
 function ExtractTestSpec([string]$TestSpec) {
 	Set-Variable -Option Constant -name "suite" -value "suite";
 	Set-Variable -Option Constant -name "examples" -value "examples";
+	Set-Variable -Option Constant -name "test" -value "test";
+	$validTypes = $test, $suite, "shutdown"
 	$splitTestSpec = $TestSpec.Split(':');
+	if (!$splitTestSpec) { 
+		return [TestSpec]@{name = ""; runtype=""}
+	}
 	# Type 'test' is the default
-	$returnValue = [TestSpec]@{name = $splitTestSpec[0]; runType = "test"}
-	# if the type is specified as 'suite', then honor it
+	$returnValue = [TestSpec]@{name = $splitTestSpec[0]; runType = $test}
+	# if the type is specified, then honor it
     if ($splitTestSpec.Length -gt 1) {
-    	if ($splitTestSpec[1].ToUpperInvariant() -eq $suite.ToUpperInvariant()) {
-			$returnValue.runType = $suite;
+		$lowerType = $splitTestSpec[1].ToLowerInvariant()
+    	if ($validTypes.Contains($lowerType)) {
+			$returnValue.runType = $lowerType;
     	}
     } else {
 		# If not specified, then we assume everything starting or ending with 'suite' or 'examples' is a suite
@@ -285,8 +300,9 @@ function GetVersionInfo([string]$Assembly) {
 	return ""
 }
 
-# Execute a command and retrieve the output
-function InvokeProcess([string]$Command, [string]$Arguments) {
+# Execute a command and retrieve the output if Wait is true. 
+#If Wait is false, return the process id and exit code 0 
+function InvokeProcess([string]$Command, [string]$Arguments, [bool]$Wait) {
 	Out-Log -Message "Executing: $Command $Arguments" -Command
 	$processStartInfo = [System.Diagnostics.ProcessStartInfo]@{
         FileName = $Command;
@@ -298,22 +314,29 @@ function InvokeProcess([string]$Command, [string]$Arguments) {
         CreateNoWindow = $true;
     }
     $process = [System.Diagnostics.Process]@{StartInfo = $processStartInfo}
-
-	# This is a somewhat convoluted way to read the error and output streams, and is intended to prevent deadlocks
-	# We read one stream synchronously and one stream asynchronously. Also, ReadToEnd must happen before WaitForExit.
-	$outputBuilder = [System.Text.StringBuilder]@{}
-	$appendScript = {
-        if ($EventArgs.Data) { $Event.MessageData.AppendLine($EventArgs.Data) }
-    }
-	$outputEvent = Register-ObjectEvent -InputObject $process -Action $appendScript -EventName 'OutputDataReceived' -MessageData $outputBuilder
+	if ($Wait) {
+		# This is a somewhat convoluted way to read the error and output streams, and is intended to prevent deadlocks
+		# We read one stream synchronously and one stream asynchronously. Also, ReadToEnd must happen before WaitForExit.
+		$outputBuilder = [System.Text.StringBuilder]@{}
+		$appendScript = {
+			if ($EventArgs.Data) { $Event.MessageData.AppendLine($EventArgs.Data) }
+		}
+		$outputEvent = Register-ObjectEvent -InputObject $process -Action $appendScript -EventName 'OutputDataReceived' -MessageData $outputBuilder
+	}
 	$process.Start() | Out-Null
-	$process.BeginOutputReadLine()
 	$returnValue = New-Object ExecutionResult
-	$returnValue.error = $process.StandardError.ReadToEnd()
-	$process.WaitForExit()
-	Unregister-Event -SourceIdentifier $outputEvent.Name
-	$returnValue.output = $outputBuilder.ToString()
-	$returnValue.exitCode = $process.ExitCode
+	if ($Wait) {
+		$process.BeginOutputReadLine()
+		$returnValue.error = $process.StandardError.ReadToEnd()
+		$process.WaitForExit()
+		Unregister-Event -SourceIdentifier $outputEvent.Name
+		$returnValue.output = $outputBuilder.ToString()
+		$returnValue.exitCode = $process.ExitCode
+		$returnValue.id = 0
+	} else {
+		$returnValue.ExitCode = 0
+		$returnValue.id = $process.Id
+	}
 	return $returnValue
 }
 
@@ -323,12 +346,26 @@ function Invoke-FitNesse([hashtable]$Parameters) {
 	# from there. We put it into testResults/executionLog/exception as that is where the history pages keep them too.
 	$htmlText = ""
 	[xml]$xml = $null
-	$TestSpecObject = ExtractTestSpec -TestSpec $Parameters.TestSpec
-	$restCommand = "$($TestSpecObject.name)?$($TestSpecObject.runType)&format=xml&nochunk&includehtml"
-    if ($Parameters.ExtraParam) { $restCommand += "&$($Parameters.ExtraParam)" }
+	$restCommand = $null
+	$containsTest = $false
+	if ($Parameters.TestSpec) {
+		$TestSpecObject = ExtractTestSpec -TestSpec $Parameters.TestSpec
+		$restCommand = "$($TestSpecObject.name)?$($TestSpecObject.runType)&format=xml&nochunk&includehtml"
+		if ($TestSpecObject.name) { 
+			$containsTest = $true 
+		}
+	    if ($Parameters.ExtraParam) { $restCommand += "&$($Parameters.ExtraParam)" }
+	}
 	if ($Parameters.Command -eq 'call') {
+	    if (!$restCommand) {
+			Exit-WithError -Message "No Rest command identified" 
+		}
 		$uri = New-Object System.Uri([System.Uri]$Parameters.BaseUri, $restCommand)
-		$xml = CallRest -Uri $uri -ReadWriteTimeoutSeconds $Parameters.TimeoutSeconds
+		$callRestResult = CallRest -Uri $uri -ReadWriteTimeoutSeconds $Parameters.TimeoutSeconds
+		if (!$containsTest) {
+			return $null
+		}
+		$xml = [xml]$callRestResult
 		if (TestMissedError -InputXml $xml) {
 			$htmlRequest = $uri.ToString().Replace("format=xml","format=html")
 			$htmlText = CallRest -Uri $htmlRequest -ReadWriteTimeoutSeconds $Parameters.TimeoutSeconds
@@ -336,6 +373,10 @@ function Invoke-FitNesse([hashtable]$Parameters) {
 	} else { # Execute
 		$xml = [xml](ExecuteFitNesse -AppSearchRoot $Parameters.AppSearchRoot -DataFolder $Parameters.DataFolder `
 									 -Port $Parameters.Port -RestCommand $restCommand)
+		# Bit of a hack. If FitNesse is started and keeps running, this xml snippet contains port number and process id
+	    if (!$restCommand) {
+			return $xml.OuterXml
+		}
 		if (TestMissedError -InputXml $xml) {
 			$htmlRestCommand = $restCommand.Replace("format=xml","format=html")
 			$htmlText = ExecuteFitNesse -AppSearchRoot $Parameters.AppSearchRoot -DataFolder $Parameters.DataFolder `
@@ -373,9 +414,8 @@ function TestAllTestsPassed([string]$FitNesseOutput) {
 }
 
 function TestMissedError([xml]$InputXml) {
-	return (!$xml.testResults.result) -and (!$xml.testResults.executionLog.exception)
+	return (!$InputXml.testResults.result) -and (!$InputXml.testResults.executionLog.exception)
 }
-
 
 function TestTcpPortAvailable([int]$Port) {
     $ipGlobalProperties = [System.Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties()
@@ -390,6 +430,17 @@ function InvokeMainTask() {
 	New-FolderIfNeeded -Path $parameters.ResultFolder
 	Out-Log -Message "Invoking FitNesse" -Debug
 	$xml = Invoke-FitNesse -Parameters $parameters
+	if (!$parameters.testSpec) {
+		$procInfo = [xml]$xml
+		Write-OutputVariable -Name "FitNesse.Port" -Value ($procInfo.root.port)
+		Write-OutputVariable -Name "FitNesse.ProcessId" -Value ($procInfo.root.id)
+		Out-Log -Message "##vso[task.complete result=Succeeded;]FitNesse started at port $($procInfo.root.port) with process id $($procInfo.root.id)"	
+		return
+	}
+	if (!$xml) {
+		Out-Log -Message "##vso[task.complete result=Succeeded]Operation succeeded (without generating output)"
+		return;
+	}
 	$rawResultsFilePath = (Join-Path -Path $parameters.ResultFolder -ChildPath "fitnesse.xml")
 	SaveXml -xml $xml -OutFile $rawResultsFilePath
 

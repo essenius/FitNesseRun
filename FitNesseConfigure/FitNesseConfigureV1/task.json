@@ -4,7 +4,7 @@
     "friendlyName":  "Configure FitNesse",
     "description":  "Configure FitNesse for FitSharp so it can be used to execute tests",
     "author":  "Rik Essenius",
-    "helpMarkDown":  "Version 1.0.19",
+    "helpMarkDown":  "Version 1.0.27",
     "category":  "Azure Pipelines",
     "demands":  [
 
@@ -12,7 +12,7 @@
     "version":  {
                     "Major":  1,
                     "Minor":  0,
-                    "Patch":  19
+                    "Patch":  27
                 },
     "minimumAgentVersion":  "1.95.0",
     "instanceNameFormat":  "FitNesseDeploy",

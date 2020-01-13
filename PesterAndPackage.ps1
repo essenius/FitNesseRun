@@ -11,7 +11,7 @@
 
 using namespace System.Management.Automation # for OutLog colors
 
-param([ValidateSet("Next","Sync","Ignore")][string]$VersionAction="Ignore", [switch]$NoTest, [switch]$NoPackage)
+param([ValidateSet("Next","Sync","Ignore")][string]$VersionAction="Ignore", [switch]$NoTest, [switch]$NoPackage, [switch]$Production)
 
 set-psdebug -strict
 
@@ -96,11 +96,27 @@ function SaveToJson {
     $Object | ConvertTo-Json -depth 10 | Out-File -FilePath $FilePath -Encoding "UTF8"
 }
 
-function SaveVersionInExtension {
-    param([string]$FilePath, [System.Version]$Version)
+function UpdateExtension {
+    param([string]$FilePath, [System.Version]$Version, [bool]$Production)
     $extensionFile = $FilePath
     $vssExtension = Get-Content -Raw -Path $extensionFile | ConvertFrom-Json
     $vssExtension.Version = "$Version"
+    if ($Production) {
+        $id = "FitNesseRun"
+        $runTaskId = "fitnesse-run-task"
+        $configureTaskId = "fitnesse-configure-task"
+        $public = $true 
+    } else {
+        $id = "FitNesseRun-Test"
+        $runTaskId = "fitnesse-run-test-task"
+        $configureTaskId = "fitnesse-configure-test-task"
+        $public = $false 
+    }
+    $vssExtension.id = $id
+    $vssExtension.name = $id
+    $vssExtension.public = $public
+    $vssExtension.contributions[0].id = $runTaskId
+    $vssExtension.contributions[1].id = $configureTaskId
     SaveToJson -Object $vssExtension -FilePath $extensionFile
 }
 
@@ -122,7 +138,7 @@ function SaveVersionInTask {
 }
 
 function InvokeMainTask {
-    param([string]$VersionAction, [bool]$NoTest, [bool]$NoPackage)
+    param([string]$VersionAction, [bool]$NoTest, [bool]$NoPackage, [bool]$Production)
 	$mainVersion = 1
     if (!$NoTest) {
         InvokeTest -Folder "Common" -CodeCoverage "Common\CommonFunctions.psm1"
@@ -138,7 +154,7 @@ function InvokeMainTask {
         } else {
             $versionToApply = $version
         }
-        SaveVersionInExtension -FilePath "vss-extension.json" -Version $versionToApply
+        UpdateExtension -FilePath "vss-extension.json" -Version $versionToApply -Production $Production
         SaveVersionInTask -TaskName "FitNesseConfigure" -Version $versionToApply -MainVersion $mainVersion
         SaveVersionInTask -TaskName "FitNesseRun" -Version $versionToApply -MainVersion $mainVersion
     }
@@ -148,5 +164,5 @@ function InvokeMainTask {
 }
 
 if ($MyInvocation.InvocationName -ne '.') {
-    InvokeMainTask -VersionAction $VersionAction -NoTest $NoTest.IsPresent -NoPackage $NoPackage.IsPresent
+    InvokeMainTask -VersionAction $VersionAction -NoTest $NoTest.IsPresent -NoPackage $NoPackage.IsPresent -Production $Production.IsPresent
 }

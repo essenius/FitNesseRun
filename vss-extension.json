@@ -1,10 +1,10 @@
 ﻿{
     "manifestVersion":  1,
-    "id":  "FitnesseRun",
-    "name":  "FitNesseRun",
-    "version":  "1.0.19",
+    "id":  "FitNesseRun-Test",
+    "name":  "FitNesseRun-Test",
+    "version":  "1.0.27",
     "publisher":  "rikessenius",
-    "public":  true,
+    "public":  false,
     "targets":  [
                     {
                         "id":  "Microsoft.VisualStudio.Services"
@@ -147,7 +147,7 @@
               ],
     "contributions":  [
                           {
-                              "id":  "fitnesse-run-task",
+                              "id":  "fitnesse-run-test-task",
                               "type":  "ms.vss-distributed-task.task",
                               "targets":  [
                                               "ms.vss-distributed-task.tasks"
@@ -157,7 +157,7 @@
                                              }
                           },
                           {
-                              "id":  "fitnesse-configure-task",
+                              "id":  "fitnesse-configure-test-task",
                               "type":  "ms.vss-distributed-task.task",
                               "targets":  [
                                               "ms.vss-distributed-task.tasks"

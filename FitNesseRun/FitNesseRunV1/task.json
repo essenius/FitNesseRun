@@ -4,7 +4,7 @@
     "friendlyName":  "Run FitNesse Test",
     "description":  "Run a FitNesse test via local deployment or calling an external instance",
     "author":  "Rik Essenius",
-    "helpMarkDown":  "Version 1.0.19",
+    "helpMarkDown":  "Version 1.0.27",
     "category":  "Azure Pipelines",
     "demands":  [
 
@@ -12,7 +12,7 @@
     "version":  {
                     "Major":  1,
                     "Minor":  0,
-                    "Patch":  19
+                    "Patch":  27
                 },
     "minimumAgentVersion":  "1.95.0",
     "instanceNameFormat":  "FitNesseRun $(TestSpec)",
@@ -61,7 +61,7 @@
                        "type":  "string",
                        "label":  "Test or Suite to run",
                        "defaultValue":  "",
-                       "required":  true,
+                       "required":  false,
                        "helpMarkDown":  "Relative FitNesse wiki page containing the test or suite to be run",
                        "groupName":  "all"
                    },
