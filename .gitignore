@@ -5,3 +5,5 @@
 /.vs
 /Archive
 *.backup
+obj/
+bin/
