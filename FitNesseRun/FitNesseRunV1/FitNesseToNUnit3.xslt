@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- Copyright 2017-2019 Rik Essenius
+ Copyright 2017-2020 Rik Essenius
 
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in 
  compliance with the License. You may obtain a copy of the License at
@@ -177,8 +177,11 @@
                 <xsl:when test="user:EndsWith($title, relativePageName) and ($FullTestName='' or $FullTestName=$title)">
                   <xsl:value-of select="relativePageName"/>
                 </xsl:when>
-                <xsl:otherwise>
+                <xsl:when test="starts-with($FullTestName,$title)">
                   <xsl:value-of select="substring-after($FullTestName,$title)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$FullTestName"/>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:variable>
