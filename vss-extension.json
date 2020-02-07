@@ -2,7 +2,7 @@
     "manifestVersion":  1,
     "id":  "FitnesseRun",
     "name":  "FitNesseRun",
-    "version":  "1.0.19",
+    "version":  "1.0.20",
     "publisher":  "rikessenius",
     "public":  true,
     "targets":  [
