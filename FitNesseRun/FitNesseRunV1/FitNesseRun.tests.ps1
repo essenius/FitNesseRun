@@ -50,7 +50,7 @@ Describe "FitNesseRun-CallRest" {
         $emptyPort = GetNextFreePort -DesiredPort 8500
         $uri = "http://localhost:$($emptyPort)?a=b"
         $expectedError = 'Exception calling "GetResponse" with "0" argument(s): "Unable to connect to the remote server":' + 
-            ' No connection could be made because the target machine actively refused it 127.0.0.1:8500 [URI: http://localhost:8500?a=b]'
+            " No connection could be made because the target machine actively refused it 127.0.0.1:$($emptyPort) [URI: http://localhost:$($emptyPort)?a=b]"
         $expectedResult = ($resultTemplate -f $expectedError,$uri,"")
         $result = CallRest -Uri $uri
         $result | Should -Be $expectedResult
@@ -287,7 +287,6 @@ Describe "FitNesseRun-InvokeFitNesse" {
             $extractedResult = "<?xml version=`"1.0`"?><root><DetailedResultsFile>test.html</DetailedResultsFile></root>"
             $parameters=@{'Command'='Call';'TestSpec'='JavaTest';'BaseUri'='http://localhost:8080';
                         'Resultfolder'='.';'ExtraParam'= 'param1=value1';'IncludeHtml' = $true}
-
             $xml = Invoke-FitNesse -Parameters $parameters
             Assert-MockCalled -CommandName CallRest -Times 1 -Exactly -Scope It
             $script:calledUri | Should -Be "http://localhost:8080/JavaTest?test&format=xml&nochunk&includehtml&param1=value1"
