@@ -182,7 +182,7 @@
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:value-of select="$FullTestName"/>
-                </xsl:otherwise>
+                </xsl:otherwise>                
               </xsl:choose>
             </xsl:variable>
             <test-case>

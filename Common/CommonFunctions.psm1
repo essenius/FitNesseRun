@@ -1,4 +1,4 @@
-﻿# Copyright 2018 Rik Essenius
+﻿# Copyright 2018-2020 Rik Essenius
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
 # compliance with the License. You may obtain a copy of the License at
@@ -39,10 +39,15 @@ function Copy-Folder {
 # In all packages under the sourcebase, copy (recursively) the content of the source folder to the target path
 function Copy-FromPackage {
 	param([string]$TargetPath, [string]$SourceBase, [string]$SourceFolder)
-	Get-ChildItem $SourceBase -Directory -Recurse |
-	    Where-Object {$_.FullName -like "*packages\*\$SourceFolder"} |
-	    Get-ChildItem -Directory |
-		ForEach-Object { Copy-Folder -TargetPath $TargetPath -SourcePath $_.FullName -TargetFolder $_.Name }
+	# FollowSymLink is needed to make it work in Core, see https://github.com/PowerShell/PowerShell/issues/9461
+	try {
+		$items = Get-ChildItem $SourceBase -Directory -Recurse -FollowSymlink
+	} catch {
+		$items = Get-ChildItem $SourceBase -Directory -Recurse
+	}
+	$items | Where-Object {$_.FullName -like "*packages\*\$SourceFolder"} |
+		    Get-ChildItem -Directory |
+			ForEach-Object { Copy-Folder -TargetPath $TargetPath -SourcePath $_.FullName -TargetFolder $_.Name }
 }
 
 # Exit the script with an error message if the condition is true
@@ -59,7 +64,7 @@ function ExitScript {
 function Exit-WithError {
     param([string]$Message)
 	Out-Issue -Message $Message
-	Out-Log -Message "##vso[task.complete result=Failed;]ABORTED"
+	Out-Complete -Message "ABORTED" -Fail
 	ExitScript
 }
 
@@ -118,14 +123,19 @@ function Move-FolderContent {
 			Out-Issue -Message "Could not remove $Path after moving contents to $Destination" -Warning
 		}
 	}
-
 }
+
 # Create a folder if it didn't already exist. ScriptAnalyzer chokes on the New verb and insists on a SupportsShouldProcess,
 # but we want to run this unattended so we're not implementing it.
 Function New-FolderIfNeeded {
     [CmdLetBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
 	param ([string]$Path)
 	if (!(Test-Path -Path $Path)) { New-Item -Path $Path -ItemType Directory | out-null }
+}
+
+function Out-Complete([string]$Message, [switch]$Fail) {
+	$result = if ($Fail.IsPresent) { "Failed" } else { "Succeeded" }
+	Out-Log -Message "##vso[task.complete result=$result;]$Message"
 }
 
 # Write an issue to the log. Can be a warning or an error

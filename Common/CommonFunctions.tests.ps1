@@ -138,11 +138,14 @@ InModuleScope CommonFunctions {
             $params= Get-TaskParameter -ParameterNames "targetFolder","port","slimPoolSize"
             $params.Count | should be 3
             $keys = $params.Keys.Split('`n')
-            $keys[0] | Should -BeExactly "Port" 
+            $keys -ccontains "Port" | Should -BeTrue 
+            #$keys[0] | Should -BeExactly "Port" 
             $params.Port | Should -BeExactly "port"
-            $keys[1] | Should -BeExactly "SlimPoolSize" 
+            $keys -ccontains "SlimPoolSize" | Should -BeTrue
+            #$keys[1] | Should -BeExactly "SlimPoolSize" 
             $params.SlimPoolSize | Should -BeExactly "slimPoolSize"
-            $keys[2] | Should -BeExactly "TargetFolder" 
+            $keys -ccontains "TargetFolder" | Should -BeTrue 
+            #$keys[2] | Should -BeExactly "TargetFolder" 
             $params.TargetFolder | Should -BeExactly "targetFolder"
         }
     }
@@ -184,12 +187,13 @@ InModuleScope CommonFunctions {
                 (Test-Path -Path $target -PathType Container) | should -Be $false
             }
         }
-        Context "Hidden file in source" {
+        Context "Could not complete move" {
             it "should log a warning" {
                 Mock -CommandName Out-Log -MockWith { $script:message = $Message}
+                Mock -CommandName Get-ChildItem -ModuleName CommonFunctions -MockWith { return "non-null" }
                 new-item -Path "$source\file1" -Force
                 new-item -Path "$source\Folder\file2" -Force
-                Set-ItemProperty -Path "$source\file1" -Name "Attributes" -Value "Hidden"
+                #Set-ItemProperty -Path "$source\file1" -Name "Attributes" -Value "Hidden"
                 Move-FolderContent -Path $source -Destination $target 
                 # need the backticks because the brackets are special characters for the Like operator
                 $script:Message | Should -BeLike "##vso``[task.logissue type=warning;``]Could not remove * after moving contents to *"

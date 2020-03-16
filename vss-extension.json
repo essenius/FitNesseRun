@@ -1,8 +1,8 @@
-﻿{
+{
     "manifestVersion":  1,
-    "id":  "FitnesseRun",
+    "id":  "FitNesseRun",
     "name":  "FitNesseRun",
-    "version":  "1.0.20",
+    "version":  "1.0.32",
     "publisher":  "rikessenius",
     "public":  true,
     "targets":  [

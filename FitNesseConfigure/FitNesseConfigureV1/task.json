@@ -1,10 +1,10 @@
-﻿{
+{
     "id":  "51813574-d846-4f39-8cd3-ea20a1296ca4",
     "name":  "FitNesseConfigure",
     "friendlyName":  "Configure FitNesse",
     "description":  "Configure FitNesse for FitSharp so it can be used to execute tests",
     "author":  "Rik Essenius",
-    "helpMarkDown":  "Version 1.0.20",
+    "helpMarkDown":  "Version 1.0.32",
     "category":  "Azure Pipelines",
     "demands":  [
 
@@ -12,7 +12,7 @@
     "version":  {
                     "Major":  1,
                     "Minor":  0,
-                    "Patch":  20
+                    "Patch":  32
                 },
     "minimumAgentVersion":  "1.95.0",
     "instanceNameFormat":  "FitNesseDeploy",

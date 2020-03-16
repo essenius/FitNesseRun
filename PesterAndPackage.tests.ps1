@@ -139,14 +139,30 @@ Describe "PesterAndPackage-SaveToJson" {
     }
 }
 
-Describe "PesterAndPackage-SaveVersionInExtension" {
-    it "shoud correctly set the version in vssextension.json" {
+Describe "PesterAndPackage-UpdateExtension" {
+    it "shoud correctly set version/id/name/public in the manifest json" {
         $jsonFile = "TestDrive:\test.json"
-        Out-File -InputObject '{"name":"FitNesseRun","version":"0.4.15","publisher":"rikessenius"}' -FilePath $jsonFile
+        $contributions = '[{"id": "bogus1"}, {"id": "bogus2"}]'
+        $vssExtension = '{"name":"bogus3", "id":"bogus4", "public":true, "version":"0.4.15",' +
+                        '"publisher":"rikessenius", "contributions": ' + $contributions + '}'
+        Out-File -InputObject $vssExtension -FilePath $jsonFile
         (GetVersion -FilePath $jsonFile).ToString() | Should -Be "0.4.15"
         $version = New-Object -TypeName "System.Version" -ArgumentList "3.4.5"
-        SaveVersionInExtension -FilePath $jsonFile -Version $version
+        UpdateExtension -FilePath $jsonFile -Version $version -Production $false
         (GetVersion -FilePath $jsonFile).ToString() | Should -Be "3.4.5"
+        $result = Get-Content -Raw -Path $jsonFile | ConvertFrom-Json
+        $result.id | Should -Be "FitNesseRun-Test"
+        $result.name | Should -Be "FitNesseRun-Test"
+        $result.public | Should -BeFalse
+        $result.contributions[0].id | Should -Be "fitnesse-run-test-task"
+        $result.contributions[1].id | Should -Be "fitnesse-configure-test-task"
+        UpdateExtension -FilePath $jsonFile -Version $version -Production $true
+        $result = Get-Content -Raw -Path $jsonFile | ConvertFrom-Json
+        $result.id | Should -Be "FitNesseRun"
+        $result.name | Should -Be "FitNesseRun"
+        $result.public | Should -BeTrue 
+        $result.contributions[0].id | Should -Be "fitnesse-run-task"
+        $result.contributions[1].id | Should -Be "fitnesse-configure-task"
     }
 }
 
@@ -188,14 +204,14 @@ Describe "PesterAndPackage-SaveVersionInTask" {
 Describe "PesterAndPackage-InvokeMainTask" {
     Mock -CommandName InvokeTest -MockWith { }
     Mock -CommandName GetVersion -MockWith { return New-Object -TypeName System.Version -ArgumentList "12.13.14" }
-    Mock -CommandName SaveVersionInExtension -MockWith { $script:newVersion = $Version}
+    Mock -CommandName UpdateExtension -MockWith { $script:newVersion = $Version}
     Mock -CommandName SaveVersionInTask -MockWith { }
     Mock -CommandName InvokeTfx -MockWith { }
 
     it "should run tests if NoTest is false, and invoke Tfx but not update the version if VersionAction is Ignore" {
         InvokeMainTask -VersionAction "Ignore" -NoTest $False -NoPackage $false
         Assert-MockCalled -CommandName InvokeTest -Times 3 -Exactly -Scope It
-        Assert-MockCalled -CommandName SaveVersionInExtension -Times 0 -Exactly -Scope It
+        Assert-MockCalled -CommandName UpdateExtension -Times 0 -Exactly -Scope It
         Assert-MockCalled -CommandName InvokeTfx -Times 1 -Exactly -Scope It
     }
     it "shoud not run tests if NoTest is true, update the version and invoke Tfx if VersionAction is Next" {
@@ -203,7 +219,7 @@ Describe "PesterAndPackage-InvokeMainTask" {
         Assert-MockCalled -CommandName InvokeTest -Times 0 -Exactly -Scope It
         Assert-MockCalled -CommandName GetVersion -Times 1 -Exactly -Scope It
         "$script:newVersion" | should be "12.13.15"
-        Assert-MockCalled -CommandName SaveVersionInExtension -Times 1 -Exactly -Scope It
+        Assert-MockCalled -CommandName UpdateExtension -Times 1 -Exactly -Scope It
         Assert-MockCalled -CommandName SaveVersionInTask -Times 2 -Exactly -Scope It
         Assert-MockCalled -CommandName InvokeTfx -Times 1 -Exactly -Scope It
     }
@@ -212,7 +228,7 @@ Describe "PesterAndPackage-InvokeMainTask" {
         Assert-MockCalled -CommandName InvokeTest -Times 0 -Exactly -Scope It
         Assert-MockCalled -CommandName GetVersion -Times 1 -Exactly -Scope It
         "$script:newVersion" | should be "12.13.14"
-        Assert-MockCalled -CommandName SaveVersionInExtension -Times 1 -Exactly -Scope It
+        Assert-MockCalled -CommandName UpdateExtension -Times 1 -Exactly -Scope It
         Assert-MockCalled -CommandName SaveVersionInTask -Times 2 -Exactly -Scope It
         Assert-MockCalled -CommandName InvokeTfx -Times 0 -Exactly -Scope It
     }
