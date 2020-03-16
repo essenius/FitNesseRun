@@ -44,11 +44,16 @@ function InvokeTest {
 		$basePath = $Folder
 	}
     if (!$CodeCoverage) {
-        $CodeCoverage = (Join-Path -Path $basePath -ChildPath "$(Split-Path -Path $Folder -Leaf).ps1")
+        $CodeCoverage = "$(Split-Path -Path $Folder -Leaf).ps1"
     }
 
-    $scripts = Join-Path -Path $basePath -ChildPath "*.tests.ps1"
+    $scripts = "*.tests.ps1"
+    # Here we need to set the current directory to make "using module" statements work
+    $originalLocation = Get-Location
+    Set-Location -Path $basePath
     $testResult = invoke-Pester -PassThru -Script $scripts -CodeCoverage $CodeCoverage
+    # And put it back
+    Set-Location $originalLocation
     if ($testResult.FailedCount -gt 0) {
         ExitWithError -Message "$($basePath): $($testResult.FailedCount) test(s) failed"
     }
@@ -141,7 +146,7 @@ function InvokeMainTask {
     param([string]$VersionAction, [bool]$NoTest, [bool]$NoPackage, [bool]$Production)
 	$mainVersion = 1
     if (!$NoTest) {
-        InvokeTest -Folder "Common" -CodeCoverage "Common\CommonFunctions.psm1"
+        InvokeTest -Folder "Common" -CodeCoverage "CommonFunctions.psm1"
         InvokeTest -Folder "FitNesseConfigure" -MainVersion $mainVersion
         InvokeTest -Folder "FitNesseRun" -MainVersion $mainVersion
 		OutLog -Message "All tests passed" -Pass

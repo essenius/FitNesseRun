@@ -177,9 +177,12 @@
                 <xsl:when test="user:EndsWith($title, relativePageName) and ($FullTestName='' or $FullTestName=$title)">
                   <xsl:value-of select="relativePageName"/>
                 </xsl:when>
-                <xsl:otherwise>
+                <xsl:when test="starts-with($FullTestName,$title)">
                   <xsl:value-of select="substring-after($FullTestName,$title)"/>
-                </xsl:otherwise>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$FullTestName"/>
+                </xsl:otherwise>                
               </xsl:choose>
             </xsl:variable>
             <test-case>

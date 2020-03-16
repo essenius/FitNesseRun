@@ -18,7 +18,6 @@ Azure Pipelines task to run a FitNesse test or suite on an existing FitNesse (ht
 - For **Test or Suite to run**, you can enter ':shutdown' (notice the colon) to shut down the FitNesse instance being called
 
 ### For Execute:
-- Leave **Test or Suite to run** empty if you only want to start FitNesse (this allows for using a subsequent FitNesseRun Call)
 - **Desired Port**: the port that the FitNesse to be executed should run on (will take the next free port if occupied)
 - **Data Folder**: the folder for the FitNesse data (i.e. parent of the FitNesseRoot folder). This is also where the fixtures are expected
 - **Application Search Root**: the root folder where the task starts searching for FitNesse (typically same as Data Folder). It will take the first match it finds
@@ -53,4 +52,6 @@ The task can also unblock the Wiki and Slim ports in the firewall, should be req
 |Date|Note|
 |---|---|
 |3-May-2019|First release of V1 (V0 is also still available)|
-|6-Jan-2020|Introduced mechanism to start and shutdown FitNesse as separate activities|
+|6-Jan-2020|Introduced mechanism to start and shutdown FitNesse as separate activities.|
+|7-Feb-2020|Bug fix in NUnit3 generation that sometimes led to empty test names|
+|16-Mar-2020|IncludeHtml now controls whether FitNesse includes HTML in suite results|

@@ -5,3 +5,7 @@
 /.vs
 /Archive
 *.backup
+bin/
+obj/
+.DS_Store
+*.zip

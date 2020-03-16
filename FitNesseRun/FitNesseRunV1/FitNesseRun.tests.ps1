@@ -1,4 +1,4 @@
-﻿# Copyright 2017-2019 Rik Essenius
+﻿# Copyright 2017-2020 Rik Essenius
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
 # compliance with the License. You may obtain a copy of the License at
@@ -49,12 +49,13 @@ Describe "FitNesseRun-CallRest" {
     it "inserts an exception message with a connection issue, adding inner exception" {
         $emptyPort = GetNextFreePort -DesiredPort 8500
         $uri = "http://localhost:$($emptyPort)?a=b"
-        $expectedError = "Exception calling `"GetResponse`" with `"0`" argument(s): `"Unable to connect to the remote server`"" +
-        ": No connection could be made because the target machine actively refused it 127.0.0.1:$($emptyPort) [Uri: http://localhost:$($emptyPort)?a=b]"
+        $expectedError = 'Exception calling "GetResponse" with "0" argument(s): "Unable to connect to the remote server":' + 
+            ' No connection could be made because the target machine actively refused it 127.0.0.1:8500 [URI: http://localhost:8500?a=b]'
         $expectedResult = ($resultTemplate -f $expectedError,$uri,"")
         $result = CallRest -Uri $uri
         $result | Should -Be $expectedResult
     }
+    # Looks the next one is not working in .Net Core
     it "sets the ReadWriteTimeout when the parameter is set" {
         $uri = "https://www.cnn.com" # a somewhat slower page,taking over a millisecond to get back
         $expectedError = "Exception calling `"ReadToEnd`" with `"0`" argument(s): " +
@@ -286,6 +287,7 @@ Describe "FitNesseRun-InvokeFitNesse" {
             $extractedResult = "<?xml version=`"1.0`"?><root><DetailedResultsFile>test.html</DetailedResultsFile></root>"
             $parameters=@{'Command'='Call';'TestSpec'='JavaTest';'BaseUri'='http://localhost:8080';
                         'Resultfolder'='.';'ExtraParam'= 'param1=value1';'IncludeHtml' = $true}
+
             $xml = Invoke-FitNesse -Parameters $parameters
             Assert-MockCalled -CommandName CallRest -Times 1 -Exactly -Scope It
             $script:calledUri | Should -Be "http://localhost:8080/JavaTest?test&format=xml&nochunk&includehtml&param1=value1"
@@ -310,7 +312,7 @@ Describe "FitNesseRun-InvokeFitNesse" {
             Mock -CommandName GetErrorFromHtmlString -MockWith { return "Exception Message" }
             Mock -CommandName CallRest -MockWith { $script:calledUri = $Uri; return [xml]$xmlResult }
             Mock -CommandName TestMissedError -MockWith { return $true }
-            $parameters=@{'Command'='Call';'TestSpec'='JavaTest';'BaseUri'='http://localhost:8080';'Resultfolder'='.'}
+            $parameters=@{'Command'='Call';'TestSpec'='JavaTest';'BaseUri'='http://localhost:8080';'Resultfolder'='.';'IncludeHtml'=$true}
             $resultXml = Invoke-FitNesse -Parameters $parameters
 			$expectedResult = "<?xml version=`"1.0`"?><testResults>" +
 			"<executionLog><exception><![CDATA[Exception Message]]></exception>" +
@@ -337,10 +339,10 @@ Describe "FitNesseRun-InvokeFitNesse" {
             $script:command = ""
             $script:arguments = ""
             $parameters=@{'Command'='Execute'; 'TestSpec'='JavaTest'; 'Port'='9123';
-						  'AppSearchRoot'='E:\My Apps'; 'DataFolder'='.'; 'ResultFolder'='.' }
+						  'AppSearchRoot'='E:\My Apps'; 'DataFolder'='.'; 'ResultFolder'='.';'IncludeHtml'=$false }
             $xml = Invoke-FitNesse -Parameters $parameters
             $script:command | Should -Be "C:\Program Files\java.exe"
-            $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o -c `"JavaTest?test&format=xml&nochunk&includehtml`""
+            $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o -c `"JavaTest?test&format=xml&nochunk`""
             $xml | Should -Be $extractedResult
         }
         it "executes an execute without test spec right" {
@@ -371,7 +373,7 @@ Describe "FitNesseRun-InvokeFitNesse" {
             $resultXml = Invoke-FitNesse -Parameters $parameters
             $resultXml | Should -Be ("<?xml version=`"1.0`"?><testResults><executionLog><exception><![CDATA[Exception Message]]></exception>" +
 			"<stackTrace><![CDATA[FitNesseRun.ps1 Invoke-FitNesse({Parameters=System.Collections.Hashtable})]]></stackTrace></executionLog></testResults>")
-            $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o -c `"JavaTest?test&format=html&nochunk&includehtml`""
+            $script:arguments | Should -Be "-jar `"E:\My Apps\fitnesse.jar`" -d `".`" -p 9123 -o -c `"JavaTest?test&format=html&nochunk`""
             Assert-MockCalled -CommandName InvokeProcess -Times 2 -Exactly -Scope It
             Assert-MockCalled -CommandName GetErrorFromHtmlString -Times 1 -Exactly -Scope It
         }
@@ -405,19 +407,19 @@ Describe "FitNesseRun-InvokeProcess" {
         $result.error  | Should -Match "unrecognized option: --unrecognized"
     }
     It "executes java WorkFolder" {
-        $result = InvokeProcess -Command "java.exe" -Arguments ("-cp", "$PSScriptRoot", "WorkFolder") -Wait $true
+        $result = InvokeProcess -Command "java.exe" -Arguments ("-cp", "`"$PSScriptRoot`"", "WorkFolder") -Wait $true
         $result.ExitCode | Should -Be 0
         $result.output |  Should -Be ((get-location).path + "\.`r`n")
         $result.error  | Should -Be ""
     }
     It "executes find to test multiple arguments" {
-        $result = InvokeProcess -Command "find" -Arguments ("/c", '"java WorkFolder"', "$PSScriptRoot\FitNesseRun.tests.ps1" ) -Wait $true
+        $result = InvokeProcess -Command "find" -Arguments ("/c", '"java WorkFolder"', "`"$PSScriptRoot\FitNesseRun.tests.ps1`"" ) -Wait $true
         $result.ExitCode | Should -Be 0
         $result.output |  Should -BeLike "*FITNESSERUN.TESTS.PS1: 3*"
         $result.error  | Should -Be ""
     }
     It "executes and doesn't wait" {
-        $result = InvokeProcess -Command "find" -Arguments ("/c", '"java WorkFolder"', "$PSScriptRoot\FitNesseRun.tests.ps1" ) -Wait $false
+        $result = InvokeProcess -Command "find" -Arguments ("/c", '"java WorkFolder"', "`"$PSScriptRoot\FitNesseRun.tests.ps1`"" ) -Wait $false
         $result.ExitCode | Should -Be 0
         $result.output |  Should -BeNull
         $result.error  | Should -BeNull
