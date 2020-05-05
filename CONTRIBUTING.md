@@ -18,4 +18,4 @@ the task name, the version of the task and if possible a test case showing the i
 
 ## New feature suggestions
 - Check whether a similar feature is already available in the issues list, and respond to that if so.
-- If there is no similar feature, create a new issue with the label `Enhancement`. Make sure the title and description 
+- If there is no similar feature, create a new issue with the label `Enhancement`. Make sure the title and description are clear.
