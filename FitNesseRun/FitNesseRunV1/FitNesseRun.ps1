@@ -315,25 +315,27 @@ function InvokeProcess([string]$Command, [string]$Arguments, [bool]$Wait) {
         WorkingDirectory = (Get-Location).Path;
         UseShellExecute = $false;
         CreateNoWindow = $true;
-    }
+	}
     $process = [System.Diagnostics.Process]@{StartInfo = $processStartInfo}
 	if ($Wait) {
 		# This is a somewhat convoluted way to read the error and output streams, and is intended to prevent deadlocks
 		# We read one stream synchronously and one stream asynchronously. Also, ReadToEnd must happen before WaitForExit.
-		$outputBuilder = [System.Text.StringBuilder]@{}
+		# We use Output as the synchronous one since the async read is a bit flaky with large inputs, and that's less of an 
+		# issue with the error stream which doesn't usually generate a lot of data.
+		$errorBuilder = [System.Text.StringBuilder]@{}
 		$appendScript = {
 			if ($EventArgs.Data) { $Event.MessageData.AppendLine($EventArgs.Data) }
 		}
-		$outputEvent = Register-ObjectEvent -InputObject $process -Action $appendScript -EventName 'OutputDataReceived' -MessageData $outputBuilder
-	}
+		$errorEvent = Register-ObjectEvent -InputObject $process -Action $appendScript -EventName 'ErrorDataReceived' -MessageData $errorBuilder
+	} 
 	$process.Start() | Out-Null
 	$returnValue = New-Object ExecutionResult
 	if ($Wait) {
-		$process.BeginOutputReadLine()
-		$returnValue.error = $process.StandardError.ReadToEnd()
+		$process.BeginErrorReadLine()
+		$returnValue.output = $process.StandardOutput.ReadToEnd()
 		$process.WaitForExit()
-		Unregister-Event -SourceIdentifier $outputEvent.Name
-		$returnValue.output = $outputBuilder.ToString()
+		Unregister-Event -SourceIdentifier $errorEvent.Name
+		$returnValue.error = $errorBuilder.ToString()
 		$returnValue.exitCode = $process.ExitCode
 		$returnValue.id = 0
 	} else {
